@@ -1,10 +1,9 @@
 class Game {
   //ATTRIBUTE////////////////////////////
-  public playScene: PlayScene
 
   //CONSTRUCTOR////////////////////////
   constructor() {
-    this.playScene = new PlayScene()
+
   }
 
   //METHODS//////////////////////////
@@ -12,6 +11,7 @@ class Game {
   //Update//////////////////////////
   public update() {
 
+    playScene.update()
   }
 
   //Draw//////////////////////////
@@ -19,7 +19,7 @@ class Game {
     imageMode(CORNER)
     image(backgroundImg, 0, 0, windowWidth, windowHeight)
 
-    
+    playScene.draw()
   }
 
 
