@@ -1,7 +1,7 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
 // let sound: p5.SoundFile
-
+let backgroundImg: p5.Image;
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
@@ -9,6 +9,7 @@ let game: Game;
  */
 function preload() {
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
+  backgroundImg = loadImage('../assets/images/background.jpg');
 }
 
 /**
@@ -20,7 +21,11 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
-
+  imageMode(CENTER)
+  rectMode(CENTER)
+  textAlign(CENTER)
+  angleMode(DEGREES)
+  
   game = new Game();
 }
 
@@ -28,7 +33,7 @@ function setup() {
  * Built in draw function in P5
  * This is a good place to call public methods of the object
  * you created in the setup function above
- */
+*/
 function draw() {
   game.update();
   game.draw();
