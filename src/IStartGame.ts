@@ -1,6 +1,6 @@
 class IStartGame {
     //ATTRIBUTE////////////////////////////
-    
+    // public startGame(): void
 
     //CONSTRUCTOR////////////////////////
     constructor(){
