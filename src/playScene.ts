@@ -16,9 +16,9 @@ class PlayScene {
   }
   //METHODS//////////////////////////
 
-  //Update//////////////////////////
+  //Update
   public update() {}
-  //Draw//////////////////////////
+  //Draw
   public draw() {
     push();
     fill("black");

@@ -8,11 +8,11 @@ class Player {
     }
     //METHODS//////////////////////////
     
-    //Update//////////////////////////
+    //Update
     public update(){
 
     }
-    //Draw//////////////////////////
+    //Draw
     public draw(){
 
     }

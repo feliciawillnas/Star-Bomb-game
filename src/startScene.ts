@@ -8,11 +8,11 @@ class StartScene {
     }
     //METHODS//////////////////////////
     
-    //Update//////////////////////////
+    //Update
     public update(){
 
     }
-    //Draw//////////////////////////
+    //Draw
     public draw(){
 
     }

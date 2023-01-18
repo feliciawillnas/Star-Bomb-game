@@ -8,11 +8,11 @@ class IStartGame {
     }
     //METHODS//////////////////////////
     
-    //Update//////////////////////////
+    //Update
     public update(){
 
     }
-    //Draw//////////////////////////
+    //Draw
     public draw(){
 
     }

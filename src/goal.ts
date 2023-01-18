@@ -8,11 +8,11 @@ class Goal {
     }
     //METHODS//////////////////////////
     
-    //Update//////////////////////////
+    //Update
     public update(){
 
     }
-    //Draw//////////////////////////
+    //Draw
     public draw(){
 
     }

@@ -7,14 +7,13 @@ class Game {
   }
 
   //METHODS//////////////////////////
-
-  //Update//////////////////////////
+  //Update
   public update() {
 
     playScene.update()
   }
 
-  //Draw//////////////////////////
+  //Draw
   public draw() {
     imageMode(CORNER)
     image(backgroundImg, 0, 0, windowWidth, windowHeight)
