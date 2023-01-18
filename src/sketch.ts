@@ -1,10 +1,13 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
 let playScene: PlayScene;
+let goal: Goal;
+let scoreInterface: ScoreInterface;
 // let sound: p5.SoundFile
 let backgroundImg: p5.Image;
 let galaxGoalImg: p5.Image;
 let playboardBGImg: p5.Image;
+let gameFont: p5.Font;
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
@@ -15,6 +18,7 @@ function preload() {
   backgroundImg = loadImage('../assets/images/background.jpg');
   galaxGoalImg = loadImage('../assets/images/galax.jpg')
   playboardBGImg = loadImage('../assets/images/playboardBackground.png')
+  gameFont = loadFont('../assets/fonts/PressStart2P-Regular.ttf');
 }
 
 /**
@@ -30,9 +34,12 @@ function setup() {
   rectMode(CENTER)
   textAlign(CENTER)
   angleMode(DEGREES)
+  textFont(gameFont);
   
   game = new Game();
   playScene = new PlayScene();
+  goal = new Goal();
+  scoreInterface = new ScoreInterface();
 }
 
 /**
