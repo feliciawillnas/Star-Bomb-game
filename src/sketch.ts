@@ -4,6 +4,7 @@ let playScene: PlayScene;
 // let sound: p5.SoundFile
 let backgroundImg: p5.Image;
 let galaxGoalImg: p5.Image;
+let playboardBGImg: p5.Image;
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
@@ -13,6 +14,7 @@ function preload() {
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
   backgroundImg = loadImage('../assets/images/background.jpg');
   galaxGoalImg = loadImage('../assets/images/galax.jpg')
+  playboardBGImg = loadImage('../assets/images/playboardBackground.png')
 }
 
 /**

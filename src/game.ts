@@ -9,15 +9,14 @@ class Game {
   //METHODS//////////////////////////
   //Update
   public update() {
-
     playScene.update()
+  
   }
 
   //Draw
   public draw() {
-    imageMode(CORNER)
-    image(backgroundImg, 0, 0, windowWidth, windowHeight)
-
+    image(backgroundImg, width/2, height/2, windowWidth, windowHeight)
+    
     playScene.draw()
   }
 
