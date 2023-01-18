@@ -7,6 +7,11 @@ let scoreInterface: ScoreInterface;
 let backgroundImg: p5.Image;
 let galaxGoalImg: p5.Image;
 let playboardBGImg: p5.Image;
+let rocketImgPink1: p5.Image;
+let rocketImgBlue1: p5.Image;
+let rocketImgPink2: p5.Image;
+let rocketImgBlue2: p5.Image;
+
 let gameFont: p5.Font;
 /**
  * Built in preload function in P5
@@ -18,6 +23,11 @@ function preload() {
   backgroundImg = loadImage('../assets/images/background.jpg');
   galaxGoalImg = loadImage('../assets/images/galax.jpg')
   playboardBGImg = loadImage('../assets/images/playboardBackground.png')
+  rocketImgBlue1 = loadImage('../assets/images/blueRocket1.png')
+  rocketImgPink1 = loadImage('../assets/images/pinkRocket1.png')
+  rocketImgBlue2 = loadImage('../assets/images/bluerocket2.png')
+  rocketImgPink2 = loadImage('../assets/images/pinkrocket2.png')
+  
   gameFont = loadFont('../assets/fonts/PressStart2P-Regular.ttf');
 }
 
