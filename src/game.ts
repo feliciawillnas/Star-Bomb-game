@@ -1,27 +1,30 @@
 class Game {
   //ATTRIBUTE////////////////////////////
-
+  public scene: string;
   //CONSTRUCTOR////////////////////////
   constructor() {
-
+    this.scene = "startScene";
   }
 
   //METHODS//////////////////////////
   //Update
   public update() {
-    playScene.update();
-    startScene.update();
+    if(this.scene == "playScene"){
+      playScene.update();
+    }
+    if (this.scene == "startScene"){
+      startScene.update();
+    };
   };
 
   //Draw
   public draw() {
     image(backgroundImg, width/2, height/2, windowWidth, windowHeight);
     
-    if(playScene.scene == "playScene"){
+    if(this.scene == "playScene"){
       playScene.draw();
     }
-
-    if (startScene.scene == "startScene"){
+    if (this.scene == "startScene"){
       startScene.draw();
     };
   };

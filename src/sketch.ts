@@ -17,9 +17,11 @@ let rocketImgPink1: p5.Image;
 let rocketImgBlue1: p5.Image;
 let rocketImgPink2: p5.Image;
 let rocketImgBlue2: p5.Image;
+let neonGreenBomb: p5.Image;
 
 /*Fonts*/
 let gameFont: p5.Font;
+let symbolFont: p5.Font;
 
 
 /**
@@ -36,8 +38,10 @@ function preload() {
   rocketImgPink1 = loadImage('../assets/images/pinkRocket1.png')
   rocketImgBlue2 = loadImage('../assets/images/bluerocket2.png')
   rocketImgPink2 = loadImage('../assets/images/pinkrocket2.png')
-  
+  neonGreenBomb = loadImage('../assets/images/neonGreenBomb.png')
+
   gameFont = loadFont('../assets/fonts/PressStart2P-Regular.ttf');
+  symbolFont = loadFont('../assets/fonts/symbolerFont.otf')
 }
 
 /**
