@@ -1,5 +1,7 @@
 //---- GLOBAL VARIABLES ----//
+/*Instances*/
 let game: Game;
+
 let images: Images;
 let sounds: Sounds;
 
@@ -20,8 +22,10 @@ interface Sounds {
   music: p5.SoundFile;
 }
 
-// let sound: p5.SoundFile
 let gameFont: p5.Font;
+let symbolFont: p5.Font;
+
+
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
@@ -40,6 +44,7 @@ function preload() {
     neonGreenBomb: loadImage('../assets/images/neonGreenBomb.png')
   }
   gameFont = loadFont('../assets/fonts/PressStart2P-Regular.ttf');
+  symbolFont = loadFont('../assets/fonts/symbolerFont.otf')
 }
 
 /**
@@ -59,6 +64,7 @@ function setup() {
   textFont(gameFont);
   
   game = new Game();
+
 }
 
 /**

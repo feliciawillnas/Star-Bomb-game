@@ -1,27 +1,30 @@
 class PlayScene {
   //ATTRIBUTE////////////////////////////
-  private goal: Goal;
-  private scoreInterface: ScoreInterface;
+  public goal: Goal;
+  public scoreInterface: ScoreInterface;
+  public bomb: Bomb;
   // private bombs: Bomb[];
   // private spawnTimeout: number;
 
   // Playground widht & height
-  private rectW: number;
-  private rectH: number;
+  public rectW: number;
+  public rectH: number;
 
   // Extra distance between the top & playground
-  private offsetTop: number;
+  public offsetTop: number;
   // Border lines
 
-  private neonBlur: number
-  private offsetBlur: number
-  private neonPink: string
-  private neonBlue: string
+  public neonBlur: number
+  public offsetBlur: number
+  public neonPink: string
+  public neonBlue: string
+
 
   //CONSTRUCTOR////////////////////////
   constructor() {
     this.goal = new Goal();
     this.scoreInterface = new ScoreInterface();
+    this.bomb = new Bomb(60, 400, 400);
     // this.bombs = [];
     // this.spawnTimeout = 2000;
 
