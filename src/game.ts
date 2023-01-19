@@ -9,15 +9,20 @@ class Game {
   //METHODS//////////////////////////
   //Update
   public update() {
-    playScene.update()
-  
-  }
+    playScene.update();
+    startScene.update();
+  };
 
   //Draw
   public draw() {
-    image(backgroundImg, width/2, height/2, windowWidth, windowHeight)
+    image(backgroundImg, width/2, height/2, windowWidth, windowHeight);
     
-    playScene.draw()
-  }
+    if(playScene.scene == "playScene"){
+      playScene.draw();
+    }
 
-}
+    if (startScene.scene == "startScene"){
+      startScene.draw();
+    };
+  };
+};

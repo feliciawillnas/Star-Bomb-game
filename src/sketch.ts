@@ -1,9 +1,15 @@
 //---- GLOBAL VARIABLES ----//
+/*Instances*/
 let game: Game;
+let startScene: StartScene;
 let playScene: PlayScene;
 let goal: Goal;
 let scoreInterface: ScoreInterface;
+
+/*Sounds*/
 // let sound: p5.SoundFile
+
+/*Images*/
 let backgroundImg: p5.Image;
 let galaxGoalImg: p5.Image;
 let playboardBGImg: p5.Image;
@@ -12,7 +18,10 @@ let rocketImgBlue1: p5.Image;
 let rocketImgPink2: p5.Image;
 let rocketImgBlue2: p5.Image;
 
+/*Fonts*/
 let gameFont: p5.Font;
+
+
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
@@ -48,6 +57,7 @@ function setup() {
   
   game = new Game();
   playScene = new PlayScene();
+  startScene = new StartScene(game);
   goal = new Goal();
   scoreInterface = new ScoreInterface();
 }

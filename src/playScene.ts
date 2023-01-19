@@ -13,6 +13,8 @@ class PlayScene {
   public neonPink: string
   public neonBlue: string
 
+  public scene: string;
+
   //CONSTRUCTOR////////////////////////
   constructor() {
     this.rectW = 1000;
@@ -22,6 +24,7 @@ class PlayScene {
     this.offsetBlur = 5;
     this.neonPink = '#F98CF3'
     this.neonBlue = '#69B7C2'
+    this.scene = "playScene"
   }
   //METHODS//////////////////////////
 
