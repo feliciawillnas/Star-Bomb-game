@@ -1,12 +1,12 @@
 class Game {
   //ATTRIBUTE////////////////////////////
   public scene: string;
-  private playScene: PlayScene;
+  public playScene: PlayScene;
   private startScene: StartScene;
 
   //CONSTRUCTOR////////////////////////
   constructor() {
-    this.scene = "startScene";
+    this.scene = "playScene";
     this.playScene = new PlayScene();
     this.startScene = new StartScene(game);
   }
@@ -14,7 +14,6 @@ class Game {
   //METHODS//////////////////////////
   //Update
   public update() {
-    this.playScene.update();
     if (this.scene == "playScene") {
       this.playScene.update();
     }
@@ -27,7 +26,6 @@ class Game {
   public draw() {
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
-    this.playScene.draw();
     if (this.scene == "playScene") {
       this.playScene.draw();
     }

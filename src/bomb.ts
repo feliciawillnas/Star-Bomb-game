@@ -3,43 +3,47 @@ class Bomb {
     // private color: string;
     private x = 0;
     private y = 0;
-    private vx = 4;
+    private vx = 20;
+    private vy = 20;
     private diameter = 50;
 
     //CONSTRUCTOR////////////////////////
-    constructor(diameter: number){
-        this.x = random((width / 2 - playScene.rectW / 2) + diameter / 2,
-        (width / 2 + playScene.rectW / 2) - diameter / 2);
-        this.y = random((height / 2 - playScene.rectH / 2 + playScene.offsetTop) + diameter / 2,
-        (height / 2 + playScene.rectH / 2 + playScene.offsetTop) - diameter / 2);
+    constructor(diameter: number, x: number, y: number) {
+        this.diameter = diameter;
+        this.x = x;
+        this.y = y;
     }
     //METHODS//////////////////////////
-    
     //Update
-    public update(){
-
+    public update(rightSideOfPlayScene: number) {
+        this.move(rightSideOfPlayScene);
     }
+    
     //Draw
-    public draw(){
-        bombs.display();
-        bombs.move();
+    public draw() {
+        noStroke();
+        fill(255);
+        ellipse(this.x, this.y, this.diameter);
     }
-    // let spring = 0.05;
-    // let gravity = 0;
-    // let friction = -0.5;
-    // let balls = [];
 
-display() {
-    noStroke();
-    fill(255);
-    ellipse(this.x, this.y, this.diameter);
-  }
-
-move() {
-    this.x += this.vx
-    if (this.x > (width / 2 + playScene.rectW / 2) - this.diameter / 2) {
-        this.vx =- 4;
-    } else if (this.x < (width / 2 - playScene.rectW / 2) + this.diameter / 2) {
-        this.vx =+ 4;
+    
+    private move(rightSideOfPlayScene: number) {
+        // let spring = 0.05;
+        // let gravity = 0;
+        // let friction = -0.5;
+        // let balls = [];
+        this.x += this.vx
+        this.y += this.vy
+        const bombRadius = this.diameter / 2;
+        if (this.x > rightSideOfPlayScene - bombRadius) {
+            this.vx =- 10;
+        } else if (this.x < (width / 2 - game.playScene.rectW / 2) + this.diameter / 2) {
+            this.vx =+ 10;
+        }
+        //    if (this.y > (height / 2 - playScene.rectH / 2 + playScene.offsetTop) + this.diameter / 2) {
+        //        this.vy =- 10;
+        //    } else if (this.y < (height / 2 + playScene.rectH / 2 + playScene.offsetTop) - this.diameter / 2) {
+        //        this.vy =+ 10;
+        //   }
     }
-}}
+}
