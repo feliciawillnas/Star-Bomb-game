@@ -8,7 +8,8 @@ let backgroundImg: p5.Image;
 let galaxGoalImg: p5.Image;
 let playboardBGImg: p5.Image;
 let gameFont: p5.Font;
-let player: Player;
+let playerOne: Player;
+let playerTwo: Player;
 
 let rocketImgPink1: p5.Image;
 let rocketImgBlue1: p5.Image;
@@ -51,7 +52,8 @@ function setup() {
   playScene = new PlayScene();
   goal = new Goal();
   scoreInterface = new ScoreInterface();
-  player = new Player();
+  playerOne = new Player(1);
+  playerTwo = new Player(2);
 }
 
 /**

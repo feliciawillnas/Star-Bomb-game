@@ -39,7 +39,8 @@ class PlayScene {
     this.borderLines();
     scoreInterface.draw();
     goal.draw();
-    player.draw();
+    playerOne.draw();
+    playerTwo.draw();
   }
 
   public drawPlayboardRect() {
