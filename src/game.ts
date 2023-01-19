@@ -1,23 +1,23 @@
 class Game {
   //ATTRIBUTE////////////////////////////
+  private playScene: PlayScene;
 
   //CONSTRUCTOR////////////////////////
   constructor() {
-
+    this.playScene = new PlayScene();
   }
 
   //METHODS//////////////////////////
   //Update
   public update() {
-    playScene.update()
-  
+    this.playScene.update()
   }
 
   //Draw
   public draw() {
-    image(backgroundImg, width/2, height/2, windowWidth, windowHeight)
+    image(images.background, width/2, height/2, windowWidth, windowHeight)
     
-    playScene.draw()
+    this.playScene.draw()
   }
 
 }

@@ -1,20 +1,30 @@
 class PlayScene {
   //ATTRIBUTE////////////////////////////
+  private goal: Goal;
+  private scoreInterface: ScoreInterface;
+  // private bombs: Bomb[];
+  // private spawnTimeout: number;
+
   // Playground widht & height
-  public rectW: number;
-  public rectH: number;
+  private rectW: number;
+  private rectH: number;
 
   // Extra distance between the top & playground
-  public offsetTop: number;
+  private offsetTop: number;
   // Border lines
 
-  public neonBlur: number
-  public offsetBlur: number
-  public neonPink: string
-  public neonBlue: string
+  private neonBlur: number
+  private offsetBlur: number
+  private neonPink: string
+  private neonBlue: string
 
   //CONSTRUCTOR////////////////////////
   constructor() {
+    this.goal = new Goal();
+    this.scoreInterface = new ScoreInterface();
+    // this.bombs = [];
+    // this.spawnTimeout = 2000;
+
     this.rectW = 1000;
     this.rectH = 500;
     this.offsetTop = 40;
@@ -29,8 +39,15 @@ class PlayScene {
   public update() {
     goal.update();
     scoreInterface.update();
-    //bomb.update();
+    // bomb.update()
     // player.update()
+    
+    // const rightSide = width / 2 + this.rectW / 2;
+    // for (const bomb of this.bombs) {
+    //   bomb.update(rightSide);
+    // }
+
+    // this.spawnBombs();
   }
   //Draw
   public draw() {
@@ -39,22 +56,41 @@ class PlayScene {
     this.borderLines();
     scoreInterface.draw();
     goal.draw();
-    //bomb.draw();
   }
 
-  public drawPlayboardRect() {
+  /** skapa nya bomber allt eftersom */
+  // private spawnBombs() {
+  //   this.spawnTimeout -= deltaTime;
+  //   if (this.spawnTimeout < 0) {
+      
+  //     const diameter = 10;
+  //     const x = random((width / 2 - this.rectW / 2) + diameter / 2,
+  //       (width / 2 + this.rectW / 2) - diameter / 2);
+  //     const y = random((height / 2 - this.rectH / 2 + this.offsetTop) + diameter / 2,
+  //       (height / 2 + this.rectH / 2 + this.offsetTop) - diameter / 2);
+      
+  //     this.bombs.push(new Bomb(diameter, x, y));
+  //     this.spawnTimeout = 2000;
+  //   }
+  // }
+
+
+  private drawPlayboardRect() {
+    push();
     fill("black");
     image(
-      playboardBGImg,
+      images.playboardBG,
       width / 2,
       height / 2 + this.offsetTop,
       this.rectW,
       this.rectH
     );
+    pop();
   }
 
   // Center Line
-  public centerLine() {
+  private centerLine() {
+    push();
     stroke("white");
     strokeWeight(10);
     line(
@@ -62,11 +98,13 @@ class PlayScene {
       height / 2 - this.rectH / 2 + this.offsetTop,
       width / 2,
       height / 2 + this.rectH / 2 + this.offsetTop
-    );
+      );
+    pop();
   }
 
   // Border Lines for playboard. 
-  public borderLines() {
+  private borderLines() {
+    push();
     strokeWeight(10);
     stroke(this.neonBlue);
 
@@ -94,7 +132,7 @@ class PlayScene {
       width / 2 - this.rectW / 2,
       height / 2 - this.rectH / 2 + this.offsetTop,
       width / 2 - this.rectW / 2,
-      height / 2 + this.offsetTop - goal.goalH / 2
+      height / 2 + this.offsetTop - this.goal.goalH / 2
     );
     pop();
 
@@ -108,7 +146,7 @@ class PlayScene {
       width / 2 + this.rectW / 2,
       height / 2 - this.rectH / 2 + this.offsetTop,
       width / 2 + this.rectW / 2,
-      height / 2 + this.offsetTop - goal.goalH / 2
+      height / 2 + this.offsetTop - this.goal.goalH / 2
     );
     pop()
     
@@ -137,7 +175,7 @@ class PlayScene {
       width / 2 - this.rectW / 2,
       height / 2 + this.rectH / 2 + this.offsetTop,
       width / 2 - this.rectW / 2,
-      height / 2 + this.offsetTop + goal.goalH / 2
+      height / 2 + this.offsetTop + this.goal.goalH / 2
     );
     pop();
 
@@ -151,8 +189,9 @@ class PlayScene {
       width / 2 + this.rectW / 2,
       height / 2 + this.rectH / 2 + this.offsetTop,
       width / 2 + this.rectW / 2,
-      height / 2 + this.offsetTop + goal.goalH / 2
+      height / 2 + this.offsetTop + this.goal.goalH / 2
     );
     pop()
+    pop();
   }
 }
