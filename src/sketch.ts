@@ -1,13 +1,21 @@
 //---- GLOBAL VARIABLES ----//
 let game: Game;
-let playScene: PlayScene;
-let goal: Goal;
-let scoreInterface: ScoreInterface;
-let bombs: Bomb;
+let images: Images;
+let sounds: Sounds;
+
+interface Images {
+  background: p5.Image;
+  galaxGoal: p5.Image;
+  playboardBG: p5.Image;
+}
+
+interface Sounds {
+  bang: p5.SoundFile;
+  pop: p5.SoundFile;
+  music: p5.SoundFile;
+}
+
 // let sound: p5.SoundFile
-let backgroundImg: p5.Image;
-let galaxGoalImg: p5.Image;
-let playboardBGImg: p5.Image;
 let gameFont: p5.Font;
 /**
  * Built in preload function in P5
@@ -16,9 +24,11 @@ let gameFont: p5.Font;
  */
 function preload() {
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
-  backgroundImg = loadImage('../assets/images/background.jpg');
-  galaxGoalImg = loadImage('../assets/images/galax.jpg')
-  playboardBGImg = loadImage('../assets/images/playboardBackground.png')
+  images = {
+    background: loadImage('../assets/images/background.jpg'),
+    galaxGoal: loadImage('../assets/images/galax.jpg'),
+    playboardBG: loadImage('../assets/images/playboardBackground.png'),
+  }
   gameFont = loadFont('../assets/fonts/PressStart2P-Regular.ttf');
 }
 
@@ -31,6 +41,7 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
+
   imageMode(CENTER)
   rectMode(CENTER)
   textAlign(CENTER)
@@ -38,10 +49,6 @@ function setup() {
   textFont(gameFont);
   
   game = new Game();
-  playScene = new PlayScene();
-  goal = new Goal();
-  scoreInterface = new ScoreInterface();
-  bombs = new Bomb(50);
 }
 
 /**
