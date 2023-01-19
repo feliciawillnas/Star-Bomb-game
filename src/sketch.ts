@@ -41,7 +41,7 @@ function setup() {
   playScene = new PlayScene();
   goal = new Goal();
   scoreInterface = new ScoreInterface();
-  bombs = new Bomb();
+  bombs = new Bomb(50);
 }
 
 /**

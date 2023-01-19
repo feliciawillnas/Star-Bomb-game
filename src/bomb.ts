@@ -3,11 +3,14 @@ class Bomb {
     // private color: string;
     private x = 0;
     private y = 0;
+    private diameter = 50;
 
     //CONSTRUCTOR////////////////////////
-    constructor(){
-        this.x = random(width / 2 - playScene.rectW / 2, width / 2 + playScene.rectW / 2),
-        this.y = random(height / 2 - playScene.rectH / 2 + playScene.offsetTop, height / 2 + playScene.rectH / 2 + playScene.offsetTop)
+    constructor(diameter: number){
+        this.x = random((width / 2 - playScene.rectW / 2) + diameter, (width / 2 + playScene.rectW / 2) - diameter),
+        this.y = random((height / 2 - playScene.rectH / 2 + playScene.offsetTop) + diameter, (height / 2 + playScene.rectH / 2 + playScene.offsetTop) - diameter)
+    console.log(this.x)
+    console.log(this.y)
     }
     //METHODS//////////////////////////
     
@@ -27,6 +30,6 @@ class Bomb {
 display() {
     noStroke();
     fill(255);
-    ellipse(this.x, this.y, 50, 50);
+    ellipse(this.x, this.y, this.diameter);
   }
 }
