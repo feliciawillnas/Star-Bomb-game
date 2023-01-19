@@ -2,6 +2,7 @@ class PlayScene {
   //ATTRIBUTE////////////////////////////
   public goal: Goal;
   public scoreInterface: ScoreInterface;
+  public bomb: Bomb;
   // private bombs: Bomb[];
   // private spawnTimeout: number;
 
@@ -23,6 +24,7 @@ class PlayScene {
   constructor() {
     this.goal = new Goal();
     this.scoreInterface = new ScoreInterface();
+    this.bomb = new Bomb(60, 400, 400);
     // this.bombs = [];
     // this.spawnTimeout = 2000;
 
