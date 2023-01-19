@@ -1,4 +1,6 @@
 //---- GLOBAL VARIABLES ----//
+//let explosion: p5.Image;
+//let bomb : Bomb;
 let game: Game;
 let playScene: PlayScene;
 let goal: Goal;
@@ -19,6 +21,7 @@ function preload() {
   galaxGoalImg = loadImage('../assets/images/galax.jpg')
   playboardBGImg = loadImage('../assets/images/playboardBackground.png')
   gameFont = loadFont('../assets/fonts/PressStart2P-Regular.ttf');
+  //explosion = loadImage('../assets/images/boom.png');
 }
 
 /**
@@ -35,7 +38,7 @@ function setup() {
   textAlign(CENTER)
   angleMode(DEGREES)
   textFont(gameFont);
-  
+  //bomb = new Bomb();
   game = new Game();
   playScene = new PlayScene();
   goal = new Goal();

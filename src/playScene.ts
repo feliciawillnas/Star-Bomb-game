@@ -29,7 +29,7 @@ class PlayScene {
   public update() {
     goal.update();
     scoreInterface.update();
-    // bomb.update()
+    //bomb.update();
     // player.update()
   }
   //Draw
@@ -39,6 +39,7 @@ class PlayScene {
     this.borderLines();
     scoreInterface.draw();
     goal.draw();
+    //bomb.draw();
   }
 
   public drawPlayboardRect() {
