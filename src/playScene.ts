@@ -39,7 +39,9 @@ class PlayScene {
     this.borderLines();
     scoreInterface.draw();
     goal.draw();
+    bombs.draw();
   }
+
 
   public drawPlayboardRect() {
     fill("black");

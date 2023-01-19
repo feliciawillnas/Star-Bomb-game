@@ -3,6 +3,7 @@ let game: Game;
 let playScene: PlayScene;
 let goal: Goal;
 let scoreInterface: ScoreInterface;
+let bombs: Bomb;
 // let sound: p5.SoundFile
 let backgroundImg: p5.Image;
 let galaxGoalImg: p5.Image;
@@ -40,6 +41,7 @@ function setup() {
   playScene = new PlayScene();
   goal = new Goal();
   scoreInterface = new ScoreInterface();
+  bombs = new Bomb();
 }
 
 /**
