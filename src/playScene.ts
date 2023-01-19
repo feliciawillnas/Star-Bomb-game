@@ -37,8 +37,8 @@ class PlayScene {
 
   //Update
   public update() {
-    goal.update();
-    scoreInterface.update();
+    this.goal.update();
+    this.scoreInterface.update();
     // bomb.update()
     // player.update()
     
@@ -54,8 +54,8 @@ class PlayScene {
     this.drawPlayboardRect();
     this.centerLine();
     this.borderLines();
-    scoreInterface.draw();
-    goal.draw();
+    this.scoreInterface.draw();
+    this.goal.draw();
   }
 
   /** skapa nya bomber allt eftersom */
