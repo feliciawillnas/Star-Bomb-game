@@ -8,10 +8,10 @@ class PlayScene {
   public offsetTop: number;
   // Border lines
 
-  public neonBlur: number
-  public offsetBlur: number
-  public neonPink: string
-  public neonBlue: string
+  public neonBlur: number;
+  public offsetBlur: number;
+  public neonPink: string;
+  public neonBlue: string;
 
   //CONSTRUCTOR////////////////////////
   constructor() {
@@ -20,8 +20,8 @@ class PlayScene {
     this.offsetTop = 40;
     this.neonBlur = 18;
     this.offsetBlur = 5;
-    this.neonPink = '#F98CF3'
-    this.neonBlue = '#69B7C2'
+    this.neonPink = "#F98CF3";
+    this.neonBlue = "#69B7C2";
   }
   //METHODS//////////////////////////
 
@@ -39,6 +39,7 @@ class PlayScene {
     this.borderLines();
     scoreInterface.draw();
     goal.draw();
+    player.draw();
   }
 
   public drawPlayboardRect() {
@@ -64,16 +65,16 @@ class PlayScene {
     );
   }
 
-  // Border Lines for playboard. 
+  // Border Lines for playboard.
   public borderLines() {
     strokeWeight(10);
     stroke(this.neonBlue);
 
-    // Top blue line blur effect 
-    push()
+    // Top blue line blur effect
+    push();
     drawingContext.shadowOffsetY = -this.offsetBlur;
     drawingContext.shadowBlur = this.neonBlur;
-    drawingContext.shadowColor = this.neonBlue; 
+    drawingContext.shadowColor = this.neonBlue;
     // Top Blue Line
     line(
       width / 2 - this.rectW / 2,
@@ -84,11 +85,11 @@ class PlayScene {
     pop();
 
     // Left Blue Line
-    push()
-    // Left blue line blur effect 
+    push();
+    // Left blue line blur effect
     drawingContext.shadowOffsetX = -this.offsetBlur;
     drawingContext.shadowBlur = this.neonBlur;
-    drawingContext.shadowColor = this.neonBlue; 
+    drawingContext.shadowColor = this.neonBlue;
     line(
       width / 2 - this.rectW / 2,
       height / 2 - this.rectH / 2 + this.offsetTop,
@@ -98,36 +99,36 @@ class PlayScene {
     pop();
 
     // Right Blue Line
-    push()
-    // Right blue line blur effect 
+    push();
+    // Right blue line blur effect
     drawingContext.shadowOffsetX = this.offsetBlur;
     drawingContext.shadowBlur = this.neonBlur;
-    drawingContext.shadowColor = this.neonBlue; 
+    drawingContext.shadowColor = this.neonBlue;
     line(
       width / 2 + this.rectW / 2,
       height / 2 - this.rectH / 2 + this.offsetTop,
       width / 2 + this.rectW / 2,
       height / 2 + this.offsetTop - goal.goalH / 2
     );
-    pop()
-    
+    pop();
+
     stroke(this.neonPink);
-    push()
+    push();
     // Bottom Pink Line Blur Effect
     drawingContext.shadowOffsetY = this.offsetBlur;
     drawingContext.shadowBlur = this.neonBlur;
     drawingContext.shadowColor = this.neonPink;
-     // Bottom Pink Line
+    // Bottom Pink Line
     line(
       width / 2 + this.rectW / 2,
       height / 2 + this.rectH / 2 + this.offsetTop,
       width / 2 - this.rectW / 2,
       height / 2 + this.rectH / 2 + this.offsetTop
     );
-    pop()
+    pop();
 
     //Left Pink Line
-     push()
+    push();
     // Left Pink Line Blur Effect
     drawingContext.shadowOffsetX = -this.offsetBlur;
     drawingContext.shadowBlur = this.neonBlur;
@@ -141,7 +142,7 @@ class PlayScene {
     pop();
 
     //Right Pink Line
-     push()
+    push();
     // Right Pink Line Blur Effect
     drawingContext.shadowOffsetX = this.offsetBlur;
     drawingContext.shadowBlur = this.neonBlur;
@@ -152,6 +153,6 @@ class PlayScene {
       width / 2 + this.rectW / 2,
       height / 2 + this.offsetTop + goal.goalH / 2
     );
-    pop()
+    pop();
   }
 }
