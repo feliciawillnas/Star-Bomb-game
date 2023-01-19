@@ -15,7 +15,7 @@ class StartScene {
     this.interactionInstructionW = "W";
     this.interactionInstructionASD = "A S D";
     this.interactionInstructionUP_A = "\uf106";
-this.interactionInstructionLDR_A = "\uf104   \uf107   \uf105";
+    this.interactionInstructionLDR_A = "\uf104   \uf107   \uf105";
     this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS";
     this.game = game;
   }
@@ -32,8 +32,8 @@ this.interactionInstructionLDR_A = "\uf104   \uf107   \uf105";
     push();
     textSize(60);
     text(this.gameTitle, width / 2, height / 2 - 140);
-    neonGreenBomb.resize(123, 107)
-    image(neonGreenBomb, width/2 + 162, height/2 -190)
+    images.neonGreenBomb.resize(123, 107)
+    image(images.neonGreenBomb, width/2 + 162, height/2 -190)
     pop();
     
 
@@ -54,18 +54,18 @@ this.interactionInstructionLDR_A = "\uf104   \uf107   \uf105";
 
     //Pink rocket img
     push()
-    rocketImgPink1.resize(120, 256)
+    images.rocketImgPink1.resize(120, 256)
     translate(width/2 + 450, height/2)
     rotate(-45)
-    image(rocketImgPink1, 0, 0)
+    image(images.rocketImgPink1, 0, 0)
     pop()
 
     //Blue rocket img
     push()
-    rocketImgBlue1.resize(120, 256)
+    images.rocketImgBlue1.resize(120, 256)
     translate(width/2 - 450, height/2 + 200)
     rotate(45)
-    image(rocketImgBlue1, 0, 0)
+    image(images.rocketImgBlue1, 0, 0)
     pop()
 
     //Player1/blue interaction instruction
