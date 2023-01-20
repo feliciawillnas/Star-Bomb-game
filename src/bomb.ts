@@ -6,12 +6,15 @@ class Bomb {
     private vx = 5;
     private vy = 5;
     private diameter = 50;
+    private id = 0;
+
 
     //CONSTRUCTOR////////////////////////
-    constructor(diameter: number, x: number, y: number) {
+    constructor(diameter: number, x: number, y: number, id: number) {
         this.diameter = diameter;
         this.x = x;
         this.y = y;
+        this.id = id;
     }
 
     //METHODS//////////////////////////
@@ -30,11 +33,13 @@ class Bomb {
         this.move(rectW, rectH);
     }
     
+    public updateId(id: number) {
+        this.id = id;
+        console.log(id);
+    }
+
     private move(rectW: number, rectH: number) {
-        // let spring = 0.05;
-        // let gravity = 0;
-        // let friction = -0.5;
-        // let balls = [];
+
         const playAreaLeftBorder = (width / 2 - rectW / 2)
         const playAreaRightBorder = (width / 2 + rectW / 2)
         const playAreaTopBorder = (height / 2 - rectH / 2 + 40)

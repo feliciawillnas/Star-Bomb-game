@@ -25,7 +25,7 @@ class PlayScene {
     this.goal = new Goal();
     this.scoreInterface = new ScoreInterface();
     this.spawnTimeout = 0;
-    this.removeTimeout = 18000;
+    this.removeTimeout = 6000;
     this.bombs = [];
     this.rectW = 1000;
     this.rectH = 500;
@@ -70,8 +70,8 @@ class PlayScene {
             (width / 2 + this.rectW / 2) - diameter / 2);
           const y = random((height / 2 - this.rectH / 2 + this.offsetTop) + diameter / 2,
             (height / 2 + this.rectH / 2 + this.offsetTop) - diameter / 2);
-
-          this.bombs.push(new Bomb(diameter, x, y));
+          let id = this.bombs.length;
+          this.bombs.push(new Bomb(diameter, x, y, id));
       this.spawnTimeout = 1000;
     }
   }
@@ -80,8 +80,13 @@ class PlayScene {
     this.removeTimeout -= deltaTime;
     if (this.removeTimeout < 0) {
         this.bombs.shift();
-    this.removeTimeout = 5000;
-  }
+        let id = 0
+        for (const bomb of this.bombs) {
+            bomb.updateId(id);
+            id = id + 1;
+        }
+        this.removeTimeout = 1000;
+    }
 }
 
 
