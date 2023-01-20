@@ -25,6 +25,7 @@ class StartScene {
   public update() {}
   //Draw
   public draw() {
+    // Drawing all text and images.
     fill("white");
     stroke("black");
     strokeWeight(10);
