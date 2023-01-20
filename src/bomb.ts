@@ -20,7 +20,8 @@ class Bomb {
     //Draw
     public draw() {
         noStroke();
-        fill(255);
+        fill(0, 0, 0, 0);
+        image(images.neonGreenBomb, this.x, this.y);
         ellipse(this.x, this.y, this.diameter);
     }
 
