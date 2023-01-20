@@ -4,7 +4,7 @@ class PlayScene {
   private scoreInterface: ScoreInterface;
   // private bombs: Bomb[];
   // private spawnTimeout: number;
-
+  
   // Playground widht & height
   private rectW: number;
   private rectH: number;

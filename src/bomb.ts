@@ -4,17 +4,22 @@ class Bomb {
     //explosionWidth =  50;
     //explosionHeight = 50;
     //CONSTRUCTOR////////////////////////
-    constructor(){
-        
+    constructor(diameter: number){
+        this.x = random((width / 2 - playScene.rectW / 2) + diameter / 2,
+        (width / 2 + playScene.rectW / 2) - diameter / 2);
+        this.y = random((height / 2 - playScene.rectH / 2 + playScene.offsetTop) + diameter / 2,
+        (height / 2 + playScene.rectH / 2 + playScene.offsetTop) - diameter / 2);
     }
     //METHODS//////////////////////////
     
     //Update
     public update(){
+        playScene.update();
 
     }
     //Draw
     public draw(){
+<<<<<<< Updated upstream
         /*background(0);
         textAlign(CENTER, CENTER);
         textSize(30);
@@ -30,9 +35,26 @@ class Bomb {
             
         }
         */
+=======
+        bombs.display();
+        bombs.move();
     }
+    // let spring = 0.05;
+    // let gravity = 0;
+    // let friction = -0.5;
+    // let balls = [];
 
-}
+display() {
+    noStroke();
+    fill(255);
+    ellipse(this.x, this.y, this.diameter);
+  }
 
-
-
+move() {
+    this.x += this.vx
+    if (this.x > (width / 2 + playScene.rectW / 2) - this.diameter / 2) {
+        this.vx =- 4;
+    } else if (this.x < (width / 2 - playScene.rectW / 2) + this.diameter / 2) {
+        this.vx =+ 4;
+    }
+}}
