@@ -2,8 +2,9 @@ class PlayScene {
   //ATTRIBUTE////////////////////////////
   private goal: Goal;
   private scoreInterface: ScoreInterface;
-  // private bombs: Bomb[];
-  // private spawnTimeout: number;
+  private bombs: Bomb[];
+  private spawnTimeout: number;
+  private removeTimeout: number;
 
   // Playground widht & height
   private rectW: number;
@@ -22,9 +23,9 @@ class PlayScene {
   constructor() {
     this.goal = new Goal();
     this.scoreInterface = new ScoreInterface();
-    // this.bombs = [];
-    // this.spawnTimeout = 2000;
-
+    this.spawnTimeout = 0;
+    this.removeTimeout = 18000;
+    this.bombs = [];
     this.rectW = 1000;
     this.rectH = 500;
     this.offsetTop = 40;
@@ -37,45 +38,50 @@ class PlayScene {
 
   //Update
   public update() {
-    this.goal.update();
-    this.scoreInterface.update();
+    // this.goal.update();
+    // this.scoreInterface.update();
     // player.update()
-    
-    // const rightSide = width / 2 + this.rectW / 2;
-    // for (const bomb of this.bombs) {
-    //   bomb.update(rightSide);
-    // }
-
-    // this.spawnBombs();
+    for (const bomb of this.bombs) {
+        bomb.update(this.rectW, this.rectH);
+    }
   }
+
   //Draw
   public draw() {
     this.drawPlayboardRect();
     this.centerLine();
     this.borderLines();
-    this.scoreInterface.draw();
-    this.goal.draw();
     
-    // for (const bomb of this.bombs) {
-    //   bomb.draw();
-    // }
+    // this.scoreInterface.draw();
+    // this.goal.draw();
+    this.spawnBombs();
+    this.removeBombs();
+    for (const bomb of this.bombs) {
+      bomb.draw();
+    }
   }
 
-  /** skapa nya bomber allt eftersom */
-  // private spawnBombs() {
-  //   this.spawnTimeout -= deltaTime;
-  //   if (this.spawnTimeout < 0) {
-      
-  //     const diameter = 10;
-  //     const x = random((width / 2 - this.rectW / 2) + diameter / 2,
-  //       (width / 2 + this.rectW / 2) - diameter / 2);
-  //     const y = random((height / 2 - this.rectH / 2 + this.offsetTop) + diameter / 2,
-  //       (height / 2 + this.rectH / 2 + this.offsetTop) - diameter / 2);
-      
-  //     this.bombs.push(new Bomb(diameter, x, y));
-  //     this.spawnTimeout = 2000;
-  //   }
-  // }
+  private spawnBombs() {
+      this.spawnTimeout -= deltaTime;
+      if (this.spawnTimeout < 0) {
+          const diameter = 40;
+          const x = random((width / 2 - this.rectW / 2) + diameter / 2,
+            (width / 2 + this.rectW / 2) - diameter / 2);
+          const y = random((height / 2 - this.rectH / 2 + this.offsetTop) + diameter / 2,
+            (height / 2 + this.rectH / 2 + this.offsetTop) - diameter / 2);
+
+          this.bombs.push(new Bomb(diameter, x, y));
+      this.spawnTimeout = 1000;
+    }
+  }
+
+  private removeBombs() {
+    this.removeTimeout -= deltaTime;
+    if (this.removeTimeout < 0) {
+        this.bombs.shift();
+    this.removeTimeout = 5000;
+  }
+}
 
 
   private drawPlayboardRect() {
