@@ -34,18 +34,24 @@ class Bomb {
         // let gravity = 0;
         // let friction = -0.5;
         // let balls = [];
+        const playAreaLeftBorder = (width / 2 - rectW / 2)
+        const playAreaRightBorder = (width / 2 + rectW / 2)
+        const playAreaTopBorder = (height / 2 - rectH / 2 + 40)
+        const playAreaBottomBorder = (height / 2 + rectH / 2 + 40)
+        const bombRadius = this.diameter / 2;
+
         this.x += this.vx
         this.y += this.vy
         
-        if (this.x > (width / 2 + rectW / 2) - this.diameter / 2) {
+        if (this.x > playAreaRightBorder - bombRadius) {
             this.vx =- 5;
-        } else if (this.x < (width / 2 - rectW / 2) + this.diameter / 2) {
+        } else if (this.x < playAreaLeftBorder + bombRadius) {
             this.vx =+ 5;
         }
 
-        if (this.y < (height / 2 - rectH / 2 + 40) + this.diameter / 2) {
+        if (this.y < playAreaTopBorder + bombRadius) {
                this.vy =+ 5;
-        } else if (this.y > (height / 2 + rectH / 2 + 40) - this.diameter / 2) {
+        } else if (this.y > playAreaBottomBorder - bombRadius) {
                this.vy =- 5;
         }
     }
