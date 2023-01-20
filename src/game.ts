@@ -7,7 +7,7 @@ class Game {
 
   //CONSTRUCTOR////////////////////////
   constructor() {
-    this.scene = "playScene";
+    this.scene = "playScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
     this.startScene = new StartScene(game);
     this.endScene = new EndScene();
@@ -26,6 +26,7 @@ class Game {
 
   //Draw
   public draw() {
+    this.changeToPlayScene();
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
     if (this.scene == "playScene") {
@@ -33,6 +34,11 @@ class Game {
     }
     if (this.scene == "startScene") {
       this.startScene.draw();
+    }
+  }
+  public changeToPlayScene() {
+    if (keyIsDown(32)) {
+      this.scene = "playScene";
     }
   }
 }
