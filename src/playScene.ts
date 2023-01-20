@@ -6,9 +6,9 @@ class PlayScene {
   private spawnTimeout: number;
   private removeTimeout: number;
 
-  // Playground widht & height
-  public rectW: number;
-  public rectH: number;
+  // Playground width & height
+  private rectW: number;
+  private rectH: number;
 
   // Extra distance between the top & playground
   public offsetTop: number;
@@ -63,32 +63,38 @@ class PlayScene {
   }
 
   private spawnBombs() {
+    const playAreaLeftBorder = (width / 2 - this.rectW / 2)
+    const playAreaRightBorder = (width / 2 + this.rectW / 2)
+    const playAreaTopBorder = (height / 2 - this.rectH / 2 + this.offsetTop)
+    const playAreaBottomBorder = (height / 2 + this.rectH / 2 + this.offsetTop)
+    const diameter = 40;
+    const bombRadius = diameter / 2;
+
       this.spawnTimeout -= deltaTime;
       if (this.spawnTimeout < 0) {
-          const diameter = 40;
-          const x = random((width / 2 - this.rectW / 2) + diameter / 2,
-            (width / 2 + this.rectW / 2) - diameter / 2);
-          const y = random((height / 2 - this.rectH / 2 + this.offsetTop) + diameter / 2,
-            (height / 2 + this.rectH / 2 + this.offsetTop) - diameter / 2);
-          let id = this.bombs.length;
+          const x = random(playAreaLeftBorder + bombRadius,
+              playAreaRightBorder - bombRadius);
+          const y = random(playAreaTopBorder + bombRadius,
+              playAreaBottomBorder - bombRadius);
+
+          const id = this.bombs.length+1;
           this.bombs.push(new Bomb(diameter, x, y, id));
-      this.spawnTimeout = 1000;
-    }
+          this.spawnTimeout = 1000;
+      }
   }
 
   private removeBombs() {
     this.removeTimeout -= deltaTime;
     if (this.removeTimeout < 0) {
         this.bombs.shift();
-        let id = 0
+        let id = 1
         for (const bomb of this.bombs) {
             bomb.updateId(id);
-            id = id + 1;
+            id += 1;
         }
         this.removeTimeout = 1000;
     }
 }
-
 
   private drawPlayboardRect() {
     push();
