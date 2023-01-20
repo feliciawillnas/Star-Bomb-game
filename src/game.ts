@@ -3,12 +3,14 @@ class Game {
   public scene: string;
   public playScene: PlayScene;
   private startScene: StartScene;
+  private endScene: EndScene;
 
   //CONSTRUCTOR////////////////////////
   constructor() {
     this.scene = "playScene";
     this.playScene = new PlayScene();
     this.startScene = new StartScene(game);
+    this.endScene = new EndScene();
   }
 
   //METHODS//////////////////////////

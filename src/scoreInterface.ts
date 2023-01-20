@@ -21,8 +21,8 @@ class ScoreInterface {
         fill(255, 255, 255, 50);
         rect(
             windowWidth / 2,
-            height / 2 - game.playScene.rectH / 2 - 40,
-            game.playScene.rectW,
+            height / 2 - game.playScene.playboard.height / 2 - 40,
+            game.playScene.playboard.width,
             100
         );
         fill(255, 255, 255);
@@ -36,14 +36,14 @@ class ScoreInterface {
         text(
             "SCORE",
             windowWidth / 2,
-            height / 2 - game.playScene.rectH / 2 - 20
+            height / 2 - game.playScene.playboard.height / 2 - 20
             );
         pop()
         
         // Player Scores
         push();
-        text("30" /*player1Score*/, width/2 - game.playScene.rectW/4, height / 2 - game.playScene.rectH / 2 - 20)
-        text("40" /*player2Score*/, width/2 + game.playScene.rectW/4, height / 2 - game.playScene.rectH / 2 - 20)
+        text("30" /*player1Score*/, width/2 - game.playScene.playboard.width/4, height / 2 - game.playScene.playboard.height / 2 - 20)
+        text("40" /*player2Score*/, width/2 + game.playScene.playboard.width/4, height / 2 - game.playScene.playboard.height / 2 - 20)
         pop();
 
 

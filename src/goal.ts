@@ -25,8 +25,8 @@ class Goal {
     // Goal left
     image(
       images.galaxGoal,
-      width / 2 - game.playScene.rectW / 2 - this.goalW / 2,
-      height / 2 + game.playScene.offsetTop,
+      width / 2 - game.playScene.playboard.width / 2 - this.goalW / 2,
+      height / 2 + game.playScene.playboard.offsetTop,
       this.goalW,
       this.goalH
     );
@@ -34,96 +34,111 @@ class Goal {
     // Goal right
     image(
       images.galaxGoal,
-      width / 2 + game.playScene.rectW / 2 + this.goalW / 2,
-      height / 2 + game.playScene.offsetTop,
+      width / 2 + game.playScene.playboard.width / 2 + this.goalW / 2,
+      height / 2 + game.playScene.playboard.offsetTop,
       this.goalW,
       this.goalH
     );
   }
-
+  public getGoalSize() {
+    return this.goalH, this.goalW;
+  }
+  
   public leftGoalLines() {
-    stroke(game.playScene.neonPink);
+    stroke(game.playScene.playboard.neonPink);
     strokeWeight(10);
 
     // Top line
     push();
-    drawingContext.shadowOffsetY = -game.playScene.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.neonBlur;
-    drawingContext.shadowColor = game.playScene.neonPink;
+    drawingContext.shadowOffsetY = -game.playScene.playboard.offsetBlur;
+    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
+    drawingContext.shadowColor = game.playScene.playboard.neonPink;
     line(
-      width / 2 - game.playScene.rectW / 2 - this.goalW,
-      height / 2 - game.playScene.rectH / 2 + this.goalH - game.playScene.offsetTop,
-      width / 2 - game.playScene.rectW / 2,
-      height / 2 + game.playScene.offsetTop - this.goalH / 2
+      width / 2 - game.playScene.playboard.width / 2 - this.goalW,
+      height / 2 -
+        game.playScene.playboard.height / 2 +
+        this.goalH -
+        game.playScene.playboard.offsetTop,
+      width / 2 - game.playScene.playboard.width / 2,
+      height / 2 + game.playScene.playboard.offsetTop - this.goalH / 2
     );
-    pop()
+    pop();
 
     // Left line
     push();
-    drawingContext.shadowOffsetX = -game.playScene.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.neonBlur;
-    drawingContext.shadowColor = game.playScene.neonPink;
+    drawingContext.shadowOffsetX = -game.playScene.playboard.offsetBlur;
+    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
+    drawingContext.shadowColor = game.playScene.playboard.neonPink;
     line(
-      width / 2 - game.playScene.rectW / 2 - this.goalW,
-      height / 2 - game.playScene.rectH / 2 + this.goalH - game.playScene.offsetTop,
-      width / 2 - game.playScene.rectW / 2 - this.goalW,
-      height / 2 + this.goalH / 2 + game.playScene.offsetTop 
+      width / 2 - game.playScene.playboard.width / 2 - this.goalW,
+      height / 2 -
+        game.playScene.playboard.height / 2 +
+        this.goalH -
+        game.playScene.playboard.offsetTop,
+      width / 2 - game.playScene.playboard.width / 2 - this.goalW,
+      height / 2 + this.goalH / 2 + game.playScene.playboard.offsetTop
     );
-    pop()
+    pop();
 
     // Bottom Line
     push();
-    drawingContext.shadowOffsetY = game.playScene.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.neonBlur;
-    drawingContext.shadowColor = game.playScene.neonPink;
-    line (
-      width / 2 - game.playScene.rectW / 2 - this.goalW,
-      height / 2 + this.goalH / 2 + game.playScene.offsetTop, 
-      width / 2 - game.playScene.rectW / 2,
-      height / 2 + this.goalH / 2 + game.playScene.offsetTop
-    )
-    pop()
+    drawingContext.shadowOffsetY = game.playScene.playboard.offsetBlur;
+    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
+    drawingContext.shadowColor = game.playScene.playboard.neonPink;
+    line(
+      width / 2 - game.playScene.playboard.width / 2 - this.goalW,
+      height / 2 + this.goalH / 2 + game.playScene.playboard.offsetTop,
+      width / 2 - game.playScene.playboard.width / 2,
+      height / 2 + this.goalH / 2 + game.playScene.playboard.offsetTop
+    );
+    pop();
   }
 
   public rightGoalLines() {
-    stroke(game.playScene.neonBlue);
+    stroke(game.playScene.playboard.neonBlue);
 
     // Top line
-    push()
-    drawingContext.shadowOffsetY = -game.playScene.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.neonBlur;
-    drawingContext.shadowColor = game.playScene.neonBlue;
+    push();
+    drawingContext.shadowOffsetY = -game.playScene.playboard.offsetBlur;
+    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
+    drawingContext.shadowColor = game.playScene.playboard.neonBlue;
     line(
-      width / 2 + game.playScene.rectW / 2 + this.goalW,
-      height / 2 - game.playScene.rectH / 2 + this.goalH - game.playScene.offsetTop,
-      width / 2 + game.playScene.rectW / 2,
-      height / 2 + game.playScene.offsetTop - this.goalH / 2
+      width / 2 + game.playScene.playboard.width / 2 + this.goalW,
+      height / 2 -
+        game.playScene.playboard.height / 2 +
+        this.goalH -
+        game.playScene.playboard.offsetTop,
+      width / 2 + game.playScene.playboard.width / 2,
+      height / 2 + game.playScene.playboard.offsetTop - this.goalH / 2
     );
     pop();
 
     // Right line
-    push()
-    drawingContext.shadowOffsetX = game.playScene.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.neonBlur;
-    drawingContext.shadowColor = game.playScene.neonBlue;
+    push();
+    drawingContext.shadowOffsetX = game.playScene.playboard.offsetBlur;
+    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
+    drawingContext.shadowColor = game.playScene.playboard.neonBlue;
     line(
-        width / 2 + game.playScene.rectW / 2 + this.goalW,
-        height / 2 - game.playScene.rectH / 2 + this.goalH - game.playScene.offsetTop,
-        width / 2 + game.playScene.rectW / 2 + this.goalW,
-        height / 2 + this.goalH / 2 + game.playScene.offsetTop 
-      );
-      pop();
+      width / 2 + game.playScene.playboard.width / 2 + this.goalW,
+      height / 2 -
+        game.playScene.playboard.height / 2 +
+        this.goalH -
+        game.playScene.playboard.offsetTop,
+      width / 2 + game.playScene.playboard.width / 2 + this.goalW,
+      height / 2 + this.goalH / 2 + game.playScene.playboard.offsetTop
+    );
+    pop();
 
     // Bottom line
-    push()
-    drawingContext.shadowOffsetY = game.playScene.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.neonBlur;
-    drawingContext.shadowColor = game.playScene.neonBlue;
+    push();
+    drawingContext.shadowOffsetY = game.playScene.playboard.offsetBlur;
+    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
+    drawingContext.shadowColor = game.playScene.playboard.neonBlue;
     line(
-      width / 2 + game.playScene.rectW / 2 + this.goalW,
-      height / 2 + this.goalH/2 + game.playScene.offsetTop,
-      width / 2 + game.playScene.rectW / 2,
-      height / 2 + this.goalH / 2 + game.playScene.offsetTop
+      width / 2 + game.playScene.playboard.width / 2 + this.goalW,
+      height / 2 + this.goalH / 2 + game.playScene.playboard.offsetTop,
+      width / 2 + game.playScene.playboard.width / 2,
+      height / 2 + this.goalH / 2 + game.playScene.playboard.offsetTop
     );
     pop();
   }
