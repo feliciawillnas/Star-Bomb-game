@@ -33,10 +33,9 @@ class StartScene {
     push();
     textSize(60);
     text(this.gameTitle, width / 2, height / 2 - 140);
-    images.neonGreenBomb.resize(123, 107)
-    image(images.neonGreenBomb, width/2 + 162, height/2 -190)
+    images.neonGreenBomb.resize(123, 107);
+    image(images.neonGreenBomb, width / 2 + 162, height / 2 - 190);
     pop();
-    
 
     //Text: "Press space to"
     push();
@@ -54,37 +53,37 @@ class StartScene {
     pop();
 
     //Pink rocket img
-    push()
-    images.rocketImgPink1.resize(120, 256)
-    translate(width/2 + 450, height/2)
-    rotate(-45)
-    image(images.rocketImgPink1, 0, 0)
-    pop()
+    push();
+    images.rocketImgPink1.resize(120, 256);
+    translate(width / 2 + 450, height / 2);
+    rotate(-45);
+    image(images.rocketImgPink1, 0, 0);
+    pop();
 
     //Blue rocket img
-    push()
-    images.rocketImgBlue1.resize(120, 256)
-    translate(width/2 - 450, height/2 + 200)
-    rotate(45)
-    image(images.rocketImgBlue1, 0, 0)
-    pop()
+    push();
+    images.rocketImgBlue1.resize(120, 256);
+    translate(width / 2 - 450, height / 2 + 200);
+    rotate(45);
+    image(images.rocketImgBlue1, 0, 0);
+    pop();
 
     //Player1/blue interaction instruction
-    push()
-    text(this.interactionInstructionW, width/2 -450, height/2 + 80)
-    text(this.interactionInstructionASD, width/2 -450, height/2 + 100)
-    pop()
+    push();
+    text(this.interactionInstructionW, width / 2 - 450, height / 2 + 80);
+    text(this.interactionInstructionASD, width / 2 - 450, height / 2 + 100);
+    pop();
 
     //Player2/pink interaction instruction
-    push()
+    push();
     textFont(symbolFont);
-    text(this.interactionInstructionUP_A, width/2 +450, height/2 + 80)
-    text(this.interactionInstructionLDR_A, width/2 +450, height/2 + 100)
-    pop()
+    text(this.interactionInstructionUP_A, width / 2 + 450, height / 2 + 80);
+    text(this.interactionInstructionLDR_A, width / 2 + 450, height / 2 + 100);
+    pop();
 
     //Creators
-    push()
-    text("LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS", width/2, height - 20)
-    pop()
+    push();
+    text("LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS", width / 2, height - 20);
+    pop();
   }
 }
