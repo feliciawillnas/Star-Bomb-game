@@ -10,11 +10,15 @@ class PlayScene {
 
   //CONSTRUCTOR////////////////////////
   constructor() {
-    this.goal = new Goal();
     this.scoreInterface = new ScoreInterface();
     this.bomb = new Bomb(60, 400, 400);
+
+    const offsetTop = 40;
+    const boardWidth = 1000;
+    const boardHeight = 500;
+    this.playboard = new Playboard(offsetTop, boardWidth, boardHeight);
+    this.goal = new Goal(offsetTop, boardWidth, boardHeight);
     this.player = new Player();
-    this.playboard = new Playboard();
   }
   //METHODS//////////////////////////
 
@@ -25,7 +29,6 @@ class PlayScene {
     this.bomb.update(10);
     this.player.update();
     this.playboard.update();
-
     // const rightSide = width / 2 + this.rectW / 2;
     // for (const bomb of this.bombs) {
     //   bomb.update(rightSide);
@@ -35,12 +38,12 @@ class PlayScene {
   }
   //Draw
   public draw() {
-    this.scoreInterface.draw();
     this.goal.draw();
+    this.scoreInterface.draw();
     this.bomb.draw();
     this.player.draw();
     this.playboard.draw();
-    
+
     // for (const bomb of this.bombs) {
     //   bomb.draw();
     // }
