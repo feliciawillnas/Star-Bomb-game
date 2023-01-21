@@ -6,12 +6,16 @@ class Bomb {
   private vx = 20;
   private vy = 20;
   private diameter = 50;
+  private boardWidth: number;
+  private boardHeight: number;
 
   //CONSTRUCTOR////////////////////////
-  constructor(diameter: number, x: number, y: number) {
+  constructor(diameter: number, x: number, y: number, boardWidth: number, boardHeight: number) {
     this.diameter = diameter;
     this.x = x;
     this.y = y;
+    this.boardWidth = boardWidth;
+    this.boardHeight = boardHeight;
   }
   //METHODS//////////////////////////
   //Update
@@ -36,10 +40,7 @@ class Bomb {
     const bombRadius = this.diameter / 2;
     if (this.x > rightSideOfPlayScene - bombRadius) {
       this.vx = -10;
-    } else if (
-      this.x <
-      width / 2 - game.playScene.playboard.width / 2 + this.diameter / 2
-    ) {
+    } else if (this.x < width / 2 - this.boardWidth / 2 + this.diameter / 2) {
       this.vx = +10;
     }
     //    if (this.y > (height / 2 - playScene.rectH / 2 + playScene.offsetTop) + this.diameter / 2) {
