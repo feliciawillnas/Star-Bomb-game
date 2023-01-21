@@ -1,30 +1,40 @@
 class Playboard {
   //ATTRIBUTE////////////////////////////
   // Playground width & height
-  public width: number;
-  public height: number;
+  private width: number;
+  private height: number;
 
   private goalW: number;
   private goalH: number;
 
   // Extra distance between the top & playground
-  public offsetTop: number;
+  private offsetTop: number;
   // Border lines
 
-  public neonBlur: number;
-  public offsetBlur: number;
-  public neonPink: string;
-  public neonBlue: string;
+  private neonPink: string;
+  private neonBlue: string;
+  private neonBlur: number;
+  private offsetBlur: number;
 
   //CONSTRUCTOR////////////////////////
-  constructor(offsetTop: number, width: number, height: number, goalW: number, goalH: number) {
+  constructor(
+    offsetTop: number,
+    width: number,
+    height: number,
+    goalW: number,
+    goalH: number,
+    neonPink: string,
+    neonBlue: string,
+    neonBlur: number,
+    offsetBlur: number
+  ) {
     this.width = width;
     this.height = height;
     this.offsetTop = offsetTop;
-    this.neonBlur = 18;
-    this.offsetBlur = 5;
-    this.neonPink = '#F98CF3';
-    this.neonBlue = '#69B7C2';
+    this.neonPink = neonPink;
+    this.neonBlue = neonBlue;
+    this.neonBlur = neonBlur;
+    this.offsetBlur = offsetBlur;
     this.goalW = goalW;
     this.goalH = goalH;
   }

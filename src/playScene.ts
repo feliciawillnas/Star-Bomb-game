@@ -10,18 +10,41 @@ class PlayScene {
 
   //CONSTRUCTOR////////////////////////
   constructor() {
-    this.scoreInterface = new ScoreInterface();
-    this.bomb = new Bomb(60, 400, 400);
-
     const offsetTop = 40;
     const boardWidth = 1000;
     const boardHeight = 500;
-
     const goalW = 150;
     const goalH = 220;
+    const neonPink = '#F98CF3';
+    const neonBlue = '#69B7C2';
+    const neonBlur = 18;
+    const offsetBlur = 5;
 
-    this.playboard = new Playboard(offsetTop, boardWidth, boardHeight, goalW, goalH);
-    this.goal = new Goal(offsetTop, boardWidth, boardHeight, goalW, goalH);
+    this.scoreInterface = new ScoreInterface(boardWidth, boardHeight);
+    this.bomb = new Bomb(60, 400, 400);
+
+    this.playboard = new Playboard(
+      offsetTop,
+      boardWidth,
+      boardHeight,
+      goalW,
+      goalH,
+      neonPink,
+      neonBlue,
+      neonBlur,
+      offsetBlur
+    );
+    this.goal = new Goal(
+      offsetTop,
+      boardWidth,
+      boardHeight,
+      goalW,
+      goalH,
+      neonPink,
+      neonBlue,
+      neonBlur,
+      offsetBlur
+    );
     // this.player = new Player();
   }
   //METHODS//////////////////////////

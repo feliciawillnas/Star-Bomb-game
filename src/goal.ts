@@ -7,13 +7,22 @@ class Goal {
   private boardWidth: number;
   private boardHeight: number;
 
+  private neonPink: string;
+  private neonBlue: string;
+  private neonBlur: number;
+  private offsetBlur: number;
+
   //CONSTRUCTOR////////////////////////
   constructor(
     offsetTop: number,
     boardWidth: number,
     boardHeight: number,
     goalW: number,
-    goalH: number
+    goalH: number,
+    neonPink: string,
+    neonBlue: string,
+    neonBlur: number,
+    offsetBlur: number
   ) {
     this.offsetTop = offsetTop;
     this.boardWidth = boardWidth;
@@ -21,6 +30,10 @@ class Goal {
     // Goal width & height
     this.goalW = goalW; //150
     this.goalH = goalH; //220
+    this.neonPink = neonPink;
+    this.neonBlue = neonBlue;
+    this.neonBlur = neonBlur;
+    this.offsetBlur = offsetBlur;
   }
   //METHODS//////////////////////////
 
@@ -47,14 +60,14 @@ class Goal {
   }
 
   public leftGoalLines() {
-    stroke(game.playScene.playboard.neonPink);
+    stroke(this.neonPink);
     strokeWeight(10);
 
     // Top line
     push();
-    drawingContext.shadowOffsetY = -game.playScene.playboard.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
-    drawingContext.shadowColor = game.playScene.playboard.neonPink;
+    drawingContext.shadowOffsetY = -this.offsetBlur;
+    drawingContext.shadowBlur = this.neonBlur;
+    drawingContext.shadowColor = this.neonPink;
 
     line(
       width / 2 - this.boardWidth / 2 - this.goalW,
@@ -66,9 +79,9 @@ class Goal {
 
     // Left line
     push();
-    drawingContext.shadowOffsetX = -game.playScene.playboard.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
-    drawingContext.shadowColor = game.playScene.playboard.neonPink;
+    drawingContext.shadowOffsetX = -this.offsetBlur;
+    drawingContext.shadowBlur = this.neonBlur;
+    drawingContext.shadowColor = this.neonPink;
     line(
       width / 2 - this.boardWidth / 2 - this.goalW,
       height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop,
@@ -79,9 +92,9 @@ class Goal {
 
     // Bottom Line
     push();
-    drawingContext.shadowOffsetY = game.playScene.playboard.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
-    drawingContext.shadowColor = game.playScene.playboard.neonPink;
+    drawingContext.shadowOffsetY = this.offsetBlur;
+    drawingContext.shadowBlur = this.neonBlur;
+    drawingContext.shadowColor = this.neonPink;
     line(
       width / 2 - this.boardWidth / 2 - this.goalW,
       height / 2 + this.goalH / 2 + this.offsetTop,
@@ -92,13 +105,13 @@ class Goal {
   }
 
   public rightGoalLines() {
-    stroke(game.playScene.playboard.neonBlue);
+    stroke(this.neonBlue);
 
     // Top line
     push();
-    drawingContext.shadowOffsetY = -game.playScene.playboard.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
-    drawingContext.shadowColor = game.playScene.playboard.neonBlue;
+    drawingContext.shadowOffsetY = -this.offsetBlur;
+    drawingContext.shadowBlur = this.neonBlur;
+    drawingContext.shadowColor = this.neonBlue;
     line(
       width / 2 + this.boardWidth / 2 + this.goalW,
       height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop,
@@ -109,9 +122,9 @@ class Goal {
 
     // Right line
     push();
-    drawingContext.shadowOffsetX = game.playScene.playboard.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
-    drawingContext.shadowColor = game.playScene.playboard.neonBlue;
+    drawingContext.shadowOffsetX = this.offsetBlur;
+    drawingContext.shadowBlur = this.neonBlur;
+    drawingContext.shadowColor = this.neonBlue;
     line(
       width / 2 + this.boardWidth / 2 + this.goalW,
       height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop,
@@ -122,9 +135,9 @@ class Goal {
 
     // Bottom line
     push();
-    drawingContext.shadowOffsetY = game.playScene.playboard.offsetBlur;
-    drawingContext.shadowBlur = game.playScene.playboard.neonBlur;
-    drawingContext.shadowColor = game.playScene.playboard.neonBlue;
+    drawingContext.shadowOffsetY = this.offsetBlur;
+    drawingContext.shadowBlur = this.neonBlur;
+    drawingContext.shadowColor = this.neonBlue;
     line(
       width / 2 + this.boardWidth / 2 + this.goalW,
       height / 2 + this.goalH / 2 + this.offsetTop,
