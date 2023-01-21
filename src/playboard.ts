@@ -4,6 +4,9 @@ class Playboard {
   public width: number;
   public height: number;
 
+  private goalW: number;
+  private goalH: number;
+
   // Extra distance between the top & playground
   public offsetTop: number;
   // Border lines
@@ -14,7 +17,13 @@ class Playboard {
   public neonBlue: string;
 
   //CONSTRUCTOR////////////////////////
-  constructor(offsetTop: number, width: number, height: number) {
+  constructor(
+    offsetTop: number,
+    width: number,
+    height: number,
+    goalW: number,
+    goalH: number
+  ) {
     this.width = width;
     this.height = height;
     this.offsetTop = offsetTop;
@@ -22,6 +31,8 @@ class Playboard {
     this.offsetBlur = 5;
     this.neonPink = "#F98CF3";
     this.neonBlue = "#69B7C2";
+    this.goalW = goalW;
+    this.goalH = goalH;
   }
   //METHODS//////////////////////////
 
@@ -91,7 +102,7 @@ class Playboard {
       width / 2 - this.width / 2,
       height / 2 - this.height / 2 + this.offsetTop,
       width / 2 - this.width / 2,
-      height / 2 + this.offsetTop - game.playScene.goal.goalH / 2
+      height / 2 + this.offsetTop - this.goalH / 2
     );
     pop();
 
@@ -104,7 +115,7 @@ class Playboard {
       width / 2 + this.width / 2,
       height / 2 - this.height / 2 + this.offsetTop,
       width / 2 + this.width / 2,
-      height / 2 + this.offsetTop - game.playScene.goal.goalH / 2
+      height / 2 + this.offsetTop - this.goalH / 2
     );
     pop();
 
@@ -131,7 +142,7 @@ class Playboard {
       width / 2 - this.width / 2,
       height / 2 + this.height / 2 + this.offsetTop,
       width / 2 - this.width / 2,
-      height / 2 + this.offsetTop + game.playScene.goal.goalH / 2
+      height / 2 + this.offsetTop + this.goalH / 2
     );
     pop();
 
@@ -144,7 +155,7 @@ class Playboard {
       width / 2 + this.width / 2,
       height / 2 + this.height / 2 + this.offsetTop,
       width / 2 + this.width / 2,
-      height / 2 + this.offsetTop + game.playScene.goal.goalH / 2
+      height / 2 + this.offsetTop + this.goalH / 2
     );
     pop();
     pop();
