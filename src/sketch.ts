@@ -1,20 +1,30 @@
 //---- GLOBAL VARIABLES ----//
+/*Instances*/
 let game: Game;
-let playScene: PlayScene;
-let goal: Goal;
-let scoreInterface: ScoreInterface;
-// let sound: p5.SoundFile
-let backgroundImg: p5.Image;
-let galaxGoalImg: p5.Image;
-let playboardBGImg: p5.Image;
-let gameFont: p5.Font;
-let playerOne: Player;
-let playerTwo: Player;
 
-let rocketImgPink1: p5.Image;
-let rocketImgBlue1: p5.Image;
-let rocketImgPink2: p5.Image;
-let rocketImgBlue2: p5.Image;
+let images: Images;
+let sounds: Sounds;
+
+interface Images {
+  background: p5.Image;
+  galaxGoal: p5.Image;
+  playboardBG: p5.Image;
+  rocketImgPink1: p5.Image;
+  rocketImgBlue1: p5.Image;
+  rocketImgPink2: p5.Image;
+  rocketImgBlue2: p5.Image;
+  neonGreenBomb: p5.Image;
+}
+
+interface Sounds {
+  bang: p5.SoundFile;
+  pop: p5.SoundFile;
+  music: p5.SoundFile;
+}
+
+let gameFont: p5.Font;
+let symbolFont: p5.Font;
+
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
@@ -22,15 +32,18 @@ let rocketImgBlue2: p5.Image;
  */
 function preload() {
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
-  backgroundImg = loadImage("../assets/images/background.jpg");
-  galaxGoalImg = loadImage("../assets/images/galax.jpg");
-  playboardBGImg = loadImage("../assets/images/playboardBackground.png");
+  images = {
+    background: loadImage("../assets/images/background.jpg"),
+    galaxGoal: loadImage("../assets/images/galax.jpg"),
+    playboardBG: loadImage("../assets/images/playboardBackground.png"),
+    rocketImgBlue1: loadImage("../assets/images/bluerocket1.png"),
+    rocketImgPink1: loadImage("../assets/images/pinkrocket1.png"),
+    rocketImgBlue2: loadImage("../assets/images/bluerocket2.png"),
+    rocketImgPink2: loadImage("../assets/images/pinkrocket2.png"),
+    neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
+  };
   gameFont = loadFont("../assets/fonts/PressStart2P-Regular.ttf");
-
-  rocketImgBlue1 = loadImage("../assets/images/blueRocket1.png");
-  rocketImgPink1 = loadImage("../assets/images/pinkRocket1.png");
-  rocketImgBlue2 = loadImage("../assets/images/bluerocket2.png");
-  rocketImgPink2 = loadImage("../assets/images/pinkrocket2.png");
+  symbolFont = loadFont("../assets/fonts/symbolerFont.otf");
 }
 
 /**
@@ -49,11 +62,6 @@ function setup() {
   textFont(gameFont);
 
   game = new Game();
-  playScene = new PlayScene();
-  goal = new Goal();
-  scoreInterface = new ScoreInterface();
-  playerOne = new Player(1);
-  playerTwo = new Player(2);
 }
 
 /**
