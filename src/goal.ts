@@ -1,20 +1,26 @@
 class Goal {
   //ATTRIBUTE////////////////////////////
   // Goal width & height
-  public goalW: number;
-  public goalH: number;
+  private goalW: number;
+  private goalH: number;
   private offsetTop: number;
   private boardWidth: number;
   private boardHeight: number;
 
   //CONSTRUCTOR////////////////////////
-  constructor(offsetTop: number, boardWidth: number, boardHeight: number) {
+  constructor(
+    offsetTop: number,
+    boardWidth: number,
+    boardHeight: number,
+    goalW: number,
+    goalH: number
+  ) {
     this.offsetTop = offsetTop;
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
     // Goal width & height
-    this.goalW = 150;
-    this.goalH = 220;
+    this.goalW = goalW; //150
+    this.goalH = goalH; //220
   }
   //METHODS//////////////////////////
 

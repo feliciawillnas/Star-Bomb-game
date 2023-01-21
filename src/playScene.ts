@@ -16,8 +16,12 @@ class PlayScene {
     const offsetTop = 40;
     const boardWidth = 1000;
     const boardHeight = 500;
-    this.playboard = new Playboard(offsetTop, boardWidth, boardHeight);
-    this.goal = new Goal(offsetTop, boardWidth, boardHeight);
+
+    const goalW = 150;
+    const goalH = 220;
+
+    this.playboard = new Playboard(offsetTop, boardWidth, boardHeight, goalW, goalH);
+    this.goal = new Goal(offsetTop, boardWidth, boardHeight, goalW, goalH);
     // this.player = new Player();
   }
   //METHODS//////////////////////////
