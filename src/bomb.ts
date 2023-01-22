@@ -6,15 +6,13 @@ class Bomb {
     private vx = 5;
     private vy = 5;
     private diameter = 50;
-    private id = 0;
 
 
     //CONSTRUCTOR////////////////////////
-    constructor(diameter: number, x: number, y: number, id: number) {
+    constructor(diameter: number, x: number, y: number) {
         this.diameter = diameter;
         this.x = x;
         this.y = y;
-        this.id = id;
     }
 
     //METHODS//////////////////////////
@@ -32,12 +30,8 @@ class Bomb {
     public update(rectW: number, rectH: number) {
         this.move(rectW, rectH);
     }
-    
-    public updateId(id: number) {
-        this.id = id;
-        console.log(id);
-    }
 
+    //Move
     private move(rectW: number, rectH: number) {
 
         const playAreaLeftBorder = (width / 2 - rectW / 2)
@@ -61,4 +55,6 @@ class Bomb {
                this.vy =- 5;
         }
     }
-  }
+
+    // Collide
+}

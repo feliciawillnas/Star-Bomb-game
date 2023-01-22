@@ -31,7 +31,7 @@ class PlayScene {
     this.playboard.update();
 
     for (const bomb of this.bombs) {
-      bomb.update(game.playScene.playboard.width, game.playScene.playboard.height);
+      bomb.update(this.playboard.width, this.playboard.height);
     }
   }
 
@@ -50,10 +50,10 @@ class PlayScene {
   }
   
   private spawnBombs() {
-    const playAreaLeftBorder = (width / 2 - game.playScene.playboard.width / 2)
-    const playAreaRightBorder = (width / 2 + game.playScene.playboard.width / 2)
-    const playAreaTopBorder = (height / 2 - game.playScene.playboard.height / 2 + game.playScene.playboard.offsetTop)
-    const playAreaBottomBorder = (height / 2 + game.playScene.playboard.height / 2 + game.playScene.playboard.offsetTop)
+    const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
+    const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
+    const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
+    const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
     const diameter = 40;
     const bombRadius = diameter / 2;
 
@@ -64,8 +64,7 @@ class PlayScene {
           const y = random(playAreaTopBorder + bombRadius,
               playAreaBottomBorder - bombRadius);
 
-          const id = this.bombs.length+1;
-          this.bombs.push(new Bomb(diameter, x, y, id));
+          this.bombs.push(new Bomb(diameter, x, y));
           this.spawnTimeout = 1000;
       }
   }
@@ -74,11 +73,6 @@ class PlayScene {
     this.removeTimeout -= deltaTime;
     if (this.removeTimeout < 0) {
         this.bombs.shift();
-        let id = 1
-        for (const bomb of this.bombs) {
-            bomb.updateId(id);
-            id += 1;
-        }
         this.removeTimeout = 1000;
     }
 }
