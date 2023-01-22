@@ -1,12 +1,10 @@
 class Bomb {
     //ATTRIBUTE////////////////////////////
-    // private color: string;
     private x = 0;
     private y = 0;
     private vx = 5;
     private vy = 5;
     private diameter = 50;
-
 
     //CONSTRUCTOR////////////////////////
     constructor(diameter: number, x: number, y: number) {
@@ -17,7 +15,6 @@ class Bomb {
 
     //METHODS//////////////////////////
     
-    
     //Draw
     public draw() {
         noStroke();
@@ -27,34 +24,36 @@ class Bomb {
     }
 
     //Update
-    public update(rectW: number, rectH: number) {
-        this.move(rectW, rectH);
+    public update(playboardWidth: number, playboardHeight: number) {
+        this.move();
+        this.checkCollision(playboardWidth, playboardHeight);
     }
 
-    //Move
-    private move(rectW: number, rectH: number) {
-
-        const playAreaLeftBorder = (width / 2 - rectW / 2)
-        const playAreaRightBorder = (width / 2 + rectW / 2)
-        const playAreaTopBorder = (height / 2 - rectH / 2 + 40)
-        const playAreaBottomBorder = (height / 2 + rectH / 2 + 40)
-        const bombRadius = this.diameter / 2;
-
+    //Move bomb
+    private move() {
         this.x += this.vx
         this.y += this.vy
-        
-        if (this.x > playAreaRightBorder - bombRadius) {
+    }
+
+    // Check collision
+    private checkCollision(playboardWidth: number, playboardHeight: number) {
+        const playboardLeftBorder = (width / 2 - playboardWidth / 2)
+        const playboardRightBorder = (width / 2 + playboardWidth / 2)
+        const playboardTopBorder = (height / 2 - playboardHeight / 2 + 40)
+        const playboardBottomBorder = (height / 2 + playboardHeight / 2 + 40)
+        const bombRadius = this.diameter / 2;
+
+        if (this.x > playboardRightBorder - bombRadius) {
             this.vx =- 5;
-        } else if (this.x < playAreaLeftBorder + bombRadius) {
+        } else if (this.x < playboardLeftBorder + bombRadius) {
             this.vx =+ 5;
         }
 
-        if (this.y < playAreaTopBorder + bombRadius) {
+        if (this.y < playboardTopBorder + bombRadius) {
                this.vy =+ 5;
-        } else if (this.y > playAreaBottomBorder - bombRadius) {
+        } else if (this.y > playboardBottomBorder - bombRadius) {
                this.vy =- 5;
         }
     }
-
-    // Collide
+    
 }

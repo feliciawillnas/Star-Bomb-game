@@ -49,6 +49,7 @@ class PlayScene {
     }
   }
   
+  
   private spawnBombs() {
     const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
     const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
