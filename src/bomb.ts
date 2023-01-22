@@ -61,4 +61,4 @@ class Bomb {
                this.vy =- 5;
         }
     }
-}
+  }

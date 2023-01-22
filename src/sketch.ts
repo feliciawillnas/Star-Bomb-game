@@ -25,7 +25,6 @@ interface Sounds {
 let gameFont: p5.Font;
 let symbolFont: p5.Font;
 
-
 /**
  * Built in preload function in P5
  * This is a good place to load assets such as
@@ -34,17 +33,17 @@ let symbolFont: p5.Font;
 function preload() {
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
   images = {
-    background: loadImage('../assets/images/background.jpg'),
-    galaxGoal: loadImage('../assets/images/galax.jpg'),
-    playboardBG: loadImage('../assets/images/playboardBackground.png'),
-    rocketImgBlue1: loadImage('../assets/images/bluerocket1.png'),
-    rocketImgPink1: loadImage('../assets/images/pinkrocket1.png'),
-    rocketImgBlue2: loadImage('../assets/images/bluerocket2.png'),
-    rocketImgPink2: loadImage('../assets/images/pinkrocket2.png'),
-    neonGreenBomb: loadImage('../assets/images/neonGreenBomb.png')
-  }
-  gameFont = loadFont('../assets/fonts/PressStart2P-Regular.ttf');
-  symbolFont = loadFont('../assets/fonts/symbolerFont.otf')
+    background: loadImage("../assets/images/background.jpg"),
+    galaxGoal: loadImage("../assets/images/galax.jpg"),
+    playboardBG: loadImage("../assets/images/playboardBackground.png"),
+    rocketImgBlue1: loadImage("../assets/images/bluerocket1.png"),
+    rocketImgPink1: loadImage("../assets/images/pinkrocket1.png"),
+    rocketImgBlue2: loadImage("../assets/images/bluerocket2.png"),
+    rocketImgPink2: loadImage("../assets/images/pinkrocket2.png"),
+    neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
+  };
+  gameFont = loadFont("../assets/fonts/PressStart2P-Regular.ttf");
+  symbolFont = loadFont("../assets/fonts/symbolerFont.otf");
 }
 
 /**
@@ -57,21 +56,20 @@ function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
 
-  imageMode(CENTER)
-  rectMode(CENTER)
-  textAlign(CENTER)
-  angleMode(DEGREES)
+  imageMode(CENTER);
+  rectMode(CENTER);
+  textAlign(CENTER);
+  angleMode(DEGREES);
   textFont(gameFont);
-  
-  game = new Game();
 
+  game = new Game();
 }
 
 /**
  * Built in draw function in P5
  * This is a good place to call public methods of the object
  * you created in the setup function above
-*/
+ */
 function draw() {
   game.update();
   game.draw();
