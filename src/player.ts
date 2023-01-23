@@ -62,7 +62,7 @@ class Player {
   public update() {
     this.controlPlayerOne();
     this.controlPlayerTwo();
-    // this.keepPlayersInsideScreen();
+    this.keepPlayersInsideScreen();
   }
   //Draw
   public draw() {
