@@ -2,6 +2,7 @@ class ScoreInterface {
   //ATTRIBUTE////////////////////////////
   private boardWidth: number;
   private boardHeight: number;
+
   //CONSTRUCTOR////////////////////////
   constructor(boardWidth: number, boardHeight: number) {
     this.boardWidth = boardWidth;
@@ -10,9 +11,11 @@ class ScoreInterface {
   //METHODS//////////////////////////
 
   //Update
-  public update() {}
+  public update() {
+    
+  }
   //Draw
-  public draw() {
+  public draw(scorePlayer1: number, scorePlayer2: number) {
     // Drawing scoreboard
     noStroke();
     stroke('black');
@@ -33,15 +36,16 @@ class ScoreInterface {
     // Player Scores
     push();
     text(
-      '30' /*player1Score*/,
+      scorePlayer1,
       width / 2 - this.boardWidth / 4,
       height / 2 - this.boardHeight / 2 - 20
     );
     text(
-      '40' /*player2Score*/,
+      scorePlayer2,
       width / 2 + this.boardWidth / 4,
       height / 2 - this.boardHeight / 2 - 20
-    );
-    pop();
-  }
+      );
+      pop();
+    }
+    
 }

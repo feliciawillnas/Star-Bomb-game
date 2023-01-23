@@ -1,6 +1,6 @@
 class Player {
   //ATTRIBUTE////////////////////////////
-  public x: number;
+  public x: number; //Ändra tillbaka till private När vi testat klart i goal.
   public y: number;
   private widthPlayer: number;
   private heightPlayer: number;
