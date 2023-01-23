@@ -36,10 +36,10 @@ function preload() {
     background: loadImage("../assets/images/background.jpg"),
     galaxGoal: loadImage("../assets/images/galax.jpg"),
     playboardBG: loadImage("../assets/images/playboardBackground.png"),
-    rocketImgBlue1: loadImage("../assets/images/bluerocket1.png"),
-    rocketImgPink1: loadImage("../assets/images/pinkrocket1.png"),
-    rocketImgBlue2: loadImage("../assets/images/bluerocket2.png"),
-    rocketImgPink2: loadImage("../assets/images/pinkrocket2.png"),
+    rocketImgBlue1: loadImage("../assets/images/blueRocket1.png"),
+    rocketImgPink1: loadImage("../assets/images/pinkRocket1.png"),
+    rocketImgBlue2: loadImage("../assets/images/blueRocket2.png"),
+    rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
     neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
   };
   gameFont = loadFont("../assets/fonts/PressStart2P-Regular.ttf");
