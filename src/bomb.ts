@@ -1,10 +1,10 @@
 class Bomb {
     //ATTRIBUTE////////////////////////////
-    private x = 0;
-    private y = 0;
-    private vx = 5;
-    private vy = 5;
-    private diameter = 50;
+    public x = 0;
+    public y = 0;
+    public vx = 2;
+    public vy = 2;
+    public diameter = 50;
 
     //CONSTRUCTOR////////////////////////
     constructor(diameter: number, x: number, y: number) {
@@ -16,21 +16,21 @@ class Bomb {
     //METHODS//////////////////////////
     
     //Draw
-    public draw() {
+    public draw(color: string) {
         noStroke();
-        fill(0, 0, 0, 0);
-        image(images.neonGreenBomb, this.x, this.y);
+        fill(color);
+        // image(images.neonGreenBomb, this.x, this.y);
         ellipse(this.x, this.y, this.diameter);
     }
 
     //Update
     public update(playboardWidth: number, playboardHeight: number) {
-        this.move();
+        this.moveBomb();
         this.checkCollision(playboardWidth, playboardHeight);
     }
 
     //Move bomb
-    private move() {
+    private moveBomb() {
         this.x += this.vx
         this.y += this.vy
     }
@@ -43,17 +43,25 @@ class Bomb {
         const playboardBottomBorder = (height / 2 + playboardHeight / 2 + 40)
         const bombRadius = this.diameter / 2;
 
+        //Check collision with walls
         if (this.x > playboardRightBorder - bombRadius) {
-            this.vx =- 5;
-        } else if (this.x < playboardLeftBorder + bombRadius) {
-            this.vx =+ 5;
+            // if (this.y > playboardTopBorder + 140 && this.y < playboardBottomBorder - 140) {
+            //     this.x = 4000;
+            // } else {
+            this.vx =- 2;
+            // }
+        } if (this.x < playboardLeftBorder + bombRadius) {
+            this.vx =+ 2;
         }
 
         if (this.y < playboardTopBorder + bombRadius) {
-               this.vy =+ 5;
+               this.vy =+ 2;
         } else if (this.y > playboardBottomBorder - bombRadius) {
-               this.vy =- 5;
+               this.vy =- 2;
         }
+
+        //Check collision with other bombs
+
     }
     
 }
