@@ -22,7 +22,7 @@ class Goal {
     neonPink: string,
     neonBlue: string,
     neonBlur: number,
-    offsetBlur: number
+    offsetBlur: number,
   ) {
     this.offsetTop = offsetTop;
     this.boardWidth = boardWidth;
@@ -38,17 +38,41 @@ class Goal {
   //METHODS//////////////////////////
 
   //Update
-  public update() {}
+  public update() {
+    
+  }
   //Draw
+  
   public draw() {
     this.goals();
     this.leftGoalLines();
     this.rightGoalLines();
+    // this.checkForGoal();
   }
 
-  public goals() {
-    // Goal left
+  // private checkForGoal(){
+  //   // Spelare skapar ett nummer när den entrar mål.
+  //   // Vänster mål
+  //   if(game.playScene.playerOne.x <= width/2 - this.boardWidth/2 && game.playScene.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && game.playScene.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop) {
+  //     this.scorePlayer1 = this.scorePlayer1 + 10
+  //     circle(width/2, height/2, 200)
+  //   }
+  //   // Höger mål
+  //   if (game.playScene.playerOne.x >= width/2 + this.boardWidth/2 && game.playScene.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && game.playScene.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop){
+  //     push();
+  //     fill('green')
+  //     this.scorePlayer2 = this.scorePlayer2 + 10
+  //     circle(width/2, height/2, 200)
+  //     pop();
+  //   }
 
+    
+  //   // Text som skriver "GOAL!!!"
+    
+  // }
+
+  private goals() {
+    // Goal left
     let leftGoalX = width / 2 - this.boardWidth / 2 - this.goalW / 2;
     let leftGoalY = height / 2 + this.offsetTop;
     image(images.galaxGoal, leftGoalX, leftGoalY, this.goalW, this.goalH);
@@ -59,7 +83,8 @@ class Goal {
     image(images.galaxGoal, rightGoalX, rightGoalY, this.goalW, this.goalH);
   }
 
-  public leftGoalLines() {
+  private leftGoalLines() {
+    push()
     stroke(this.neonPink);
     strokeWeight(10);
 
@@ -102,11 +127,14 @@ class Goal {
       height / 2 + this.goalH / 2 + this.offsetTop
     );
     pop();
+    pop();
   }
 
-  public rightGoalLines() {
+  private rightGoalLines() {
+    push();
     stroke(this.neonBlue);
-
+    strokeWeight(10);
+    
     // Top line
     push();
     drawingContext.shadowOffsetY = -this.offsetBlur;
@@ -144,6 +172,7 @@ class Goal {
       width / 2 + this.boardWidth / 2,
       height / 2 + this.goalH / 2 + this.offsetTop
     );
+    pop();
     pop();
   }
 }
