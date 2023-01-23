@@ -12,6 +12,8 @@ class PlayScene {
 
   private offsetTop: number
   private boardWidth: number
+  private boardHeight: number
+  private goalW: number
   private goalH: number
   // private bombs: Bomb[];
   // private spawnTimeout: number;
@@ -20,8 +22,8 @@ class PlayScene {
   constructor() {
     this.offsetTop = 40;
     this.boardWidth = 1000;
-    const boardHeight = 500;
-    const goalW = 150;
+    this.boardHeight = 500;
+    this.goalW = 150;
     this.goalH = 220;
     const neonPink = '#F98CF3';
     const neonBlue = '#69B7C2';
@@ -37,14 +39,14 @@ class PlayScene {
     this.scorePlayer2 = 0
 
 
-    this.scoreInterface = new ScoreInterface(this.boardWidth, boardHeight);
-    this.bomb = new Bomb(60, 400, 400, this.boardWidth, boardHeight);
+    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
+    this.bomb = new Bomb(60, 400, 400, this.boardWidth, this.boardHeight);
 
     this.playboard = new Playboard(
       this.offsetTop,
       this.boardWidth,
-      boardHeight,
-      goalW,
+      this.boardHeight,
+      this.goalW,
       this.goalH,
       neonPink,
       neonBlue,
@@ -54,16 +56,16 @@ class PlayScene {
     this.goal = new Goal(
       this.offsetTop,
       this.boardWidth,
-      boardHeight,
-      goalW,
+      this.boardHeight,
+      this.goalW,
       this.goalH,
       neonPink,
       neonBlue,
       neonBlur,
       offsetBlur,
     );
-    this.playerOne = new Player(playerOne, this.offsetTop, this.boardWidth, boardHeight);
-    this.playerTwo = new Player(playerTwo, this.offsetTop, this.boardWidth, boardHeight);
+    this.playerOne = new Player(playerOne, this.offsetTop, this.boardWidth, this.boardHeight);
+    this.playerTwo = new Player(playerTwo, this.offsetTop, this.boardWidth, this.boardHeight);
   }
   //METHODS//////////////////////////
 
@@ -89,26 +91,19 @@ class PlayScene {
   }
 
   private checkForGoal(){
-    
-    // Spelare skapar ett nummer när den entrar mål.
     // Vänster mål
-    
-    if(game.playScene.playerOne.x <= width/2 - this.boardWidth/2 && game.playScene.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && game.playScene.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop) {
+    if(this.playerOne.x <= width/2 - this.boardWidth/2 && this.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && this.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop) {
       this.scorePlayer1 = this.scorePlayer1 + 10
-      circle(width/2, height/2, 200)
-    }
-    // Höger mål
-    if (game.playScene.playerOne.x >= width/2 + this.boardWidth/2 && game.playScene.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && game.playScene.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop){
-      push();
-      fill('green')
-      this.scorePlayer2 = this.scorePlayer2 + 10
-      circle(width/2, height/2, 200)
-      pop();
+      // Poäng vid mål (visas ovanför målet) 
+      text('+10', width/2 - this.boardWidth/ 2 - this.goalW/2, this.boardHeight / 2  )
     }
 
-    
+    // Höger mål
+    if (this.playerOne.x >= width/2 + this.boardWidth/2 && this.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && this.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop){
+      this.scorePlayer2 = this.scorePlayer2 + 10
+    }
     // Text som skriver "GOAL!!!"
-    
+
   }
 }
 
