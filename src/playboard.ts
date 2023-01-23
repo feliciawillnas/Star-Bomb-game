@@ -1,27 +1,42 @@
 class Playboard {
   //ATTRIBUTE////////////////////////////
   // Playground width & height
-  public width: number;
-  public height: number;
+  private width: number;
+  private height: number;
+
+  private goalW: number;
+  private goalH: number;
 
   // Extra distance between the top & playground
-  public offsetTop: number;
+  private offsetTop: number;
   // Border lines
 
-  public neonBlur: number;
-  public offsetBlur: number;
-  public neonPink: string;
-  public neonBlue: string;
+  private neonPink: string;
+  private neonBlue: string;
+  private neonBlur: number;
+  private offsetBlur: number;
 
   //CONSTRUCTOR////////////////////////
-  constructor(offsetTop: number, width: number, height: number) {
+  constructor(
+    offsetTop: number,
+    width: number,
+    height: number,
+    goalW: number,
+    goalH: number,
+    neonPink: string,
+    neonBlue: string,
+    neonBlur: number,
+    offsetBlur: number
+  ) {
     this.width = width;
     this.height = height;
     this.offsetTop = offsetTop;
-    this.neonBlur = 18;
-    this.offsetBlur = 5;
-    this.neonPink = "#F98CF3";
-    this.neonBlue = "#69B7C2";
+    this.neonPink = neonPink;
+    this.neonBlue = neonBlue;
+    this.neonBlur = neonBlur;
+    this.offsetBlur = offsetBlur;
+    this.goalW = goalW;
+    this.goalH = goalH;
   }
   //METHODS//////////////////////////
 
@@ -36,21 +51,15 @@ class Playboard {
 
   private drawPlayboardImage() {
     push();
-    fill("black");
-    image(
-      images.playboardBG,
-      width / 2,
-      height / 2 + this.offsetTop,
-      this.width,
-      this.height
-    );
+    fill('black');
+    image(images.playboardBG, width / 2, height / 2 + this.offsetTop, this.width, this.height);
     pop();
   }
 
   // Center Line
   private centerLine() {
     push();
-    stroke("white");
+    stroke('white');
     strokeWeight(10);
     line(
       width / 2,
@@ -91,7 +100,7 @@ class Playboard {
       width / 2 - this.width / 2,
       height / 2 - this.height / 2 + this.offsetTop,
       width / 2 - this.width / 2,
-      height / 2 + this.offsetTop - game.playScene.goal.goalH / 2
+      height / 2 + this.offsetTop - this.goalH / 2
     );
     pop();
 
@@ -104,7 +113,7 @@ class Playboard {
       width / 2 + this.width / 2,
       height / 2 - this.height / 2 + this.offsetTop,
       width / 2 + this.width / 2,
-      height / 2 + this.offsetTop - game.playScene.goal.goalH / 2
+      height / 2 + this.offsetTop - this.goalH / 2
     );
     pop();
 
@@ -131,7 +140,7 @@ class Playboard {
       width / 2 - this.width / 2,
       height / 2 + this.height / 2 + this.offsetTop,
       width / 2 - this.width / 2,
-      height / 2 + this.offsetTop + game.playScene.goal.goalH / 2
+      height / 2 + this.offsetTop + this.goalH / 2
     );
     pop();
 
@@ -144,7 +153,7 @@ class Playboard {
       width / 2 + this.width / 2,
       height / 2 + this.height / 2 + this.offsetTop,
       width / 2 + this.width / 2,
-      height / 2 + this.offsetTop + game.playScene.goal.goalH / 2
+      height / 2 + this.offsetTop + this.goalH / 2
     );
     pop();
     pop();

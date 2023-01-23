@@ -3,22 +3,55 @@ class PlayScene {
   public goal: Goal;
   public scoreInterface: ScoreInterface;
   public bomb: Bomb;
-  public player: Player;
+  // public player: Player;
   public playboard: Playboard;
   // private bombs: Bomb[];
   // private spawnTimeout: number;
+  public playerOne: Player;
+  public playerTwo: Player;
 
   //CONSTRUCTOR////////////////////////
   constructor() {
-    this.scoreInterface = new ScoreInterface();
-    this.bomb = new Bomb(60, 400, 400);
-
     const offsetTop = 40;
     const boardWidth = 1000;
     const boardHeight = 500;
-    this.playboard = new Playboard(offsetTop, boardWidth, boardHeight);
-    this.goal = new Goal(offsetTop, boardWidth, boardHeight);
-    this.player = new Player();
+    const goalW = 150;
+    const goalH = 220;
+    const neonPink = '#F98CF3';
+    const neonBlue = '#69B7C2';
+    const neonBlur = 18;
+    const offsetBlur = 5;
+
+    const playerOne = 1;
+    const playerTwo = 2;
+
+    this.scoreInterface = new ScoreInterface(boardWidth, boardHeight);
+    this.bomb = new Bomb(60, 400, 400, boardWidth, boardHeight);
+
+    this.playboard = new Playboard(
+      offsetTop,
+      boardWidth,
+      boardHeight,
+      goalW,
+      goalH,
+      neonPink,
+      neonBlue,
+      neonBlur,
+      offsetBlur
+    );
+    this.goal = new Goal(
+      offsetTop,
+      boardWidth,
+      boardHeight,
+      goalW,
+      goalH,
+      neonPink,
+      neonBlue,
+      neonBlur,
+      offsetBlur
+    );
+    this.playerOne = new Player(playerOne, offsetTop, boardWidth, boardHeight);
+    this.playerTwo = new Player(playerTwo, offsetTop, boardWidth, boardHeight);
   }
   //METHODS//////////////////////////
 
@@ -27,8 +60,9 @@ class PlayScene {
     this.goal.update();
     this.scoreInterface.update();
     this.bomb.update(10);
-    this.player.update();
     this.playboard.update();
+    this.playerOne.update();
+    this.playerTwo.update();
     // const rightSide = width / 2 + this.rectW / 2;
     // for (const bomb of this.bombs) {
     //   bomb.update(rightSide);
@@ -41,8 +75,9 @@ class PlayScene {
     this.goal.draw();
     this.scoreInterface.draw();
     this.bomb.draw();
-    this.player.draw();
     this.playboard.draw();
+    this.playerOne.draw();
+    this.playerTwo.draw();
 
     // for (const bomb of this.bombs) {
     //   bomb.draw();
