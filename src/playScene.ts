@@ -8,7 +8,7 @@ class PlayScene {
   public playerTwo: Player;
   // private bombs: Bomb[];
   // private spawnTimeout: number;
-
+  
   //CONSTRUCTOR////////////////////////
   constructor() {
     const offsetTop = 40;
@@ -20,11 +20,15 @@ class PlayScene {
     const neonBlue = '#69B7C2';
     const neonBlur = 18;
     const offsetBlur = 5;
-
+    
     const playerOne = 1;
     const playerTwo = 2;
+    
+    let scorePlayer1 = 0;
+    let scorePlayer2 = 0;
 
-    this.scoreInterface = new ScoreInterface(boardWidth, boardHeight);
+
+    this.scoreInterface = new ScoreInterface(boardWidth, boardHeight, scorePlayer1, scorePlayer2);
     this.bomb = new Bomb(60, 400, 400, boardWidth, boardHeight);
 
     this.playboard = new Playboard(
@@ -47,7 +51,9 @@ class PlayScene {
       neonPink,
       neonBlue,
       neonBlur,
-      offsetBlur
+      offsetBlur,
+      scorePlayer1,
+      scorePlayer2
     );
     this.playerOne = new Player(playerOne, offsetTop, boardWidth, boardHeight);
     this.playerTwo = new Player(playerTwo, offsetTop, boardWidth, boardHeight);
@@ -62,12 +68,6 @@ class PlayScene {
     this.bomb.update(10);
     this.playerOne.update();
     this.playerTwo.update();
-    // const rightSide = width / 2 + this.rectW / 2;
-    // for (const bomb of this.bombs) {
-    //   bomb.update(rightSide);
-    // }
-
-    // this.spawnBombs();
   }
   //Draw
   public draw() {
@@ -78,24 +78,36 @@ class PlayScene {
     this.playerOne.draw();
     this.playerTwo.draw();
 
-    // for (const bomb of this.bombs) {
-    //   bomb.draw();
-    // }
   }
+}
 
-  /** skapa nya bomber allt eftersom */
-  // private spawnBombs() {
+
+
+
+
+
+// const rightSide = width / 2 + this.rectW / 2;
+// for (const bomb of this.bombs) {
+//   bomb.update(rightSide);
+// }
+
+// this.spawnBombs();
+
+// for (const bomb of this.bombs) {
+//   bomb.draw();
+// }
+/** skapa nya bomber allt eftersom */
+// private spawnBombs() {
   //   this.spawnTimeout -= deltaTime;
-  //   if (this.spawnTimeout < 0) {
+//   if (this.spawnTimeout < 0) {
 
   //     const diameter = 10;
-  //     const x = random((width / 2 - this.rectW / 2) + diameter / 2,
-  //       (width / 2 + this.rectW / 2) - diameter / 2);
-  //     const y = random((height / 2 - this.rectH / 2 + this.offsetTop) + diameter / 2,
-  //       (height / 2 + this.rectH / 2 + this.offsetTop) - diameter / 2);
+//     const x = random((width / 2 - this.rectW / 2) + diameter / 2,
+//       (width / 2 + this.rectW / 2) - diameter / 2);
+//     const y = random((height / 2 - this.rectH / 2 + this.offsetTop) + diameter / 2,
+//       (height / 2 + this.rectH / 2 + this.offsetTop) - diameter / 2);
 
-  //     this.bombs.push(new Bomb(diameter, x, y));
-  //     this.spawnTimeout = 2000;
-  //   }
-  // }
-}
+//     this.bombs.push(new Bomb(diameter, x, y));
+//     this.spawnTimeout = 2000;
+//   }
+// }

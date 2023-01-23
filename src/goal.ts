@@ -11,6 +11,8 @@ class Goal {
   private neonBlue: string;
   private neonBlur: number;
   private offsetBlur: number;
+  private scorePlayer1: number;
+  private scorePlayer2: number;
 
   //CONSTRUCTOR////////////////////////
   constructor(
@@ -22,7 +24,9 @@ class Goal {
     neonPink: string,
     neonBlue: string,
     neonBlur: number,
-    offsetBlur: number
+    offsetBlur: number,
+    scorePlayer1: number,
+    scorePlayer2: number,
   ) {
     this.offsetTop = offsetTop;
     this.boardWidth = boardWidth;
@@ -34,13 +38,16 @@ class Goal {
     this.neonBlue = neonBlue;
     this.neonBlur = neonBlur;
     this.offsetBlur = offsetBlur;
+    this.scorePlayer1 = scorePlayer1;
+    this.scorePlayer2 = scorePlayer2;
   }
   //METHODS//////////////////////////
 
   //Update
-  //Draw
   public update() {
+    
   }
+  //Draw
   
   public draw() {
     this.goals();
@@ -50,15 +57,19 @@ class Goal {
   }
 
   private checkForGoal(){
-    // Spelare försvinner när den entrar mål.
+    // Spelare skapar ett nummer när den entrar mål.
+    // Vänster mål
     if(game.playScene.playerOne.x <= width/2 - this.boardWidth/2 && game.playScene.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && game.playScene.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop) {
-      fill("white")
-      textSize(60)
+      this.scorePlayer1 = this.scorePlayer1 + 10
       circle(width/2, height/2, 200)
     }
-    // Kolla mål i vänster mål.
-    if (this.goalH){
-
+    // Höger mål
+    if (game.playScene.playerOne.x >= width/2 + this.boardWidth/2 && game.playScene.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && game.playScene.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop){
+      push();
+      fill('green')
+      this.scorePlayer2 = this.scorePlayer2 + 10
+      circle(width/2, height/2, 200)
+      pop();
     }
 
     
@@ -129,7 +140,7 @@ class Goal {
     push();
     stroke(this.neonBlue);
     strokeWeight(10);
-
+    
     // Top line
     push();
     drawingContext.shadowOffsetY = -this.offsetBlur;
