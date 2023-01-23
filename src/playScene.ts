@@ -91,6 +91,8 @@ class PlayScene {
   }
 
   private checkForGoal(){
+    // LÄGG TILL TIMER FÖR POÄNGEN OVANFÖR MÅLEN
+
     // Vänster mål
     if(this.playerOne.x <= width/2 - this.boardWidth/2 && this.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && this.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop) {
       this.scorePlayer1 = this.scorePlayer1 + 10
@@ -101,8 +103,10 @@ class PlayScene {
     // Höger mål
     if (this.playerOne.x >= width/2 + this.boardWidth/2 && this.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && this.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop){
       this.scorePlayer2 = this.scorePlayer2 + 10
+      // Poäng vid mål (visas ovanför målet) 
+      text('+10', width/2 + this.boardWidth/ 2 + this.goalW/2, this.boardHeight / 2  )
     }
-    // Text som skriver "GOAL!!!"
+   
 
   }
 }
