@@ -16,10 +16,10 @@ class Bomb {
     //METHODS//////////////////////////
     
     //Draw
-    public draw(color: string) {
+    public draw() {
         noStroke();
-        fill(color);
-        // image(images.neonGreenBomb, this.x, this.y);
+        fill(0, 0, 0, 0);
+        image(images.neonGreenBomb, this.x, this.y);
         ellipse(this.x, this.y, this.diameter);
     }
 

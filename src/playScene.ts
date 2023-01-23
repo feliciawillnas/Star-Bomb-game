@@ -46,7 +46,7 @@ class PlayScene {
     this.spawnBombs();
     this.removeBombs();
     for (const bomb of this.bombs) {
-      bomb.draw("blue");
+      bomb.draw();
     }
   }
   
@@ -85,7 +85,7 @@ class PlayScene {
               if (entity === otherEntity) continue;
 
               let spring = 0.05;
-              
+
               let dx = otherEntity.x - entity.x;
               let dy = otherEntity.y - entity.y;
               let distance = sqrt(dx * dx + dy * dy);
