@@ -1,10 +1,10 @@
 class Player {
   //ATTRIBUTE////////////////////////////
-  private x: number;
-  private y: number;
+  public x: number;
+  public y: number;
   private widthPlayer: number;
   private heightPlayer: number;
-  private diameter: number;
+  public diameter: number;
   private angle: number;
   private color: string;
   private img: p5.Image;
