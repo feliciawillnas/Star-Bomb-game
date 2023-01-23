@@ -1,14 +1,17 @@
 class Playboard {
   //ATTRIBUTE////////////////////////////
   // Playground width & height
-  public width: number;
-  public height: number;
+  private width: number;
+  private height: number;
+
+  private goalW: number;
+  private goalH: number;
 
   private goalW: number;
   private goalH: number;
 
   // Extra distance between the top & playground
-  public offsetTop: number;
+  private offsetTop: number;
   // Border lines
 
   private neonPink: string;
