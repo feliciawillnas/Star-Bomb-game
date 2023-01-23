@@ -38,17 +38,36 @@ class Goal {
   //METHODS//////////////////////////
 
   //Update
-  public update() {}
   //Draw
+  public update() {
+  }
+  
   public draw() {
     this.goals();
     this.leftGoalLines();
     this.rightGoalLines();
+    this.checkForGoal();
   }
 
-  public goals() {
-    // Goal left
+  private checkForGoal(){
+    // Spelare försvinner när den entrar mål.
+    if(game.playScene.playerOne.x <= width/2 - this.boardWidth/2 && game.playScene.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && game.playScene.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop) {
+      fill("white")
+      textSize(60)
+      circle(width/2, height/2, 200)
+    }
+    // Kolla mål i vänster mål.
+    if (this.goalH){
 
+    }
+
+    
+    // Text som skriver "GOAL!!!"
+    
+  }
+
+  private goals() {
+    // Goal left
     let leftGoalX = width / 2 - this.boardWidth / 2 - this.goalW / 2;
     let leftGoalY = height / 2 + this.offsetTop;
     image(images.galaxGoal, leftGoalX, leftGoalY, this.goalW, this.goalH);
@@ -59,7 +78,8 @@ class Goal {
     image(images.galaxGoal, rightGoalX, rightGoalY, this.goalW, this.goalH);
   }
 
-  public leftGoalLines() {
+  private leftGoalLines() {
+    push()
     stroke(this.neonPink);
     strokeWeight(10);
 
@@ -102,10 +122,13 @@ class Goal {
       height / 2 + this.goalH / 2 + this.offsetTop
     );
     pop();
+    pop();
   }
 
-  public rightGoalLines() {
+  private rightGoalLines() {
+    push();
     stroke(this.neonBlue);
+    strokeWeight(10);
 
     // Top line
     push();
@@ -144,6 +167,7 @@ class Goal {
       width / 2 + this.boardWidth / 2,
       height / 2 + this.goalH / 2 + this.offsetTop
     );
+    pop();
     pop();
   }
 }

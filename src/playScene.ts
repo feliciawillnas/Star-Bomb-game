@@ -1,14 +1,13 @@
 class PlayScene {
   //ATTRIBUTE////////////////////////////
-  public goal: Goal;
-  public scoreInterface: ScoreInterface;
-  public bomb: Bomb;
-  // public player: Player;
-  public playboard: Playboard;
-  // private bombs: Bomb[];
-  // private spawnTimeout: number;
+  private goal: Goal;
+  private scoreInterface: ScoreInterface;
+  private bomb: Bomb;
+  private playboard: Playboard;
   public playerOne: Player;
   public playerTwo: Player;
+  // private bombs: Bomb[];
+  // private spawnTimeout: number;
 
   //CONSTRUCTOR////////////////////////
   constructor() {
@@ -57,10 +56,10 @@ class PlayScene {
 
   //Update
   public update() {
-    this.goal.update();
-    this.scoreInterface.update();
-    this.bomb.update(10);
     this.playboard.update();
+    this.scoreInterface.update();
+    this.goal.update();
+    this.bomb.update(10);
     this.playerOne.update();
     this.playerTwo.update();
     // const rightSide = width / 2 + this.rectW / 2;
@@ -72,10 +71,10 @@ class PlayScene {
   }
   //Draw
   public draw() {
-    this.goal.draw();
-    this.scoreInterface.draw();
-    this.bomb.draw();
     this.playboard.draw();
+    this.scoreInterface.draw();
+    this.goal.draw();
+    this.bomb.draw();
     this.playerOne.draw();
     this.playerTwo.draw();
 

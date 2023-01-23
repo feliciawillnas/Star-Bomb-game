@@ -1,7 +1,7 @@
 class Player {
   //ATTRIBUTE////////////////////////////
-  private x: number;
-  private y: number;
+  public x: number; //Ändra tillbaka till private När vi testat klart i goal.
+  public y: number;
   private widthPlayer: number;
   private heightPlayer: number;
   private diameter: number;
@@ -62,7 +62,7 @@ class Player {
   public update() {
     this.controlPlayerOne();
     this.controlPlayerTwo();
-    this.keepPlayersInsideScreen();
+    // this.keepPlayersInsideScreen();
   }
   //Draw
   public draw() {
