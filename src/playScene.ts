@@ -2,24 +2,59 @@ class PlayScene {
   //ATTRIBUTE////////////////////////////
   public goal: Goal;
   public scoreInterface: ScoreInterface;
-  public player: Player;
+  // public player: Player;
   public playboard: Playboard;
   private bombs: Bomb[];
   private spawnTimeout: number;
   private removeTimeout: number;
+  public playerOne: Player;
+  public playerTwo: Player;
 
   //CONSTRUCTOR////////////////////////
   constructor() {
-    this.scoreInterface = new ScoreInterface();
-    this.spawnTimeout = 0;
-    this.removeTimeout = 16000;
-    this.bombs = [];
     const offsetTop = 40;
     const boardWidth = 1000;
     const boardHeight = 500;
-    this.playboard = new Playboard(offsetTop, boardWidth, boardHeight);
-    this.goal = new Goal(offsetTop, boardWidth, boardHeight);
-    this.player = new Player();
+    const goalW = 150;
+    const goalH = 220;
+    const neonPink = '#F98CF3';
+    const neonBlue = '#69B7C2';
+    const neonBlur = 18;
+    const offsetBlur = 5;
+
+    const playerOne = 1;
+    const playerTwo = 2;
+
+    this.scoreInterface = new ScoreInterface(boardWidth, boardHeight);
+    
+    this.spawnTimeout = 0;
+    this.removeTimeout = 16000;
+    this.bombs = [];
+
+    this.playboard = new Playboard(
+      offsetTop,
+      boardWidth,
+      boardHeight,
+      goalW,
+      goalH,
+      neonPink,
+      neonBlue,
+      neonBlur,
+      offsetBlur
+    );
+    this.goal = new Goal(
+      offsetTop,
+      boardWidth,
+      boardHeight,
+      goalW,
+      goalH,
+      neonPink,
+      neonBlue,
+      neonBlur,
+      offsetBlur
+    );
+    this.playerOne = new Player(playerOne, offsetTop, boardWidth, boardHeight);
+    this.playerTwo = new Player(playerTwo, offsetTop, boardWidth, boardHeight);
   }
   //METHODS//////////////////////////
 
@@ -27,8 +62,9 @@ class PlayScene {
   public update() {
     this.goal.update();
     this.scoreInterface.update();
-    this.player.update();
     this.playboard.update();
+    this.playerOne.update();
+    this.playerTwo.update();
 
     for (const bomb of this.bombs) {
       bomb.update(this.playboard.width, this.playboard.height);
@@ -40,8 +76,9 @@ class PlayScene {
   public draw() {
     this.goal.draw();
     this.scoreInterface.draw();
-    this.player.draw();
     this.playboard.draw();
+    this.playerOne.draw();
+    this.playerTwo.draw();
 
     this.spawnBombs();
     this.removeBombs();
