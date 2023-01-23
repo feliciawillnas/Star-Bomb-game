@@ -8,7 +8,7 @@ class Player {
   private angle: number;
   private color: string;
   private img: p5.Image;
-  private move: number;
+  public move: number;
 
   private offsetTop: number;
   private boardWidth: number;

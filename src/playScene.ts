@@ -87,6 +87,7 @@ class PlayScene {
     }
   }
   
+  //Spawn bombs
   private spawnBombs() {
     const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
     const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
@@ -107,6 +108,7 @@ class PlayScene {
       }
   }
 
+  // Remove bombs after set time
   private removeBombs() {
     this.removeTimeout -= deltaTime;
     if (this.removeTimeout < 0) {
@@ -115,6 +117,7 @@ class PlayScene {
     }
   }
 
+  // Checks collision between players and bombs
   private checkCollision() {
       const allBombs = [...this.bombs]
       const players = [this.playerOne, this.playerTwo];
@@ -140,16 +143,16 @@ class PlayScene {
                     otherBombs.vx += ax;
                     otherBombs.vy += ay;
               }
-            }
+          }
           for (const player of players) {
-            let spring = 0.05;
-
-            let dx = player.x - bomb.x;
-            let dy = player.y - bomb.y;
-            let distance = sqrt(dx * dx + dy * dy);
-            let minDist = player.diameter / 2 + bomb.diameter / 2;
-
-            if (distance < minDist) {
+              let spring = 0.05;
+  
+              let dx = player.x - bomb.x;
+              let dy = player.y - bomb.y;
+              let distance = sqrt(dx * dx + dy * dy);
+              let minDist = player.diameter / 2 + bomb.diameter / 2;
+  
+              if (distance < minDist) {
                   let angle = atan2(dy, dx);
                   let targetX = bomb.x + cos(angle) * minDist;
                   let targetY = bomb.y + sin(angle) * minDist;
@@ -157,7 +160,7 @@ class PlayScene {
                   let ay = (targetY - player.y) * spring;
                   bomb.vx -= ax;
                   bomb.vy -= ay;
-            }
+              }
           }
       }
   }
