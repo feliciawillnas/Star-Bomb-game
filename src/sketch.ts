@@ -55,7 +55,6 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
-
   imageMode(CENTER);
   rectMode(CENTER);
   textAlign(CENTER);

@@ -1,4 +1,5 @@
 class Bomb {
+
     //ATTRIBUTE////////////////////////////
     public x = 0;
     public y = 0;
@@ -62,6 +63,49 @@ class Bomb {
 
         //Check collision with other bombs
 
+  //ATTRIBUTE////////////////////////////
+  // private color: string;
+  private x = 0;
+  private y = 0;
+  private vx = 20;
+  private vy = 20;
+  private diameter = 50;
+  private boardWidth: number;
+  private boardHeight: number;
+
+  //CONSTRUCTOR////////////////////////
+  constructor(diameter: number, x: number, y: number, boardWidth: number, boardHeight: number) {
+    this.diameter = diameter;
+    this.x = x;
+    this.y = y;
+    this.boardWidth = boardWidth;
+    this.boardHeight = boardHeight;
+  }
+  //METHODS//////////////////////////
+  //Update
+  public update(rightSideOfPlayScene: number) {
+    this.move(rightSideOfPlayScene);
+  }
+
+  //Draw
+  public draw() {
+    noStroke();
+    fill(255);
+    ellipse(this.x, this.y, this.diameter);
+  }
+
+  private move(rightSideOfPlayScene: number) {
+    // let spring = 0.05;
+    // let gravity = 0;
+    // let friction = -0.5;
+    // let balls = [];
+    this.x += this.vx;
+    this.y += this.vy;
+    const bombRadius = this.diameter / 2;
+    if (this.x > rightSideOfPlayScene - bombRadius) {
+      this.vx = -10;
+    } else if (this.x < width / 2 - this.boardWidth / 2 + this.diameter / 2) {
+      this.vx = +10;
     }
     
 }
