@@ -2,11 +2,11 @@ class PlayScene {
   //ATTRIBUTE////////////////////////////
   public goal: Goal;
   public scoreInterface: ScoreInterface;
-  public bomb: Bomb;
   // public player: Player;
   public playboard: Playboard;
-  // private bombs: Bomb[];
-  // private spawnTimeout: number;
+  private bombs: Bomb[];
+  private spawnTimeout: number;
+  private removeTimeout: number;
   public playerOne: Player;
   public playerTwo: Player;
 
@@ -26,7 +26,10 @@ class PlayScene {
     const playerTwo = 2;
 
     this.scoreInterface = new ScoreInterface(boardWidth, boardHeight);
-    this.bomb = new Bomb(60, 400, 400, boardWidth, boardHeight);
+    
+    this.spawnTimeout = 0;
+    this.removeTimeout = 16000;
+    this.bombs = [];
 
     this.playboard = new Playboard(
       offsetTop,
@@ -59,44 +62,87 @@ class PlayScene {
   public update() {
     this.goal.update();
     this.scoreInterface.update();
-    this.bomb.update(10);
     this.playboard.update();
     this.playerOne.update();
     this.playerTwo.update();
-    // const rightSide = width / 2 + this.rectW / 2;
-    // for (const bomb of this.bombs) {
-    //   bomb.update(rightSide);
-    // }
 
-    // this.spawnBombs();
+    for (const bomb of this.bombs) {
+      bomb.update(this.playboard.width, this.playboard.height);
+    }
+    this.checkCollision();
   }
+
   //Draw
   public draw() {
     this.goal.draw();
     this.scoreInterface.draw();
-    this.bomb.draw();
     this.playboard.draw();
     this.playerOne.draw();
     this.playerTwo.draw();
 
-    // for (const bomb of this.bombs) {
-    //   bomb.draw();
-    // }
+    this.spawnBombs();
+    this.removeBombs();
+    for (const bomb of this.bombs) {
+      bomb.draw();
+    }
+  }
+  
+  private spawnBombs() {
+    const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
+    const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
+    const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
+    const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
+    const diameter = 40;
+    const bombRadius = diameter / 2;
+
+      this.spawnTimeout -= deltaTime;
+      if (this.spawnTimeout < 0) {
+          const x = random(playAreaLeftBorder + bombRadius + 300,
+              playAreaRightBorder - bombRadius - 300);
+          const y = random(playAreaTopBorder + bombRadius,
+              playAreaBottomBorder - bombRadius);
+
+          this.bombs.push(new Bomb(diameter, x, y));
+          this.spawnTimeout = 1000;
+      }
   }
 
-  /** skapa nya bomber allt eftersom */
-  // private spawnBombs() {
-  //   this.spawnTimeout -= deltaTime;
-  //   if (this.spawnTimeout < 0) {
+  private removeBombs() {
+    this.removeTimeout -= deltaTime;
+    if (this.removeTimeout < 0) {
+        this.bombs.shift();
+        this.removeTimeout = 1000;
+    }
+  }
 
-  //     const diameter = 10;
-  //     const x = random((width / 2 - this.rectW / 2) + diameter / 2,
-  //       (width / 2 + this.rectW / 2) - diameter / 2);
-  //     const y = random((height / 2 - this.rectH / 2 + this.offsetTop) + diameter / 2,
-  //       (height / 2 + this.rectH / 2 + this.offsetTop) - diameter / 2);
+  private checkCollision() {
+      const allEntities = [...this.bombs]
+      for (const entity of allEntities) {
+          for (const otherEntity of allEntities) {
+              if (entity === otherEntity) continue;
 
-  //     this.bombs.push(new Bomb(diameter, x, y));
-  //     this.spawnTimeout = 2000;
-  //   }
-  // }
+              let spring = 0.05;
+
+              let dx = otherEntity.x - entity.x;
+              let dy = otherEntity.y - entity.y;
+              let distance = sqrt(dx * dx + dy * dy);
+              let minDist = otherEntity.diameter / 2 + entity.diameter / 2;
+
+              if (distance < minDist) {
+                    let angle = atan2(dy, dx);
+                    let targetX = entity.x + cos(angle) * minDist;
+                    let targetY = entity.y + sin(angle) * minDist;
+                    let ax = (targetX - otherEntity.x) * spring;
+                    let ay = (targetY - otherEntity.y) * spring;
+                    entity.vx -= ax;
+                    entity.vy -= ay;
+                    otherEntity.vx += ax;
+                    otherEntity.vy += ay;
+              }
+
+          }
+      }
+  }
+
 }
+
