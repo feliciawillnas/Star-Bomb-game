@@ -164,6 +164,7 @@ class PlayScene {
       const players = [this.playerOne, this.playerTwo];
 
       for (const bomb of allBombs) {
+        //BOMBER KOLLIDERAR MED BOMBER
           for (const otherBombs of allBombs) {
               if (bomb === otherBombs) continue;
               let spring = 0.05;
@@ -185,6 +186,7 @@ class PlayScene {
                     otherBombs.vy += ay;
               }
           }
+          // SPELARE KOLLIDERAR MED BOMBER
           for (const player of players) {
               let spring = 0.05;
   
@@ -204,18 +206,26 @@ class PlayScene {
 
               }
           }
-          // player = en spelare // players array med alla spelare 
+          // SPELARE KOLLIDERAR MED SPELARE
           for (const player of players) {
             for (const otherPlayer of players) {
                 if (player === otherPlayer) continue;
   
+                let spring = 0.05;
+
                 let dx = otherPlayer.x - player.x;
                 let dy = otherPlayer.y - player.y;
                 let distance = sqrt(dx * dx + dy * dy);
                 let minDist = otherPlayer.diameter / 2 + player.diameter / 2;
   
                 if (distance < minDist) {
-                  console.log("hej");
+                  let angle = atan2(dy, dx);
+                  let targetX = player.x + cos(angle) * minDist;
+                  let targetY = player.y + sin(angle) * minDist;
+                  let ax = (targetX - player.x) * spring;
+                  let ay = (targetY - player.y) * spring;
+                  player.x -= ax;
+                  player.y -= ay;
                 }
             }
         }
