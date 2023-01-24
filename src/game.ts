@@ -5,7 +5,7 @@ class Game {
   private startScene: StartScene;
   private endScene: EndScene;
 
-  //CONSTRUCTOR////////////////////////
+  //CONSTRUCTOR//////////////////////////
   constructor() {
     this.scene = "playScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
@@ -13,7 +13,7 @@ class Game {
     this.endScene = new EndScene();
   }
 
-  //METHODS//////////////////////////
+  //METHODS//////////////////////////////
   //Update
   public update() {
     if (this.scene == "playScene") {
