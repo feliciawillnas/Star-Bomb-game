@@ -98,6 +98,7 @@ class PlayScene {
       bomb.update(this.playboard.width, this.playboard.height);
     }
     this.checkCollision();
+    this.updateBombs(); // Spawn, updateTime, remove
   }
 
   //Draw
@@ -110,8 +111,6 @@ class PlayScene {
     this.playerTwo.draw();
 
     this.checkForGoal();
-    this.spawnBombs();
-    this.removeBombs();
 
     for (const bomb of this.bombs) {
       bomb.draw();
@@ -175,21 +174,54 @@ class PlayScene {
       playAreaTopBorder + bombRadius,
       playAreaBottomBorder - bombRadius
     );
-
+    // Added timeToLive in class Bomb
     this.spawnTimeout -= deltaTime;
-    if (this.spawnTimeout < 0) {
-      this.bombs.push(new Bomb(diameter, x, y));
+    if (this.spawnTimeout <= 0) {
+      this.bombs.push(new Bomb(diameter, x, y, 5000));
       this.spawnTimeout = 1000;
     }
   }
 
-  // Remove bombs after set time
-  private removeBombs() {
-    this.removeTimeout -= deltaTime;
-    if (this.removeTimeout < 0) {
-      this.bombs.shift();
-      this.removeTimeout = 1000;
+  // Decreases each bombs timeToLive by one per second.
+  private updateBombsTimeToLive() {
+    let tmpArray = [];
+    for (let i = 0; i < this.bombs.length; i++) {
+      let bomb = this.bombs[i];
+      bomb.timeToLive -= deltaTime;
+      tmpArray.push(bomb);
     }
+    this.bombs = tmpArray;
+  }
+
+  // Removes expired bombs.
+  private removeDeadBombs() {
+    let tmpArray = [];
+    for (let i = 0; i < this.bombs.length; i++) {
+      let bomb = this.bombs[i];
+      if (bomb.timeToLive > 0) {
+        tmpArray.push(bomb);
+      }
+    }
+    this.bombs = tmpArray;
+  }
+
+  // A collaboration of all three funcitons regarding BOMBS lifetime from start to finish.
+  private updateBombs() {
+    // for (let i = 0; i < this.bombs.length; i++) {
+    //   this.bombs[i].timeToLive -= deltaTime;
+    // }
+    // this.bombs.forEach((x) => (x.timeToLive -= deltaTime));
+    this.spawnBombs();
+    this.updateBombsTimeToLive();
+    this.removeDeadBombs();
+
+    // this.bombs = this.bombs.filter((bomb) => bomb.timeToLive > 0);
+    // for (let i = this.bombs.length - 1; i >= 0; i--) {
+    //   if (this.bombs[i].timeToLive <= 0) {
+    //     this.bombs.splice(i, 1);
+    // this.removeTimeout = 1000;
+    //   }
+    // }
   }
 
   // Checks collision between players and bombs
