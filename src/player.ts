@@ -4,11 +4,11 @@ class Player {
   public y: number;
   private widthPlayer: number;
   private heightPlayer: number;
-  private diameter: number;
+  public diameter: number;
   private angle: number;
   private color: string;
   private img: p5.Image;
-  private move: number;
+  public move: number;
 
   private offsetTop: number;
   private boardWidth: number;

@@ -96,7 +96,6 @@ class PlayScene {
     this.playboard.draw();
     this.scoreInterface.draw(this.scorePlayer1, this.scorePlayer2);
     this.goal.draw();
-    this.scoreInterface.draw();
     this.playboard.draw();
     this.playerOne.draw();
     this.playerTwo.draw();
@@ -129,6 +128,7 @@ class PlayScene {
     }
   }
   
+  //Spawn bombs
   private spawnBombs() {
     const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
     const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
@@ -149,6 +149,7 @@ class PlayScene {
       }
   }
 
+  // Remove bombs after set time
   private removeBombs() {
     this.removeTimeout -= deltaTime;
     if (this.removeTimeout < 0) {
@@ -157,35 +158,77 @@ class PlayScene {
     }
   }
 
+  // Checks collision between players and bombs
   private checkCollision() {
-      const allEntities = [...this.bombs]
-      for (const entity of allEntities) {
-          for (const otherEntity of allEntities) {
-              if (entity === otherEntity) continue;
+      const allBombs = [...this.bombs]
+      const players = [this.playerOne, this.playerTwo];
 
+      for (const bomb of allBombs) {
+        //BOMBER KOLLIDERAR MED BOMBER
+          for (const otherBombs of allBombs) {
+              if (bomb === otherBombs) continue;
               let spring = 0.05;
 
-              let dx = otherEntity.x - entity.x;
-              let dy = otherEntity.y - entity.y;
+              let dx = otherBombs.x - bomb.x;
+              let dy = otherBombs.y - bomb.y;
               let distance = sqrt(dx * dx + dy * dy);
-              let minDist = otherEntity.diameter / 2 + entity.diameter / 2;
+              let minDist = otherBombs.diameter / 2 + bomb.diameter / 2;
 
               if (distance < minDist) {
                     let angle = atan2(dy, dx);
-                    let targetX = entity.x + cos(angle) * minDist;
-                    let targetY = entity.y + sin(angle) * minDist;
-                    let ax = (targetX - otherEntity.x) * spring;
-                    let ay = (targetY - otherEntity.y) * spring;
-                    entity.vx -= ax;
-                    entity.vy -= ay;
-                    otherEntity.vx += ax;
-                    otherEntity.vy += ay;
+                    let targetX = bomb.x + cos(angle) * minDist;
+                    let targetY = bomb.y + sin(angle) * minDist;
+                    let ax = (targetX - otherBombs.x) * spring;
+                    let ay = (targetY - otherBombs.y) * spring;
+                    bomb.vx -= ax;
+                    bomb.vy -= ay;
+                    otherBombs.vx += ax;
+                    otherBombs.vy += ay;
               }
-
           }
+          // SPELARE KOLLIDERAR MED BOMBER
+          for (const player of players) {
+              let spring = 0.05;
+  
+              let dx = player.x - bomb.x;
+              let dy = player.y - bomb.y;
+              let distance = sqrt(dx * dx + dy * dy);
+              let minDist = player.diameter / 2 + bomb.diameter / 2;
+  
+              if (distance < minDist) {
+                  let angle = atan2(dy, dx);
+                  let targetX = bomb.x + cos(angle) * minDist;
+                  let targetY = bomb.y + sin(angle) * minDist;
+                  let ax = (targetX - player.x) * spring;
+                  let ay = (targetY - player.y) * spring;
+                  bomb.vx -= ax;
+                  bomb.vy -= ay;
+
+              }
+          }
+          // SPELARE KOLLIDERAR MED SPELARE
+          for (const player of players) {
+            for (const otherPlayer of players) {
+                if (player === otherPlayer) continue;
+  
+                let spring = 0.05;
+
+                let dx = otherPlayer.x - player.x;
+                let dy = otherPlayer.y - player.y;
+                let distance = sqrt(dx * dx + dy * dy);
+                let minDist = otherPlayer.diameter / 2 + player.diameter / 2;
+  
+                if (distance < minDist) {
+                  let angle = atan2(dy, dx);
+                  let targetX = player.x + cos(angle) * minDist;
+                  let targetY = player.y + sin(angle) * minDist;
+                  let ax = (targetX - player.x) * spring;
+                  let ay = (targetY - player.y) * spring;
+                  player.x -= ax;
+                  player.y -= ay;
+                }
+            }
+        }
       }
-  }
-}
-
-
+}}
 
