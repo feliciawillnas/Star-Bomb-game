@@ -129,7 +129,7 @@ class PlayScene {
         this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop
       ) {
         this.bombs.splice(i, 1);
-        this.scorePlayer1 = this.scorePlayer1 + 10;
+        this.scorePlayer2 = this.scorePlayer2 + 10;
         // Poäng vid mål (visas ovanför målet)
         text(
           "+10",
@@ -146,7 +146,7 @@ class PlayScene {
         this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop
       ) {
         this.bombs.splice(i, 1);
-        this.scorePlayer2 = this.scorePlayer2 + 10;
+        this.scorePlayer1 = this.scorePlayer1 + 10;
         // Poäng vid mål (visas ovanför målet)
         text(
           "+10",
@@ -167,18 +167,17 @@ class PlayScene {
       height / 2 + this.playboard.height / 2 + this.playboard.offsetTop;
     const diameter = 40;
     const bombRadius = diameter / 2;
+    const x = random(
+      playAreaLeftBorder + bombRadius + 300,
+      playAreaRightBorder - bombRadius - 300
+    );
+    const y = random(
+      playAreaTopBorder + bombRadius,
+      playAreaBottomBorder - bombRadius
+    );
 
     this.spawnTimeout -= deltaTime;
     if (this.spawnTimeout < 0) {
-      const x = random(
-        playAreaLeftBorder + bombRadius + 300,
-        playAreaRightBorder - bombRadius - 300
-      );
-      const y = random(
-        playAreaTopBorder + bombRadius,
-        playAreaBottomBorder - bombRadius
-      );
-
       this.bombs.push(new Bomb(diameter, x, y));
       this.spawnTimeout = 1000;
     }
