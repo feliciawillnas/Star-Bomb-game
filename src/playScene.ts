@@ -162,10 +162,10 @@ class PlayScene {
   private checkCollision() {
       const allBombs = [...this.bombs]
       const players = [this.playerOne, this.playerTwo];
+
       for (const bomb of allBombs) {
           for (const otherBombs of allBombs) {
               if (bomb === otherBombs) continue;
-
               let spring = 0.05;
 
               let dx = otherBombs.x - bomb.x;
@@ -201,11 +201,24 @@ class PlayScene {
                   let ay = (targetY - player.y) * spring;
                   bomb.vx -= ax;
                   bomb.vy -= ay;
+
               }
           }
+          // player = en spelare // players array med alla spelare 
+          for (const player of players) {
+            for (const otherPlayer of players) {
+                if (player === otherPlayer) continue;
+  
+                let dx = otherPlayer.x - player.x;
+                let dy = otherPlayer.y - player.y;
+                let distance = sqrt(dx * dx + dy * dy);
+                let minDist = otherPlayer.diameter / 2 + player.diameter / 2;
+  
+                if (distance < minDist) {
+                  console.log("hej");
+                }
+            }
+        }
       }
-  }
-}
-
-
+}}
 
