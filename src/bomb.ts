@@ -36,32 +36,65 @@ class Bomb {
         this.y += this.vy
     }
 
-    // Check collision
-    private checkCollision(playboardWidth: number, playboardHeight: number) {
-        const playboardLeftBorder = (width / 2 - playboardWidth / 2)
-        const playboardRightBorder = (width / 2 + playboardWidth / 2)
-        const playboardTopBorder = (height / 2 - playboardHeight / 2 + 40)
-        const playboardBottomBorder = (height / 2 + playboardHeight / 2 + 40)
-        const bombRadius = this.diameter / 2;
+// Check collision
+private checkCollision(playboardWidth: number, playboardHeight: number) {
+    const playboardLeftBorder = (width / 2 - playboardWidth / 2)
+    const playboardRightBorder = (width / 2 + playboardWidth / 2)
+    const playboardTopBorder = (height / 2 - playboardHeight / 2 + 40)
+    const playboardBottomBorder = (height / 2 + playboardHeight / 2 + 40)
+    const bombRadius = this.diameter / 2;
 
-        //Check collision with walls
-        if (this.x > playboardRightBorder - bombRadius) {
-            // if (this.y > playboardTopBorder + 140 && this.y < playboardBottomBorder - 140) {
-            //     this.x = 4000;
-            // } else {
-            this.vx =- 2;
-            // }
-        } if (this.x < playboardLeftBorder + bombRadius) {
-            this.vx =+ 2;
+    //Check collision with walls
+    if (this.x > playboardRightBorder - bombRadius) {
+        if (this.vx > 0 && this.vx < 1) {
+            this.vx = -1;
+        } else if (this.vx > 1 && this.vx <= 2) {
+            this.vx = -2;
+        } else if (this.vx > 2 && this.vx <= 3) {
+            this.vx = -3;
+        } else if (this.vx > 3 && this.vx <= 4) {
+            this.vx = -4;
+        } else if (this.vx > 4) {
+            this.vx = -5;
         }
-
-        if (this.y < playboardTopBorder + bombRadius) {
-               this.vy =+ 2;
-        } else if (this.y > playboardBottomBorder - bombRadius) {
-               this.vy =- 2;
+    } if (this.x < playboardLeftBorder + bombRadius) {
+        if (this.vx < 0 && this.vx > -1) {
+            this.vx = 1;
+        } else if (this.vx < -1 && this.vx >= -2) {
+            this.vx = 2;
+        } else if (this.vx < -2 && this.vx >= -3) {
+            this.vx = 3;
+        } else if (this.vx < -3 && this.vx >= -4) {
+            this.vx = 4;
+        } else if (this.vx < -4) {
+            this.vx = 5;
         }
-
-        //Check collision with other bombs
-
     }
+
+    if (this.y < playboardTopBorder + bombRadius) {
+        if (this.vy < 0 && this.vy > -1) {
+            this.vy = 1;
+        } else if (this.vy < -1 && this.vy >= -2) {
+            this.vy = 2;
+        } else if (this.vy < -2 && this.vy >= -3) {
+            this.vy = 3;
+        } else if (this.vy < -3 && this.vy >= -4) {
+            this.vy = 4;
+        } else if (this.vy < -4) {
+            this.vy = 5;
+        }
+    } if (this.y > playboardBottomBorder - bombRadius) {
+        if (this.vy > 0 && this.vy < 1) {
+            this.vy = -1;
+        } else if (this.vy > 1 && this.vy <= 2) {
+            this.vy = -2;
+        } else if (this.vy > 2 && this.vy <= 3) {
+            this.vy = -3;
+        } else if (this.vy > 3 && this.vy <= 4) {
+            this.vy = -4;
+        } else if (this.vy > 4) {
+            this.vy = -5;
+        }
+    }
+}
 }
