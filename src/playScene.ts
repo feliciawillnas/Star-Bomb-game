@@ -2,7 +2,6 @@ class PlayScene {
   //ATTRIBUTE////////////////////////////
   public goal: Goal;
   public scoreInterface: ScoreInterface;
-  // public player: Player;
   public playboard: Playboard;
   private bombs: Bomb[];
   private spawnTimeout: number;
@@ -19,8 +18,6 @@ class PlayScene {
   private boardHeight: number
   private goalW: number
   private goalH: number
-  // private bombs: Bomb[];
-  // private spawnTimeout: number;
   
   //CONSTRUCTOR////////////////////////
   constructor() {
@@ -46,7 +43,7 @@ class PlayScene {
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
     
     this.spawnTimeout = 0;
-    this.removeTimeout = 16000;
+    this.removeTimeout = 10000;
     this.bombs = [];
 
     this.playboard = new Playboard(
@@ -130,22 +127,40 @@ class PlayScene {
   
   //Spawn bombs
   private spawnBombs() {
+    const diameter = 40;
+    const bombRadius = diameter / 2;
     const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
     const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
     const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
     const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
-    const diameter = 40;
-    const bombRadius = diameter / 2;
+    const playAreaX1 = playAreaLeftBorder + bombRadius + 200;
+    const playAreaX2 = playAreaRightBorder - bombRadius - 200;
+    const playAreaY1 = playAreaTopBorder + bombRadius + 50;
+    const playAreaY2 = playAreaBottomBorder - bombRadius - 50;
+    let unavailableSpacesX = []
+    let unavailableSpacesY = []
 
       this.spawnTimeout -= deltaTime;
       if (this.spawnTimeout < 0) {
-          const x = random(playAreaLeftBorder + bombRadius + 300,
-              playAreaRightBorder - bombRadius - 300);
-          const y = random(playAreaTopBorder + bombRadius,
-              playAreaBottomBorder - bombRadius);
 
-          this.bombs.push(new Bomb(diameter, x, y));
-          this.spawnTimeout = 1000;
+          let x = random(playAreaX1, playAreaX2);
+          for (const bomb of this.bombs) {
+              if (x > (bomb.x - bomb.diameter / 2) && x < (bomb.x + bomb.diameter / 2)) {
+                  unavailableSpacesX.push(bomb.x);
+              }
+          }
+
+          let y = random(playAreaY1, playAreaY2)
+          for (const bomb of this.bombs) {
+              if (y > (bomb.y - bomb.diameter / 2) && y < (bomb.y + bomb.diameter / 2)) {
+                  unavailableSpacesY.push(bomb.y);
+              }
+          }
+
+          if (unavailableSpacesY.length === 0 && unavailableSpacesY.length === 0) {
+              this.bombs.push(new Bomb(diameter, x, y));
+              this.spawnTimeout = 2000;
+          }
       }
   }
 
@@ -154,7 +169,7 @@ class PlayScene {
     this.removeTimeout -= deltaTime;
     if (this.removeTimeout < 0) {
         this.bombs.shift();
-        this.removeTimeout = 1000;
+        this.removeTimeout = 2000;
     }
   }
 
