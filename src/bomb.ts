@@ -12,8 +12,8 @@ class Bomb {
     this.diameter = diameter;
     this.x = x;
     this.y = y;
-    this.vx = 2;
-    this.vy = 2;
+    this.vx = 0;
+    this.vy = 0;
     this.timeToLive = timeToLive;
   }
 
@@ -23,6 +23,8 @@ class Bomb {
   public draw() {
     noStroke();
     fill(0, 0, 0, 0);
+    // images.neonGreenBomb.resize(103, 87)
+
     image(images.neonGreenBomb, this.x, this.y);
     // ellipse(this.x + -7, this.y + 7, this.diameter);
   }
