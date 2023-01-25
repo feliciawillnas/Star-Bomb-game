@@ -26,6 +26,7 @@ class StartScene {
   //Draw
   public draw() {
     // Drawing all text and images.
+    push();
     fill("white");
     stroke("black");
     strokeWeight(10);
@@ -84,6 +85,7 @@ class StartScene {
     //Creators
     push();
     text("LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS", width / 2, height - 20);
+    pop();
     pop();
   }
 }

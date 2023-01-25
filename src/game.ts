@@ -7,10 +7,10 @@ class Game {
 
   //CONSTRUCTOR//////////////////////////
   constructor() {
-    this.scene = "playScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
+    this.scene = "endScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
     this.startScene = new StartScene(game);
-    this.endScene = new EndScene();
+    this.endScene = new EndScene(game);
   }
 
   //METHODS//////////////////////////////
@@ -21,6 +21,9 @@ class Game {
     }
     if (this.scene == "startScene") {
       this.startScene.update();
+    }
+    if (this.scene == "endScene") {
+      this.endScene.update();
     }
   }
 
@@ -34,6 +37,9 @@ class Game {
     }
     if (this.scene == "startScene") {
       this.startScene.draw();
+    }
+    if (this.scene == "endScene") {
+      this.endScene.draw();
     }
   }
   public changeToPlayScene() {
