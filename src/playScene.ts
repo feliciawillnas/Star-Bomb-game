@@ -22,6 +22,9 @@ class PlayScene {
   // private bombs: Bomb[];
   // private spawnTimeout: number;
 
+  private startTime: any;
+  private showText: boolean;
+
   //CONSTRUCTOR////////////////////////
   constructor() {
     this.offsetTop = 40;
@@ -37,8 +40,6 @@ class PlayScene {
     const playerOne = 1;
     const playerTwo = 2;
 
-    // let scorePlayer1 = 0;
-    // let scorePlayer2 = 0;
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
 
@@ -82,6 +83,9 @@ class PlayScene {
       this.boardWidth,
       this.boardHeight
     );
+
+    this.startTime = null;
+    this.showText = false;
   }
   //METHODS//////////////////////////
 
@@ -110,11 +114,25 @@ class PlayScene {
     this.playerOne.draw();
     this.playerTwo.draw();
 
-    this.checkForGoal();
-
     for (const bomb of this.bombs) {
       bomb.draw();
     }
+    this.checkForGoal();
+    // if (this.showText) {
+    //   textAlign(CENTER);
+    //   textSize(30);
+    //   fill(255);
+    //   if (millis() - this.startTime < 2000) {
+    //     text(
+    //       "+10!",
+    //       width / 2 + this.boardWidth / 2 + this.goalW / 2,
+    //       this.boardHeight / 2
+    //     );
+    //   } else {
+    //     this.showText = false;
+    //   }
+    // }
+    this.displayPoints();
   }
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
@@ -129,12 +147,9 @@ class PlayScene {
       ) {
         this.bombs.splice(i, 1);
         this.scorePlayer2 = this.scorePlayer2 + 10;
-        // Poäng vid mål (visas ovanför målet)
-        text(
-          "+10",
-          width / 2 - this.boardWidth / 2 - this.goalW / 2,
-          this.boardHeight / 2
-        );
+        // Give score to player
+        this.startTime = millis();
+        this.showText = true;
       }
 
       // Höger mål
@@ -146,12 +161,26 @@ class PlayScene {
       ) {
         this.bombs.splice(i, 1);
         this.scorePlayer1 = this.scorePlayer1 + 10;
-        // Poäng vid mål (visas ovanför målet)
+        // Give score to player
+        this.startTime = millis();
+        this.showText = true;
+      }
+    }
+  }
+
+  private displayPoints() {
+    if (this.showText) {
+      textAlign(CENTER);
+      textSize(30);
+      fill(255);
+      if (millis() - this.startTime < 2000) {
         text(
-          "+10",
+          "+10!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
           this.boardHeight / 2
         );
+      } else {
+        this.showText = false;
       }
     }
   }
