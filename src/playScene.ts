@@ -23,7 +23,8 @@ class PlayScene {
   // private spawnTimeout: number;
 
   private startTime: any;
-  private showText: boolean;
+  private showGoalTextP1: boolean;
+  private showGoalTextP2: boolean;
 
   //CONSTRUCTOR////////////////////////
   constructor() {
@@ -85,7 +86,8 @@ class PlayScene {
     );
 
     this.startTime = null;
-    this.showText = false;
+    this.showGoalTextP1 = false;
+    this.showGoalTextP2 = false;
   }
   //METHODS//////////////////////////
 
@@ -118,25 +120,10 @@ class PlayScene {
       bomb.draw();
     }
     this.checkForGoal();
-    // if (this.showText) {
-    //   textAlign(CENTER);
-    //   textSize(30);
-    //   fill(255);
-    //   if (millis() - this.startTime < 2000) {
-    //     text(
-    //       "+10!",
-    //       width / 2 + this.boardWidth / 2 + this.goalW / 2,
-    //       this.boardHeight / 2
-    //     );
-    //   } else {
-    //     this.showText = false;
-    //   }
-    // }
-    this.displayPoints();
+    this.drawGoal();
   }
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
-    // LÄGG TILL TIMER FÖR POÄNGEN OVANFÖR MÅLEN
     for (let i = 0; i < this.bombs.length; i++) {
       // Vänster mål
       if (
@@ -149,7 +136,7 @@ class PlayScene {
         this.scorePlayer2 = this.scorePlayer2 + 10;
         // Give score to player
         this.startTime = millis();
-        this.showText = true;
+        this.showGoalTextP1 = true;
       }
 
       // Höger mål
@@ -163,25 +150,51 @@ class PlayScene {
         this.scorePlayer1 = this.scorePlayer1 + 10;
         // Give score to player
         this.startTime = millis();
-        this.showText = true;
+        this.showGoalTextP2 = true;
       }
     }
   }
 
-  private displayPoints() {
-    if (this.showText) {
+  private drawGoal() {
+    this.drawMadeGoalP1();
+    this.drawMadeGoalP2();
+  }
+
+  private drawMadeGoalP1() {
+    if (this.showGoalTextP1) {
+      push();
       textAlign(CENTER);
-      textSize(30);
+      textSize(25);
       fill(255);
-      if (millis() - this.startTime < 2000) {
+      if (millis() - this.startTime < 1000) {
         text(
-          "+10!",
-          width / 2 + this.boardWidth / 2 + this.goalW / 2,
-          this.boardHeight / 2
+          "GOAL!",
+          width / 2 - this.boardWidth / 2 - this.goalW / 2,
+          this.boardHeight / 2 + this.offsetTop
         );
       } else {
-        this.showText = false;
+        this.showGoalTextP1 = false;
       }
+      pop();
+    }
+  }
+
+  private drawMadeGoalP2() {
+    if (this.showGoalTextP2) {
+      push();
+      textAlign(CENTER);
+      textSize(25);
+      fill(255);
+      if (millis() - this.startTime < 1000) {
+        text(
+          "GOAL!",
+          width / 2 + this.boardWidth / 2 + this.goalW / 2,
+          this.boardHeight / 2 + this.offsetTop
+        );
+      } else {
+        this.showGoalTextP2 = false;
+      }
+      pop();
     }
   }
 
