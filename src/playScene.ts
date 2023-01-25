@@ -71,6 +71,7 @@ class PlayScene {
     this.playerOne = new Player(playerOne, this.offsetTop, this.boardWidth, this.boardHeight);
     this.playerTwo = new Player(playerTwo, this.offsetTop, this.boardWidth, this.boardHeight);
   }
+
   //METHODS//////////////////////////
 
   //Update
@@ -133,35 +134,39 @@ class PlayScene {
     const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
     const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
     const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
-    const playAreaX1 = playAreaLeftBorder + bombRadius + 200;
-    const playAreaX2 = playAreaRightBorder - bombRadius - 200;
+    const playAreaX1 = playAreaLeftBorder + bombRadius + 100;
+    const playAreaX2 = playAreaRightBorder - bombRadius - 100;
     const playAreaY1 = playAreaTopBorder + bombRadius + 50;
     const playAreaY2 = playAreaBottomBorder - bombRadius - 50;
+    let x = random(playAreaX1, playAreaX2);
+    let y = random(playAreaY1, playAreaY2)
     let unavailableSpacesX = []
     let unavailableSpacesY = []
+    this.spawnTimeout -= deltaTime;
+      
+    if (this.spawnTimeout < 0) {
 
-      this.spawnTimeout -= deltaTime;
-      if (this.spawnTimeout < 0) {
+        // Kontrollerar om bomber existerar på x-axeln
+        for (const bomb of this.bombs) {
+            if (x > (bomb.x - bomb.diameter / 2 - 20) && x < (bomb.x + bomb.diameter / 2 + 20)) {
+                unavailableSpacesX.push(bomb.x);
+            }
+        }
 
-          let x = random(playAreaX1, playAreaX2);
-          for (const bomb of this.bombs) {
-              if (x > (bomb.x - bomb.diameter / 2) && x < (bomb.x + bomb.diameter / 2)) {
-                  unavailableSpacesX.push(bomb.x);
-              }
-          }
+        // Kontrollerar om bomber existerar på y-axeln
+        for (const bomb of this.bombs) {
+            if (y > (bomb.y - bomb.diameter / 2 - 20) && y < (bomb.y + bomb.diameter / 2 + 20)) {
+                unavailableSpacesY.push(bomb.y);
+            }
+        }
 
-          let y = random(playAreaY1, playAreaY2)
-          for (const bomb of this.bombs) {
-              if (y > (bomb.y - bomb.diameter / 2) && y < (bomb.y + bomb.diameter / 2)) {
-                  unavailableSpacesY.push(bomb.y);
-              }
-          }
-
-          if (unavailableSpacesY.length === 0 && unavailableSpacesY.length === 0) {
-              this.bombs.push(new Bomb(diameter, x, y));
-              this.spawnTimeout = 2000;
-          }
-      }
+        // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande på bomber
+        // på x- eller y-axeln
+        if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
+            this.bombs.push(new Bomb(diameter, x, y));
+            this.spawnTimeout = 1000;
+        }
+    }
   }
 
   // Remove bombs after set time
@@ -169,7 +174,7 @@ class PlayScene {
     this.removeTimeout -= deltaTime;
     if (this.removeTimeout < 0) {
         this.bombs.shift();
-        this.removeTimeout = 2000;
+        this.removeTimeout = 1000;
     }
   }
 
