@@ -6,7 +6,7 @@ class PlayScene {
   public playboard: Playboard;
   private bombs: Bomb[];
   private spawnTimeout: number;
-  private removeTimeout: number;
+  // private removeTimeout: number;
 
   public playerOne: Player;
   public playerTwo: Player;
@@ -45,7 +45,7 @@ class PlayScene {
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
 
     this.spawnTimeout = 0;
-    this.removeTimeout = 16000;
+    // this.removeTimeout = 16000;
     this.bombs = [];
 
     this.playboard = new Playboard(
@@ -177,7 +177,7 @@ class PlayScene {
     // Added timeToLive in class Bomb
     this.spawnTimeout -= deltaTime;
     if (this.spawnTimeout <= 0) {
-      this.bombs.push(new Bomb(diameter, x, y, 5000));
+      this.bombs.push(new Bomb(diameter, x, y));
       this.spawnTimeout = 1000;
     }
   }
@@ -207,21 +207,9 @@ class PlayScene {
 
   // A collaboration of all three funcitons regarding BOMBS lifetime from start to finish.
   private updateBombs() {
-    // for (let i = 0; i < this.bombs.length; i++) {
-    //   this.bombs[i].timeToLive -= deltaTime;
-    // }
-    // this.bombs.forEach((x) => (x.timeToLive -= deltaTime));
     this.spawnBombs();
     this.updateBombsTimeToLive();
     this.removeDeadBombs();
-
-    // this.bombs = this.bombs.filter((bomb) => bomb.timeToLive > 0);
-    // for (let i = this.bombs.length - 1; i >= 0; i--) {
-    //   if (this.bombs[i].timeToLive <= 0) {
-    //     this.bombs.splice(i, 1);
-    // this.removeTimeout = 1000;
-    //   }
-    // }
   }
 
   // Checks collision between players and bombs
