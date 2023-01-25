@@ -167,7 +167,7 @@ class PlayScene {
         //BOMBER KOLLIDERAR MED BOMBER
           for (const otherBombs of allBombs) {
               if (bomb === otherBombs) continue;
-              let spring = 0.05;
+              let spring = 0.15;
 
               let dx = otherBombs.x - bomb.x;
               let dy = otherBombs.y - bomb.y;
@@ -188,7 +188,7 @@ class PlayScene {
           }
           // SPELARE KOLLIDERAR MED BOMBER
           for (const player of players) {
-              let spring = 0.05;
+              let spring = 0.35;
   
               let dx = player.x - bomb.x;
               let dy = player.y - bomb.y;
