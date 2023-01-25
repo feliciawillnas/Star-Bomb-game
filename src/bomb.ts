@@ -1,17 +1,19 @@
 class Bomb {
   //ATTRIBUTE////////////////////////////
-  public x: number = 0;
-  public y: number = 0;
-  public vx: number = 2;
-  public vy: number = 2;
-  public diameter: number = 50;
-  public timeToLive: number = 5000; // Bombens levnadstid
+  public x: number;
+  public y: number;
+  public vx: number;
+  public vy: number;
+  public diameter: number;
+  public timeToLive: number; // Bombens levnadstid
 
   //CONSTRUCTOR////////////////////////
   constructor(diameter: number, x: number, y: number, timeToLive: number) {
     this.diameter = diameter;
     this.x = x;
     this.y = y;
+    this.vx = 2;
+    this.vy = 2;
     this.timeToLive = timeToLive;
   }
 
@@ -22,7 +24,7 @@ class Bomb {
     noStroke();
     fill(0, 0, 0, 0);
     image(images.neonGreenBomb, this.x, this.y);
-    ellipse(this.x, this.y, this.diameter);
+    // ellipse(this.x + -7, this.y + 7, this.diameter);
   }
 
   //Update
