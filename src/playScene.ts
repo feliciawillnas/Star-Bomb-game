@@ -25,6 +25,7 @@ class PlayScene {
   private startTime: any;
   private showGoalTextP1: boolean;
   private showGoalTextP2: boolean;
+  private showBombExplosion: boolean;
 
   //CONSTRUCTOR////////////////////////
   constructor() {
@@ -88,6 +89,7 @@ class PlayScene {
     this.startTime = null;
     this.showGoalTextP1 = false;
     this.showGoalTextP2 = false;
+    this.showBombExplosion = false;
   }
   //METHODS//////////////////////////
 
@@ -220,7 +222,7 @@ class PlayScene {
     this.spawnTimeout -= deltaTime;
     if (this.spawnTimeout <= 0) {
       this.bombs.push(new Bomb(diameter, x, y));
-      this.spawnTimeout = 1000;
+      this.spawnTimeout = 5000; // Sets the time between bombs to spawn.
     }
   }
 
@@ -243,11 +245,49 @@ class PlayScene {
       if (bomb.timeToLive > 0) {
         tmpArray.push(bomb);
       }
+      // If bomb timer is 0 give points to players.
+      else {
+        if (bomb.x > width / 2) {
+          this.scorePlayer1 = this.scorePlayer1 + 2;
+          // // this.drawBombExplosion();
+          // if (this.showBombExplosion) {
+          //   if (millis() - this.startTime < 1000) {
+          //     text("hej", 10, 10);
+          //     image(images.galaxGoal, width / 2, height / 2 + 200, 300, 300);
+          //   } else {
+          //     this.showBombExplosion = false;
+          //   }
+          // }
+        }
+        if (bomb.x < width / 2) {
+          this.scorePlayer2 = this.scorePlayer2 + 2;
+          // // this.drawBombExplosion();
+          // if (this.showBombExplosion) {
+          //   if (millis() - this.startTime < 1000) {
+          //     text("hej", 10, 10);
+          //     image(images.galaxGoal, width / 2, height - 200, 300, 300);
+          //   } else {
+          //     this.showBombExplosion = false;
+          //   }
+          // }
+        }
+      }
     }
     this.bombs = tmpArray;
   }
 
-  // A collaboration of all three funcitons regarding BOMBS lifetime from start to finish.
+  // private drawBombExplosion() {
+  //   if (this.showBombExplosion) {
+  //     if (millis() - this.startTime < 1000) {
+  //       text("hej", 10, 10);
+  //       image(images.galaxGoal, width / 2, height / 2 + 200, 300, 300);
+  //     } else {
+  //       this.showBombExplosion = false;
+  //     }
+  //   }
+  // }
+
+  // A collection of all three funcitons regarding BOMBS lifetime from start to finish.
   private updateBombs() {
     this.spawnBombs();
     this.updateBombsTimeToLive();

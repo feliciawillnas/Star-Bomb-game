@@ -14,7 +14,7 @@ class Bomb {
     this.vx = 0;
     this.vy = 0;
     this.diameter = diameter;
-    this.timeToLive = 10_000;
+    this.timeToLive = 5_000; // Sets the detonation time.
   }
 
   //METHODS//////////////////////////
