@@ -3,8 +3,8 @@ class Bomb {
     //ATTRIBUTE////////////////////////////
     public x = 0;
     public y = 0;
-    public vx = 2;
-    public vy = 2;
+    public vx = 0;
+    public vy = 0;
     public diameter = 50;
 
     //CONSTRUCTOR////////////////////////
