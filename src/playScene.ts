@@ -44,6 +44,10 @@ class PlayScene {
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
 
+    this.startTime = null;
+    this.showGoalTextP1 = false;
+    this.showGoalTextP2 = false;
+
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
 
     this.spawnTimeout = 0;
@@ -84,10 +88,6 @@ class PlayScene {
       this.boardWidth,
       this.boardHeight
     );
-
-    this.startTime = null;
-    this.showGoalTextP1 = false;
-    this.showGoalTextP2 = false;
   }
   //METHODS//////////////////////////
 
@@ -275,76 +275,72 @@ class PlayScene {
 
   // Checks collision between players and bombs
   private checkCollision() {
+    const allBombs = [...this.bombs];
+    const players = [this.playerOne, this.playerTwo];
 
-      const allBombs = [...this.bombs]
-      const players = [this.playerOne, this.playerTwo];
+    for (const bomb of allBombs) {
+      //BOMBER KOLLIDERAR MED BOMBER
+      for (const otherBombs of allBombs) {
+        if (bomb === otherBombs) continue;
+        let spring = 0.15;
 
-      for (const bomb of allBombs) {
-        //BOMBER KOLLIDERAR MED BOMBER
-          for (const otherBombs of allBombs) {
-              if (bomb === otherBombs) continue;
-              let spring = 0.15;
+        let dx = otherBombs.x - bomb.x;
+        let dy = otherBombs.y - bomb.y;
+        let distance = sqrt(dx * dx + dy * dy);
+        let minDist = otherBombs.diameter / 2 + bomb.diameter / 2;
 
-              let dx = otherBombs.x - bomb.x;
-              let dy = otherBombs.y - bomb.y;
-              let distance = sqrt(dx * dx + dy * dy);
-              let minDist = otherBombs.diameter / 2 + bomb.diameter / 2;
+        if (distance < minDist) {
+          let angle = atan2(dy, dx);
+          let targetX = bomb.x + cos(angle) * minDist;
+          let targetY = bomb.y + sin(angle) * minDist;
+          let ax = (targetX - otherBombs.x) * spring;
+          let ay = (targetY - otherBombs.y) * spring;
+          bomb.vx -= ax;
+          bomb.vy -= ay;
+          otherBombs.vx += ax;
+          otherBombs.vy += ay;
+        }
+      }
+      // SPELARE KOLLIDERAR MED BOMBER
+      for (const player of players) {
+        let spring = 0.35;
 
-              if (distance < minDist) {
-                    let angle = atan2(dy, dx);
-                    let targetX = bomb.x + cos(angle) * minDist;
-                    let targetY = bomb.y + sin(angle) * minDist;
-                    let ax = (targetX - otherBombs.x) * spring;
-                    let ay = (targetY - otherBombs.y) * spring;
-                    bomb.vx -= ax;
-                    bomb.vy -= ay;
-                    otherBombs.vx += ax;
-                    otherBombs.vy += ay;
-              }
+        let dx = player.x - bomb.x;
+        let dy = player.y - bomb.y;
+        let distance = sqrt(dx * dx + dy * dy);
+        let minDist = player.diameter / 2 + bomb.diameter / 2;
+
+        if (distance < minDist) {
+          let angle = atan2(dy, dx);
+          let targetX = bomb.x + cos(angle) * minDist;
+          let targetY = bomb.y + sin(angle) * minDist;
+          let ax = (targetX - player.x) * spring;
+          let ay = (targetY - player.y) * spring;
+          bomb.vx -= ax;
+          bomb.vy -= ay;
+        }
+      }
+      // SPELARE KOLLIDERAR MED SPELARE
+      for (const player of players) {
+        for (const otherPlayer of players) {
+          if (player === otherPlayer) continue;
+
+          let spring = 0.05;
+
+          let dx = otherPlayer.x - player.x;
+          let dy = otherPlayer.y - player.y;
+          let distance = sqrt(dx * dx + dy * dy);
+          let minDist = otherPlayer.diameter / 2 + player.diameter / 2;
+
+          if (distance < minDist) {
+            let angle = atan2(dy, dx);
+            let targetX = player.x + cos(angle) * minDist;
+            let targetY = player.y + sin(angle) * minDist;
+            let ax = (targetX - player.x) * spring;
+            let ay = (targetY - player.y) * spring + 0.01;
+            player.x -= ax;
+            player.y -= ay;
           }
-          // SPELARE KOLLIDERAR MED BOMBER
-          for (const player of players) {
-              let spring = 0.35;
-  
-              let dx = player.x - bomb.x;
-              let dy = player.y - bomb.y;
-              let distance = sqrt(dx * dx + dy * dy);
-              let minDist = player.diameter / 2 + bomb.diameter / 2;
-  
-              if (distance < minDist) {
-                  let angle = atan2(dy, dx);
-                  let targetX = bomb.x + cos(angle) * minDist;
-                  let targetY = bomb.y + sin(angle) * minDist;
-                  let ax = (targetX - player.x) * spring;
-                  let ay = (targetY - player.y) * spring;
-                  bomb.vx -= ax;
-                  bomb.vy -= ay;
-
-              }
-          }
-          // SPELARE KOLLIDERAR MED SPELARE
-          for (const player of players) {
-            for (const otherPlayer of players) {
-                if (player === otherPlayer) continue;
-  
-                let spring = 0.05;
-                
-                let dx = otherPlayer.x - player.x;
-                let dy = otherPlayer.y - player.y;
-                let distance = sqrt(dx * dx + dy * dy);
-                let minDist = otherPlayer.diameter / 2 + player.diameter / 2;
-  
-                if (distance < minDist) {
-                  let angle = atan2(dy, dx);
-                  let targetX = player.x + cos(angle) * minDist;
-                  let targetY = player.y + sin(angle) * minDist;
-                  let ax = (targetX - player.x) * spring;
-                  let ay = (targetY - player.y) * spring +0.01;
-                  player.x -= ax;
-                  player.y -= ay;
-                }
-            }
-
         }
       }
     }
