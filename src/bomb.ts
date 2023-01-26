@@ -21,11 +21,8 @@ class Bomb {
 
   //Draw
   public draw() {
-    this.drawBombTimer()
-
-    // fill(0, 0, 0, 0);
-    image(images.neonGreenBombClear, this.x, this.y);
-    // ellipse(this.x, this.y, this.diameter);
+    this.drawBombTimer();
+    this.drawExplosion();
   }
 
   //Update
@@ -34,12 +31,23 @@ class Bomb {
     this.checkCollision(playboardWidth, playboardHeight);
   }
 
+  // Shows explosion image last 0.2 seconds of detonation time.
+  private drawExplosion() {
+    if (this.timeToLive > 200){
+        image(images.neonGreenBombClear, this.x, this.y);
+    }
+    else {
+      image(images.explosion, this.x, this.y, 40, 40);
+    }
+  }
+
+  // Shows a countdown timer inside every bomb.
   private drawBombTimer() {
     // noStroke();
-    fill("lime")
+    fill("lime");
     textSize(8);
     let intTimeToLive = round(this.timeToLive / 1000);
-    text(intTimeToLive, this.x, this.y +5) //Funkar att se timern på en bomb
+    text(intTimeToLive, this.x, this.y + 5);
   }
 
   //Move bomb
