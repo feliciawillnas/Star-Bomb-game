@@ -64,7 +64,7 @@ class EndScene {
       //Text: "Press space to"
       push();
       textSize(15);
-      text("PRESS SPACE TO ", width / 2, height / 2 + 120);
+      text("PRESS SPACE TO ", width / 2, height / 2 + 170);
       pop();
   
       //Text: "START GAME"
@@ -73,20 +73,20 @@ class EndScene {
       drawingContext.shadowOffsetY = 5;
       drawingContext.shadowBlur = 18;
       drawingContext.shadowColor = "#69B7C2";
-      text("RESTART GAME", width / 2, height / 2 + 200);
+      text("RESTART GAME", width / 2, height / 2 + 250);
       pop();
   
       //Pink rocket img
       push();
       images.rocketImgPink2Big;
-      translate(width / 2 + 180, height / 2);
+      translate(width / 2 + 240, height / 2 - 35);
       image(images.rocketImgPink2Big, 0, 0);
       pop();
   
       //Blue rocket img
       push();
       images.rocketImgBlue1Big;
-      translate(width / 2 - 180, height / 2);
+      translate(width / 2 - 240, height / 2 - 35);
       image(images.rocketImgBlue1Big, 0, 0);
       pop();
   
