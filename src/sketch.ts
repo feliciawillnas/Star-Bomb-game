@@ -13,10 +13,10 @@ interface Images {
   rocketImgBlue1: p5.Image;
   rocketImgPink2: p5.Image;
   rocketImgBlue2: p5.Image;
+  explosion: p5.Image;
 
   // neonGreenBomb: p5.Image;
   neonGreenBombStor: p5.Image;
-
   neonGreenBombClear: p5.Image;
 }
 
@@ -37,7 +37,7 @@ let symbolFont: p5.Font;
 function preload() {
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
   sounds = {
-    gameMusic: loadSound("../assets/sound/star_rider.mp3"),
+    gameMusic: loadSound("../assets/sounds/star_rider.mp3"),
   };
 
   images = {
@@ -48,6 +48,7 @@ function preload() {
     rocketImgPink1: loadImage("../assets/images/pinkRocket1.png"),
     rocketImgBlue2: loadImage("../assets/images/blueRocket2.png"),
     rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
+    explosion: loadImage("../assets/images/explosion.png"),
 
     // neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
     neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),

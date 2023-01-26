@@ -13,13 +13,13 @@ class Bomb {
   /* --------------------
         CONSTRUCTOR
   -------------------- */ 
-  constructor(diameter: number, x: number, y: number) {
+  constructor(diameter: number, x: number, y: number, timeToLive: number) {
     this.x = x;
     this.y = y;
     this.vx = 0;
     this.vy = 0;
     this.diameter = diameter;
-    this.timeToLive = 8_000; // Sets the detonation time
+    this.timeToLive = timeToLive; // Sets the detonation time.
   }
 
   /* ------------------
@@ -27,10 +27,8 @@ class Bomb {
   ------------------ */ 
   // Draw
   public draw() {
-    noStroke();
-    fill(0, 0, 0, 0);
-    image(images.neonGreenBombClear, this.x, this.y);
-    ellipse(this.x, this.y, this.diameter);
+    this.drawBombTimer();
+    this.drawExplosion();
   }
 
   // Update
@@ -39,7 +37,26 @@ class Bomb {
     this.checkBorderCollision(playboardWidth, playboardHeight);
   }
 
-  // Moves bomb with every frame rate update
+  // Shows explosion image last 0.2 seconds of detonation time.
+  private drawExplosion() {
+    if (this.timeToLive > 200){
+        image(images.neonGreenBombClear, this.x, this.y);
+    }
+    else {
+      image(images.explosion, this.x, this.y, 40, 40);
+    }
+  }
+
+  // Shows a countdown timer inside every bomb.
+  private drawBombTimer() {
+    // noStroke();
+    fill("lime");
+    textSize(8);
+    let intTimeToLive = round(this.timeToLive / 1000);
+    text(intTimeToLive, this.x, this.y + 5);
+  }
+
+  //Move bomb
   private moveBomb() {
     this.x += this.vx;
     this.y += this.vy;

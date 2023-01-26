@@ -164,6 +164,7 @@ class PlayScene {
     this.drawMadeGoalP2();
   }
 
+  // Draws the text "GOAL!" over the left goal when a bomb crosses its goal line.
   private drawMadeGoalP1() {
     if (this.showGoalTextP1) {
       push();
@@ -174,7 +175,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
-          this.boardHeight / 2 + this.offsetTop
+          height/2 - this.goalH / 2
         );
       } else {
         this.showGoalTextP1 = false;
@@ -183,6 +184,7 @@ class PlayScene {
     }
   }
 
+ // Draws the text "GOAL!" over the right goal when a bomb crosses its goal line.
   private drawMadeGoalP2() {
     if (this.showGoalTextP2) {
       push();
@@ -193,7 +195,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
-          this.boardHeight / 2 + this.offsetTop
+          height / 2 - this.goalH / 2 
         );
       } else {
         this.showGoalTextP2 = false;
@@ -254,7 +256,7 @@ class PlayScene {
           // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande bomber
           // eller spelare på x- eller y-axeln
           if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
-              this.bombs.push(new Bomb(diameter, x, y));
+              this.bombs.push(new Bomb(diameter, x, y, 15_000));
               this.spawnTimeout = 1000;
           }
       }
@@ -265,7 +267,7 @@ class PlayScene {
     let tmpArray = [];
     for (let i = 0; i < this.bombs.length; i++) {
       let bomb = this.bombs[i];
-      bomb.timeToLive -= deltaTime; // FIXA SÅ MAN SER SIFFROR SOM TICKAR NER.
+      bomb.timeToLive -= deltaTime;
       tmpArray.push(bomb);
     }
     this.bombs = tmpArray;
@@ -278,25 +280,19 @@ class PlayScene {
       let bomb = this.bombs[i];
       if (bomb.timeToLive > 0) {
         tmpArray.push(bomb);
-      } else if (bomb.timeToLive <= 0) {
+      } 
+      else if (bomb.timeToLive < 0) {
         // If bomb timer is 0 give points to players.
         if (bomb.x > width / 2) {
           this.scorePlayer1 = this.scorePlayer1 + 2;
-          image(images.galaxGoal, bomb.x, bomb.y, 300, 300);
-          this.drawMadeGoalP1();
         }
         if (bomb.x < width / 2) {
           this.scorePlayer2 = this.scorePlayer2 + 2;
-          text("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", bomb.x, bomb.y);
         }
       }
     }
     this.bombs = tmpArray;
   }
-
-  // private drawBombExplosion() {
-
-  // }
 
   // A collection of all three funcitons regarding BOMBS lifetime from start to finish.
   private updateBombs() {
