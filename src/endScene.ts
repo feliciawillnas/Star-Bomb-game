@@ -24,8 +24,10 @@ class EndScene {
      noStroke();
      stroke('black');
      strokeWeight(5);
+     rectMode(CENTER);
      fill(255, 255, 255, 50);
-     rect(750, 300, 600, 200);
+     // x, y, höjd, bredd 
+     rect(width / 2, height / 2 - 50, 590, 230);
      fill(255, 255, 255);
 
      // Winner score text
