@@ -174,7 +174,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
-          this.boardHeight / 2 + this.offsetTop
+          height/2 - this.goalH / 2
         );
       } else {
         this.showGoalTextP1 = false;
@@ -193,7 +193,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
-          this.boardHeight / 2 + this.offsetTop
+          height / 2 - this.goalH / 2 
         );
       } else {
         this.showGoalTextP2 = false;
@@ -223,7 +223,7 @@ class PlayScene {
     // Added timeToLive in class Bomb
     this.spawnTimeout -= deltaTime;
     if (this.spawnTimeout <= 0) {
-      this.bombs.push(new Bomb(diameter, x, y));
+      this.bombs.push(new Bomb(diameter, x, y, 15_000));
       this.spawnTimeout = 2000; // Sets the time between bombs to spawn.
     }
   }
@@ -250,12 +250,12 @@ class PlayScene {
         // If bomb timer is 0 give points to players.
         if (bomb.x > width / 2) {
           this.scorePlayer1 = this.scorePlayer1 + 2;
-          image(images.galaxGoal, bomb.x, bomb.y, 300, 300);
-          this.drawMadeGoalP1();
+          // image(images.galaxGoal, bomb.x, bomb.y, 300, 300);
+          // this.drawMadeGoalP1();
         }
         if (bomb.x < width / 2) {
           this.scorePlayer2 = this.scorePlayer2 + 2;
-          text("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", bomb.x, bomb.y);
+          // text("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", bomb.x, bomb.y);
         }
       }
     }

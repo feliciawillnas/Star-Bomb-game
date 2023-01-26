@@ -8,29 +8,38 @@ class Bomb {
   public timeToLive: number; // Bombens levnadstid
 
   //CONSTRUCTOR////////////////////////
-  constructor(diameter: number, x: number, y: number) {
+  constructor(diameter: number, x: number, y: number, timeToLive: number) {
     this.x = x;
     this.y = y;
     this.vx = 0;
     this.vy = 0;
     this.diameter = diameter;
-    this.timeToLive = 5_000; // Sets the detonation time.
+    this.timeToLive = timeToLive; // Sets the detonation time.
   }
 
   //METHODS//////////////////////////
 
   //Draw
   public draw() {
-    noStroke();
-    fill(0, 0, 0, 0);
+    this.drawBombTimer()
+
+    // fill(0, 0, 0, 0);
     image(images.neonGreenBombClear, this.x, this.y);
-    ellipse(this.x, this.y, this.diameter);
+    // ellipse(this.x, this.y, this.diameter);
   }
 
   //Update
   public update(playboardWidth: number, playboardHeight: number) {
     this.moveBomb();
     this.checkCollision(playboardWidth, playboardHeight);
+  }
+
+  private drawBombTimer() {
+    // noStroke();
+    fill("lime")
+    textSize(8);
+    let intTimeToLive = round(this.timeToLive / 1000);
+    text(intTimeToLive, this.x, this.y +5) //Funkar att se timern på en bomb
   }
 
   //Move bomb
