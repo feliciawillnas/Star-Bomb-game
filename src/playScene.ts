@@ -256,8 +256,6 @@ class PlayScene {
           if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
               this.bombs.push(new Bomb(diameter, x, y));
               this.spawnTimeout = 1000;
-          } else {
-            this.spawnBombs()
           }
       }
     }
