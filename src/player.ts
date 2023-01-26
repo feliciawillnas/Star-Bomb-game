@@ -7,8 +7,9 @@ class Player {
   public diameter: number;
   private angle: number;
   private color: string;
-  private img: p5.Image;
+  private img: p5.Image[];
   public move: number;
+  private i: number;
 
   private offsetTop: number;
   private boardWidth: number;
@@ -26,6 +27,7 @@ class Player {
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
     this.move = 4;
+    this.i = 0;
 
     // Spelarnas startpositioner flyttas vid in- och utzoomning. Ska det vara så?
     if (player === 1) {
@@ -36,7 +38,7 @@ class Player {
       this.diameter = this.heightPlayer + 15;
       this.angle = 90;
       this.color = 'blue';
-      this.img = images.rocketImgBlue1;
+      this.img = [images.rocketImgBlue1, images.rocketImgBlue1];
       this.rotateLeft = 65;
       this.rotateRight = 68;
       this.forward = 87;
@@ -49,7 +51,7 @@ class Player {
       this.diameter = this.heightPlayer + 15;
       this.angle = -90;
       this.color = 'purple';
-      this.img = images.rocketImgPink1;
+      this.img = [images.rocketImgPink1, images.rocketImgPink2]
       this.rotateLeft = 37;
       this.rotateRight = 39;
       this.forward = 38;
@@ -63,6 +65,8 @@ class Player {
     this.controlPlayerOne();
     this.controlPlayerTwo();
     this.keepPlayersInsideScreen();
+    this.changeImage();
+    this.changeImageInterval()
   }
   //Draw
   public draw() {
@@ -77,9 +81,25 @@ class Player {
     circle(this.x, this.y, this.diameter);
     translate(this.x, this.y);
     rotate(this.angle);
-    image(this.img, 0, 0, this.widthPlayer, this.heightPlayer);
+    image(this.img[this.i], 0, 0, this.widthPlayer, this.heightPlayer);
     pop();
+    
   }
+
+  
+  private changeImageInterval(){
+    setInterval(this.changeImage, 1000)
+    
+  }
+  private changeImage(){
+    this.i++;  
+    if(this.i > 1 ){  
+      this.i = 0
+    }
+    
+  }
+  
+
   private controlPlayerOne() {
     if (keyIsDown(this.rotateLeft)) {
       this.angle = this.angle - this.move;
