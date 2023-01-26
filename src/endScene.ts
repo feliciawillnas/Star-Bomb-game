@@ -46,8 +46,8 @@ class EndScene {
       push();
       textSize(60);
       text(this.gameTitle, width / 2, height / 2 - 200);
-      images.neonGreenBomb.resize(123, 107);
-      image(images.neonGreenBomb, width / 2 + 162, height / 2 - 250);
+    //   images.neonGreenBombBig.resize(123, 107);
+      image(images.neonGreenBombBig, width / 2 + 163, height / 2 - 245);
       pop();
 
       // Winner score 
