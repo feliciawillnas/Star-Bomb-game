@@ -1,18 +1,22 @@
 class Bomb {
+  //ATTRIBUTE////////////////////////////
+  public x: number;
+  public y: number;
+  public vx: number;
+  public vy: number;
+  public diameter: number;
+  public timeToLive: number; // Bombens levnadstid
 
-    //ATTRIBUTE////////////////////////////
-    public x = 0;
-    public y = 0;
-    public vx = 2;
-    public vy = 2;
-    public diameter = 50;
+  //CONSTRUCTOR////////////////////////
+  constructor(diameter: number, x: number, y: number) {
+    this.x = x;
+    this.y = y;
+    this.vx = 0;
+    this.vy = 0;
+    this.diameter = diameter;
+    this.timeToLive = 5_000; // Sets the detonation time.
+  }
 
-    //CONSTRUCTOR////////////////////////
-    constructor(diameter: number, x: number, y: number) {
-        this.diameter = diameter;
-        this.x = x;
-        this.y = y;
-    }
 
     //METHODS//////////////////////////
     
@@ -24,17 +28,12 @@ class Bomb {
         ellipse(this.x, this.y, this.diameter);
     }
 
-    //Update
-    public update(playboardWidth: number, playboardHeight: number) {
-        this.moveBomb();
-        this.checkCollision(playboardWidth, playboardHeight);
-    }
 
-    //Move bomb
-    private moveBomb() {
-        this.x += this.vx
-        this.y += this.vy
-    }
+  //Update
+  public update(playboardWidth: number, playboardHeight: number) {
+    this.moveBomb();
+    this.checkCollision(playboardWidth, playboardHeight);
+  }
 
 // Check collision
 private checkCollision(playboardWidth: number, playboardHeight: number) {
@@ -98,3 +97,4 @@ private checkCollision(playboardWidth: number, playboardHeight: number) {
     }
 }
 }
+
