@@ -13,8 +13,12 @@ interface Images {
   rocketImgBlue1: p5.Image;
   rocketImgPink2: p5.Image;
   rocketImgBlue2: p5.Image;
+
   neonGreenBomb: p5.Image;
   neonGreenBombStor: p5.Image;
+
+  neonGreenBombClear: p5.Image;
+
 }
 
 interface Sounds {
@@ -45,8 +49,12 @@ function preload() {
     rocketImgPink1: loadImage("../assets/images/pinkRocket1.png"),
     rocketImgBlue2: loadImage("../assets/images/blueRocket2.png"),
     rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
+
     neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
     neonGreenBombStor: loadImage("../assets/images/neonGreenBomb.png"),
+
+    neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
+
   };
   gameFont = loadFont("../assets/fonts/PressStart2P-Regular.ttf");
   symbolFont = loadFont("../assets/fonts/symbolerFont.otf");
