@@ -225,14 +225,14 @@ class PlayScene {
   
           // Kontrollerar om spelare existerar på x-axeln
           for (const player of players) {
-              if (x > (player.x - player.diameter / 2 - bombRadius - 5) && x < (player.x + player.diameter / 2 + bombRadius + 5)) {
+              if (x > (player.x - player.diameter / 2 - bombRadius - 50) && x < (player.x + player.diameter / 2 + bombRadius + 50)) {
                   unavailableSpacesX.push(player.x);
               }
           }
   
           // Kontrollerar om spelare existerar på y-axeln
           for (const player of players) {
-              if (y > (player.y - player.diameter / 2 - bombRadius - 5) && y < (player.y + player.diameter / 2 + bombRadius + 5)) {
+              if (y > (player.y - player.diameter / 2 - bombRadius - 50) && y < (player.y + player.diameter / 2 + bombRadius + 50)) {
                   unavailableSpacesY.push(player.y);
               }
           }
