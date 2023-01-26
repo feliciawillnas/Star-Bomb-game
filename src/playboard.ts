@@ -51,16 +51,22 @@ class Playboard {
 
   private drawPlayboardImage() {
     push();
-    fill('black');
-    image(images.playboardBG, width / 2, height / 2 + this.offsetTop, this.width, this.height);
+    fill("black");
+    image(
+      images.playboardBG,
+      width / 2,
+      height / 2 + this.offsetTop,
+      this.width,
+      this.height
+    );
     pop();
   }
 
   // Center Line
   private centerLine() {
     push();
-    stroke('white');
-    strokeWeight(10);
+    stroke("white");
+    strokeWeight(5);
     line(
       width / 2,
       height / 2 - this.height / 2 + this.offsetTop,

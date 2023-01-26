@@ -13,13 +13,17 @@ interface Images {
   rocketImgBlue1: p5.Image;
   rocketImgPink2: p5.Image;
   rocketImgBlue2: p5.Image;
+
+  // neonGreenBomb: p5.Image;
+  neonGreenBombStor: p5.Image;
+
   neonGreenBombClear: p5.Image;
 }
 
 interface Sounds {
-  bang: p5.SoundFile;
-  pop: p5.SoundFile;
-  music: p5.SoundFile;
+  // bang: p5.SoundFile;
+  // pop: p5.SoundFile;
+  gameMusic: p5.SoundFile;
 }
 
 let gameFont: p5.Font;
@@ -32,6 +36,10 @@ let symbolFont: p5.Font;
  */
 function preload() {
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
+  sounds = {
+    gameMusic: loadSound("../assets/sound/star_rider.mp3"),
+  };
+
   images = {
     background: loadImage("../assets/images/background.jpg"),
     galaxGoal: loadImage("../assets/images/galax.jpg"),
@@ -40,6 +48,10 @@ function preload() {
     rocketImgPink1: loadImage("../assets/images/pinkRocket1.png"),
     rocketImgBlue2: loadImage("../assets/images/blueRocket2.png"),
     rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
+
+    // neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
+    neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),
+
     neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
   };
   gameFont = loadFont("../assets/fonts/PressStart2P-Regular.ttf");

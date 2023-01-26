@@ -5,20 +5,26 @@ class PlayScene {
   public playboard: Playboard;
   private bombs: Bomb[];
   private spawnTimeout: number;
-  private removeTimeout: number;
-  
+  // private removeTimeout: number;
+
   public playerOne: Player;
   public playerTwo: Player;
-  
-  private scorePlayer1: number
-  private scorePlayer2: number
 
-  private offsetTop: number
-  private boardWidth: number
-  private boardHeight: number
-  private goalW: number
-  private goalH: number
-  
+  private scorePlayer1: number;
+  private scorePlayer2: number;
+
+  private offsetTop: number;
+  private boardWidth: number;
+  private boardHeight: number;
+  private goalW: number;
+  private goalH: number;
+  // private bombs: Bomb[];
+  // private spawnTimeout: number;
+
+  private startTime: any;
+  private showGoalTextP1: boolean;
+  private showGoalTextP2: boolean;
+
   //CONSTRUCTOR////////////////////////
   constructor() {
     this.offsetTop = 40;
@@ -26,24 +32,25 @@ class PlayScene {
     this.boardHeight = 500;
     this.goalW = 150;
     this.goalH = 220;
-    const neonPink = '#F98CF3';
-    const neonBlue = '#69B7C2';
+    const neonPink = "#F98CF3";
+    const neonBlue = "#69B7C2";
     const neonBlur = 18;
     const offsetBlur = 5;
-    
+
     const playerOne = 1;
     const playerTwo = 2;
-    
-    // let scorePlayer1 = 0;
-    // let scorePlayer2 = 0;
-    this.scorePlayer1 = 0
-    this.scorePlayer2 = 0
 
+    this.scorePlayer1 = 0;
+    this.scorePlayer2 = 0;
+
+    this.startTime = null;
+    this.showGoalTextP1 = false;
+    this.showGoalTextP2 = false;
 
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
-    
+
     this.spawnTimeout = 0;
-    this.removeTimeout = 10000;
+    // this.removeTimeout = 16000;
     this.bombs = [];
 
     this.playboard = new Playboard(
@@ -66,10 +73,20 @@ class PlayScene {
       neonPink,
       neonBlue,
       neonBlur,
-      offsetBlur,
+      offsetBlur
     );
-    this.playerOne = new Player(playerOne, this.offsetTop, this.boardWidth, this.boardHeight);
-    this.playerTwo = new Player(playerTwo, this.offsetTop, this.boardWidth, this.boardHeight);
+    this.playerOne = new Player(
+      playerOne,
+      this.offsetTop,
+      this.boardWidth,
+      this.boardHeight
+    );
+    this.playerTwo = new Player(
+      playerTwo,
+      this.offsetTop,
+      this.boardWidth,
+      this.boardHeight
+    );
   }
 
   //METHODS//////////////////////////
@@ -87,45 +104,104 @@ class PlayScene {
       bomb.update(this.playboard.width, this.playboard.height);
     }
     this.checkCollision();
+    this.updateBombs(); // Spawn, updateTime, remove
   }
 
   //Draw
   public draw() {
+    // this.playGameMusic();
     this.playboard.draw();
     this.scoreInterface.draw(this.scorePlayer1, this.scorePlayer2);
     this.goal.draw();
     this.playboard.draw();
     this.playerOne.draw();
     this.playerTwo.draw();
-    
-    this.checkForGoal()
-  }
 
-  private checkForGoal(){
-    // LÄGG TILL TIMER FÖR POÄNGEN OVANFÖR MÅLEN
-
-    // Vänster mål
-    if(this.playerOne.x <= width/2 - this.boardWidth/2 && this.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && this.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop) {
-      this.scorePlayer1 = this.scorePlayer1 + 10
-      // Poäng vid mål (visas ovanför målet) 
-      text('+10', width/2 - this.boardWidth/ 2 - this.goalW/2, this.boardHeight / 2  )
-    }
-
-    // Höger mål
-    if (this.playerOne.x >= width/2 + this.boardWidth/2 && this.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && this.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop){
-      this.scorePlayer2 = this.scorePlayer2 + 10
-      // Poäng vid mål (visas ovanför målet) 
-      text('+10', width/2 + this.boardWidth/ 2 + this.goalW/2, this.boardHeight / 2  )
-    }
-   
-
-    this.spawnBombs();
-    this.removeBombs();
     for (const bomb of this.bombs) {
       bomb.draw();
     }
+    this.checkForGoal();
+    this.drawGoal();
+    // if (!sounds.backgroundMusic.isPlaying()) {
+    //   sounds.backgroundMusic.play();
+    // }
   }
-  
+  // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
+  private checkForGoal() {
+    for (let i = 0; i < this.bombs.length; i++) {
+      // Vänster mål
+      if (
+        this.bombs[i].x <=
+          width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
+        this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop &&
+        this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop
+      ) {
+        this.bombs.splice(i, 1);
+        this.scorePlayer2 = this.scorePlayer2 + 10;
+        // Give score to player
+        this.startTime = millis();
+        this.showGoalTextP1 = true;
+      }
+
+      // Höger mål
+      if (
+        this.bombs[i].x >=
+          width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
+        this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop &&
+        this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop
+      ) {
+        this.bombs.splice(i, 1);
+        this.scorePlayer1 = this.scorePlayer1 + 10;
+        // Give score to player
+        this.startTime = millis();
+        this.showGoalTextP2 = true;
+      }
+    }
+  }
+
+  private drawGoal() {
+    this.drawMadeGoalP1();
+    this.drawMadeGoalP2();
+  }
+
+  private drawMadeGoalP1() {
+    if (this.showGoalTextP1) {
+      push();
+      textAlign(CENTER);
+      textSize(25);
+      fill(255);
+      if (millis() - this.startTime < 1000) {
+        text(
+          "GOAL!",
+          width / 2 - this.boardWidth / 2 - this.goalW / 2,
+          this.boardHeight / 2 + this.offsetTop
+        );
+      } else {
+        this.showGoalTextP1 = false;
+      }
+      pop();
+    }
+  }
+
+  private drawMadeGoalP2() {
+    if (this.showGoalTextP2) {
+      push();
+      textAlign(CENTER);
+      textSize(25);
+      fill(255);
+      if (millis() - this.startTime < 1000) {
+        text(
+          "GOAL!",
+          width / 2 + this.boardWidth / 2 + this.goalW / 2,
+          this.boardHeight / 2 + this.offsetTop
+        );
+      } else {
+        this.showGoalTextP2 = false;
+      }
+      pop();
+    }
+  }
+
   //Spawn bombs
   private spawnBombs() {
     const diameter = 40;
@@ -169,86 +245,127 @@ class PlayScene {
     }
   }
 
-  // Remove bombs after set time
-  private removeBombs() {
-    this.removeTimeout -= deltaTime;
-    if (this.removeTimeout < 0) {
-        this.bombs.shift();
-        this.removeTimeout = 1000;
+  // Decreases each bombs timeToLive by one per second.
+  private updateBombsTimeToLive() {
+    let tmpArray = [];
+    for (let i = 0; i < this.bombs.length; i++) {
+      let bomb = this.bombs[i];
+      bomb.timeToLive -= deltaTime; // FIXA SÅ MAN SER SIFFROR SOM TICKAR NER.
+      tmpArray.push(bomb);
     }
+    this.bombs = tmpArray;
+  }
+
+  // Removes expired bombs.
+  private removeDeadBombs() {
+    let tmpArray = [];
+    for (let i = 0; i < this.bombs.length; i++) {
+      let bomb = this.bombs[i];
+      if (bomb.timeToLive > 0) {
+        tmpArray.push(bomb);
+      } else if (bomb.timeToLive <= 0) {
+        // If bomb timer is 0 give points to players.
+        if (bomb.x > width / 2) {
+          this.scorePlayer1 = this.scorePlayer1 + 2;
+          image(images.galaxGoal, bomb.x, bomb.y, 300, 300);
+          this.drawMadeGoalP1();
+        }
+        if (bomb.x < width / 2) {
+          this.scorePlayer2 = this.scorePlayer2 + 2;
+          text("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA", bomb.x, bomb.y);
+        }
+      }
+    }
+    this.bombs = tmpArray;
+  }
+
+  // private drawBombExplosion() {
+
+  // }
+
+  // A collection of all three funcitons regarding BOMBS lifetime from start to finish.
+  private updateBombs() {
+    this.spawnBombs();
+    this.updateBombsTimeToLive();
+    this.removeDeadBombs();
   }
 
   // Checks collision between players and bombs
   private checkCollision() {
-      const allBombs = [...this.bombs]
-      const players = [this.playerOne, this.playerTwo];
+    const allBombs = [...this.bombs];
+    const players = [this.playerOne, this.playerTwo];
 
-      for (const bomb of allBombs) {
-        //BOMBER KOLLIDERAR MED BOMBER
-          for (const otherBombs of allBombs) {
-              if (bomb === otherBombs) continue;
-              let spring = 0.15;
+    for (const bomb of allBombs) {
+      //BOMBER KOLLIDERAR MED BOMBER
+      for (const otherBombs of allBombs) {
+        if (bomb === otherBombs) continue;
+        let spring = 0.15;
 
-              let dx = otherBombs.x - bomb.x;
-              let dy = otherBombs.y - bomb.y;
-              let distance = sqrt(dx * dx + dy * dy);
-              let minDist = otherBombs.diameter / 2 + bomb.diameter / 2;
+        let dx = otherBombs.x - bomb.x;
+        let dy = otherBombs.y - bomb.y;
+        let distance = sqrt(dx * dx + dy * dy);
+        let minDist = otherBombs.diameter / 2 + bomb.diameter / 2;
 
-              if (distance < minDist) {
-                    let angle = atan2(dy, dx);
-                    let targetX = bomb.x + cos(angle) * minDist;
-                    let targetY = bomb.y + sin(angle) * minDist;
-                    let ax = (targetX - otherBombs.x) * spring;
-                    let ay = (targetY - otherBombs.y) * spring;
-                    bomb.vx -= ax;
-                    bomb.vy -= ay;
-                    otherBombs.vx += ax;
-                    otherBombs.vy += ay;
-              }
-          }
-          // SPELARE KOLLIDERAR MED BOMBER
-          for (const player of players) {
-              let spring = 0.35;
-  
-              let dx = player.x - bomb.x;
-              let dy = player.y - bomb.y;
-              let distance = sqrt(dx * dx + dy * dy);
-              let minDist = player.diameter / 2 + bomb.diameter / 2;
-  
-              if (distance < minDist) {
-                  let angle = atan2(dy, dx);
-                  let targetX = bomb.x + cos(angle) * minDist;
-                  let targetY = bomb.y + sin(angle) * minDist;
-                  let ax = (targetX - player.x) * spring;
-                  let ay = (targetY - player.y) * spring;
-                  bomb.vx -= ax;
-                  bomb.vy -= ay;
-
-              }
-          }
-          // SPELARE KOLLIDERAR MED SPELARE
-          for (const player of players) {
-            for (const otherPlayer of players) {
-                if (player === otherPlayer) continue;
-  
-                let spring = 0.05;
-                
-                let dx = otherPlayer.x - player.x;
-                let dy = otherPlayer.y - player.y;
-                let distance = sqrt(dx * dx + dy * dy);
-                let minDist = otherPlayer.diameter / 2 + player.diameter / 2;
-  
-                if (distance < minDist) {
-                  let angle = atan2(dy, dx);
-                  let targetX = player.x + cos(angle) * minDist;
-                  let targetY = player.y + sin(angle) * minDist;
-                  let ax = (targetX - player.x) * spring;
-                  let ay = (targetY - player.y) * spring +0.01;
-                  player.x -= ax;
-                  player.y -= ay;
-                }
-            }
+        if (distance < minDist) {
+          let angle = atan2(dy, dx);
+          let targetX = bomb.x + cos(angle) * minDist;
+          let targetY = bomb.y + sin(angle) * minDist;
+          let ax = (targetX - otherBombs.x) * spring;
+          let ay = (targetY - otherBombs.y) * spring;
+          bomb.vx -= ax;
+          bomb.vy -= ay;
+          otherBombs.vx += ax;
+          otherBombs.vy += ay;
         }
       }
-}}
+      // SPELARE KOLLIDERAR MED BOMBER
+      for (const player of players) {
+        let spring = 0.35;
 
+        let dx = player.x - bomb.x;
+        let dy = player.y - bomb.y;
+        let distance = sqrt(dx * dx + dy * dy);
+        let minDist = player.diameter / 2 + bomb.diameter / 2;
+
+        if (distance < minDist) {
+          let angle = atan2(dy, dx);
+          let targetX = bomb.x + cos(angle) * minDist;
+          let targetY = bomb.y + sin(angle) * minDist;
+          let ax = (targetX - player.x) * spring;
+          let ay = (targetY - player.y) * spring;
+          bomb.vx -= ax;
+          bomb.vy -= ay;
+        }
+      }
+      // SPELARE KOLLIDERAR MED SPELARE
+      for (const player of players) {
+        for (const otherPlayer of players) {
+          if (player === otherPlayer) continue;
+
+          let spring = 0.05;
+
+          let dx = otherPlayer.x - player.x;
+          let dy = otherPlayer.y - player.y;
+          let distance = sqrt(dx * dx + dy * dy);
+          let minDist = otherPlayer.diameter / 2 + player.diameter / 2;
+
+          if (distance < minDist) {
+            let angle = atan2(dy, dx);
+            let targetX = player.x + cos(angle) * minDist;
+            let targetY = player.y + sin(angle) * minDist;
+            let ax = (targetX - player.x) * spring;
+            let ay = (targetY - player.y) * spring + 0.01;
+            player.x -= ax;
+            player.y -= ay;
+          }
+        }
+      }
+    }
+  }
+
+  // public playGameMusic() {
+  //   if (!sounds.gameMusic.isPlaying()) {
+  //     sounds.gameMusic.loop();
+  //   }
+  // }
+}
