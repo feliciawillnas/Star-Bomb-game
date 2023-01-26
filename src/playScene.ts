@@ -202,48 +202,65 @@ class PlayScene {
     }
   }
 
-  //Spawn bombs
-  private spawnBombs() {
-    const diameter = 40;
-    const bombRadius = diameter / 2;
-    const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
-    const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
-    const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
-    const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
-    const playAreaX1 = playAreaLeftBorder + bombRadius + 100;
-    const playAreaX2 = playAreaRightBorder - bombRadius - 100;
-    const playAreaY1 = playAreaTopBorder + bombRadius + 50;
-    const playAreaY2 = playAreaBottomBorder - bombRadius - 50;
-    let x = random(playAreaX1, playAreaX2);
-    let y = random(playAreaY1, playAreaY2)
-    let unavailableSpacesX = []
-    let unavailableSpacesY = []
-    this.spawnTimeout -= deltaTime;
-      
-    if (this.spawnTimeout < 0) {
-
-        // Kontrollerar om bomber existerar på x-axeln
-        for (const bomb of this.bombs) {
-            if (x > (bomb.x - bomb.diameter / 2 - 20) && x < (bomb.x + bomb.diameter / 2 + 20)) {
+    //Spawn bombs
+    private spawnBombs() {
+      const diameter = 40;
+      const bombRadius = diameter / 2;
+      const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
+      const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
+      const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
+      const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
+      const playAreaX1 = playAreaLeftBorder + bombRadius + 100;
+      const playAreaX2 = playAreaRightBorder - bombRadius - 100;
+      const playAreaY1 = playAreaTopBorder + bombRadius + 50;
+      const playAreaY2 = playAreaBottomBorder - bombRadius - 50;
+      let x = random(playAreaX1, playAreaX2);
+      let y = random(playAreaY1, playAreaY2)
+      const players = [this.playerOne, this.playerTwo];
+      let unavailableSpacesX = []
+      let unavailableSpacesY = []
+      this.spawnTimeout -= deltaTime;
+        
+      if (this.spawnTimeout < 0) {
+  
+          // Kontrollerar om spelare existerar på x-axeln
+          for (const player of players) {
+              if (x > (player.x - player.diameter / 2 - bombRadius - 5) && x < (player.x + player.diameter / 2 + bombRadius + 5)) {
+                  unavailableSpacesX.push(player.x);
+              }
+          }
+  
+          // Kontrollerar om spelare existerar på y-axeln
+          for (const player of players) {
+              if (y > (player.y - player.diameter / 2 - bombRadius - 5) && y < (player.y + player.diameter / 2 + bombRadius + 5)) {
+                  unavailableSpacesY.push(player.y);
+              }
+          }
+  
+          // Kontrollerar om bomb existerar på x-axeln
+          for (const bomb of this.bombs) {
+              if (x > (bomb.x - bomb.diameter - 5) && x < (bomb.x + bomb.diameter + 5)) {
                 unavailableSpacesX.push(bomb.x);
-            }
-        }
-
-        // Kontrollerar om bomber existerar på y-axeln
-        for (const bomb of this.bombs) {
-            if (y > (bomb.y - bomb.diameter / 2 - 20) && y < (bomb.y + bomb.diameter / 2 + 20)) {
-                unavailableSpacesY.push(bomb.y);
-            }
-        }
-
-        // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande på bomber
-        // på x- eller y-axeln
-        if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
-            this.bombs.push(new Bomb(diameter, x, y));
-            this.spawnTimeout = 1000;
-        }
+              }
+          }
+  
+          // Kontrollerar om bomb existerar på y-axeln
+          for (const bomb of this.bombs) {
+              if (y > (bomb.y - bomb.diameter - 5) && y < (bomb.y + bomb.diameter + 5)) {
+                  unavailableSpacesY.push(bomb.y);
+              }
+          }
+  
+          // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande bomber
+          // eller spelare på x- eller y-axeln
+          if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
+              this.bombs.push(new Bomb(diameter, x, y));
+              this.spawnTimeout = 1000;
+          } else {
+            this.spawnBombs()
+          }
+      }
     }
-  }
 
   // Decreases each bombs timeToLive by one per second.
   private updateBombsTimeToLive() {
