@@ -3,12 +3,14 @@ class EndScene {
 
     protected gameTitle: string;
     protected creatorNames: string;
+    // protected scoreResult: string;
     protected game: IStartGame;
   
     //CONSTRUCTOR////////////////////////
     constructor(game: IStartGame) {
       this.gameTitle = "STAR  B MB";
       this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS";
+    //   this.scoreResult = "SCORE";
       this.game = game;
     }
 
@@ -32,6 +34,8 @@ class EndScene {
 
      // Winner score text
       push();
+      textSize(40);
+      text("SCORE", width / 2, height / 2 - 100);
     //   drawingContext.shadowOffsetY = 10;
     //   drawingContext.shadowOffsetX = 10;
     //   drawingContext.shadowColor = 'black';
@@ -73,20 +77,18 @@ class EndScene {
       pop();
   
       //Pink rocket img
-    //   push();
-    //   images.rocketImgPink1.resize(120, 256);
-    //   translate(width / 2 + 250, height / 2);
-    // //   rotate(0);
-    //   image(images.rocketImgPink1, 0, 0);
-    //   pop();
+      push();
+      images.rocketImgPink2Big;
+      translate(width / 2 + 180, height / 2);
+      image(images.rocketImgPink2Big, 0, 0);
+      pop();
   
-    //   //Blue rocket img
-    //   push();
-    //   images.rocketImgBlue1.resize(120, 256);
-    //   translate(width / 2 - 250, height / 2 + 150);
-    // //   rotate(0);
-    //   image(images.rocketImgBlue1, 0, 0);
-    //   pop();
+      //Blue rocket img
+      push();
+      images.rocketImgBlue1Big;
+      translate(width / 2 - 180, height / 2);
+      image(images.rocketImgBlue1Big, 0, 0);
+      pop();
   
     //   //Player1/blue interaction instruction
     //   push();
