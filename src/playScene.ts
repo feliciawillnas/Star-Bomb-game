@@ -212,7 +212,7 @@ class PlayScene {
                 if (player === otherPlayer) continue;
   
                 let spring = 0.05;
-
+                
                 let dx = otherPlayer.x - player.x;
                 let dy = otherPlayer.y - player.y;
                 let distance = sqrt(dx * dx + dy * dy);
@@ -223,7 +223,7 @@ class PlayScene {
                   let targetX = player.x + cos(angle) * minDist;
                   let targetY = player.y + sin(angle) * minDist;
                   let ax = (targetX - player.x) * spring;
-                  let ay = (targetY - player.y) * spring;
+                  let ay = (targetY - player.y) * spring +0.01;
                   player.x -= ax;
                   player.y -= ay;
                 }
