@@ -16,13 +16,6 @@ class EndScene {
     }
 
     public draw() {
-        // Game title
-        push();
-        textSize(60);
-        text(this.gameTitle, width / 2, height / 2 - 200);
-        image(images.neonGreenBombBig, width / 2 + 163, height / 2 - 245);
-        pop();
-
         // Square that contains scoreboard
         noStroke();
         stroke('black');
@@ -63,6 +56,13 @@ class EndScene {
         fill("white");
         stroke("black");
         strokeWeight(10);
+
+        // Game title
+        push();
+        textSize(60);
+        text(this.gameTitle, width / 2, height / 2 - 200);
+        image(images.neonGreenBombBig, width / 2 + 163, height / 2 - 245);
+        pop();
         
         //  "Press space to"
         push();
