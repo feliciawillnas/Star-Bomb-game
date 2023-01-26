@@ -233,7 +233,7 @@ class PlayScene {
     let tmpArray = [];
     for (let i = 0; i < this.bombs.length; i++) {
       let bomb = this.bombs[i];
-      bomb.timeToLive -= deltaTime;
+      bomb.timeToLive -= deltaTime; // FIXA SÅ MAN SER SIFFROR SOM TICKAR NER.
       tmpArray.push(bomb);
     }
     this.bombs = tmpArray;
