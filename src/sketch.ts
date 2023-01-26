@@ -18,9 +18,9 @@ interface Images {
 }
 
 interface Sounds {
-  bang: p5.SoundFile;
-  pop: p5.SoundFile;
-  music: p5.SoundFile;
+  // bang: p5.SoundFile;
+  // pop: p5.SoundFile;
+  gameMusic: p5.SoundFile;
 }
 
 let gameFont: p5.Font;
@@ -33,6 +33,10 @@ let symbolFont: p5.Font;
  */
 function preload() {
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
+  sounds = {
+    gameMusic: loadSound("../assets/sound/star_rider.mp3"),
+  };
+
   images = {
     background: loadImage("../assets/images/background.jpg"),
     galaxGoal: loadImage("../assets/images/galax.jpg"),

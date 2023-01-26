@@ -1,4 +1,4 @@
-class IStartGame {
-  //ATTRIBUTE////////////////////////////
-  // public startGame(): void
-}
+// class IStartGame {
+//   //ATTRIBUTE////////////////////////////
+//   // public startGame(): void
+// }

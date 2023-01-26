@@ -1,4 +1,8 @@
-class Game {
+interface IStartGame {
+  startGame(): void;
+}
+
+class Game implements IStartGame {
   //ATTRIBUTE////////////////////////////
   public scene: string;
   public playScene: PlayScene;
@@ -26,7 +30,7 @@ class Game {
 
   //Draw
   public draw() {
-    this.changeToPlayScene();
+    this.startGame();
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
     if (this.scene == "playScene") {
@@ -36,7 +40,8 @@ class Game {
       this.startScene.draw();
     }
   }
-  public changeToPlayScene() {
+
+  public startGame() {
     if (keyIsDown(32)) {
       this.scene = "playScene";
     }
