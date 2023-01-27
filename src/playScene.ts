@@ -109,7 +109,6 @@ class PlayScene {
 
   //Draw
   public draw() {
-    // this.playGameMusic();
     this.playboard.draw();
     this.scoreInterface.draw(this.scorePlayer1, this.scorePlayer2);
     this.goal.draw();
@@ -122,9 +121,6 @@ class PlayScene {
     }
     this.checkForGoal();
     this.drawGoal();
-    // if (!sounds.backgroundMusic.isPlaying()) {
-    //   sounds.backgroundMusic.play();
-    // }
   }
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
@@ -374,9 +370,4 @@ class PlayScene {
     }
   }
 
-  // public playGameMusic() {
-  //   if (!sounds.gameMusic.isPlaying()) {
-  //     sounds.gameMusic.loop();
-  //   }
-  // }
 }

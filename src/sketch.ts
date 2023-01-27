@@ -74,7 +74,7 @@ function setup() {
 
   game = new Game();
 
-  sounds.gameMusic.setVolume(0.05)
+  sounds.gameMusic.setVolume(0.1)
 }
 
 /**
