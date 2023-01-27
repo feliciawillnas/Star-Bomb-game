@@ -138,32 +138,35 @@ class PlayScene {
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
     for (let i = 0; i < this.bombs.length; i++) {
-      // Vänster mål
-      if (
-        this.bombs[i].x <=
-          width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
-        this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4 &&
-        this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
-      ) {
-        this.bombs.splice(i, 1);
-        this.scorePlayer2 = this.scorePlayer2 + 10;
-        // Give score to player
-        this.startTime = millis();
-        this.showGoalTextP1 = true;
-      }
-
-      // Höger mål
-      if (
-        this.bombs[i].x >=
-          width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
-        this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4  &&
-        this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
-      ) {
-        this.bombs.splice(i, 1);
-        this.scorePlayer1 = this.scorePlayer1 + 10;
-        // Give score to player
-        this.startTime = millis();
-        this.showGoalTextP2 = true;
+      // Only score if bomb has not exploded
+      if (this.bombs[i].timeToLive > 200) {
+        // Vänster mål
+        if (
+          this.bombs[i].x <=
+            width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
+          this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4 &&
+          this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
+        ) {
+          this.bombs.splice(i, 1);
+          this.scorePlayer2 = this.scorePlayer2 + 10;
+          // Give score to player
+          this.startTime = millis();
+          this.showGoalTextP1 = true;
+        }
+  
+        // Höger mål
+        if (
+          this.bombs[i].x >=
+            width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
+          this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4  &&
+          this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
+        ) {
+          this.bombs.splice(i, 1);
+          this.scorePlayer1 = this.scorePlayer1 + 10;
+          // Give score to player
+          this.startTime = millis();
+          this.showGoalTextP2 = true;
+        }
       }
     }
   }
