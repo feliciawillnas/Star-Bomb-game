@@ -65,8 +65,7 @@ class Player {
     this.controlPlayerOne();
     this.controlPlayerTwo();
     this.keepPlayersInsideScreen();
-    this.changeImage();
-    this.changeImageInterval()
+    
   }
   //Draw
   public draw() {
@@ -86,19 +85,6 @@ class Player {
     
   }
 
-  
-  private changeImageInterval(){
-    setInterval(this.changeImage, 1000)
-    
-  }
-  private changeImage(){
-    this.i++;  
-    if(this.i > 1 ){  
-      this.i = 0
-    }
-    
-  }
-  
 
   private controlPlayerOne() {
     if (keyIsDown(this.rotateLeft)) {
