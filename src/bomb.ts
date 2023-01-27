@@ -42,6 +42,7 @@ class Bomb {
   // When timer is under 5 seconds, draw a red bomb
   // When timer is under 0.2 seconds, draw an explosion
   private drawBombImage() {
+
     // Normal bomb image
     if (this.timeToLive > 5500){
         image(images.neonGreenBombClear, this.x, this.y);
@@ -117,7 +118,7 @@ class Bomb {
     text(intTimeToLive, this.x, this.y + 5);
   }
 
-  //Move bomb
+  // Moves bomb
   private moveBomb() {
     this.x += this.vx;
     this.y += this.vy;

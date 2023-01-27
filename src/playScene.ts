@@ -1,11 +1,13 @@
 class PlayScene {
-  //ATTRIBUTE////////////////////////////
+
+  /* ------------------
+        ATTRIBUTES
+  ------------------ */ 
   public goal: Goal;
   public scoreInterface: ScoreInterface;
   public playboard: Playboard;
   private bombs: Bomb[];
   private spawnTimeout: number;
-  // private removeTimeout: number;
 
   public playerOne: Player;
   public playerTwo: Player;
@@ -18,14 +20,14 @@ class PlayScene {
   private boardHeight: number;
   private goalW: number;
   private goalH: number;
-  // private bombs: Bomb[];
-  // private spawnTimeout: number;
 
   private startTime: any;
   private showGoalTextP1: boolean;
   private showGoalTextP2: boolean;
 
-  //CONSTRUCTOR////////////////////////
+  /* --------------------
+        CONSTRUCTOR
+  -------------------- */ 
   constructor() {
     this.offsetTop = 40;
     this.boardWidth = 1000;
@@ -50,7 +52,6 @@ class PlayScene {
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
 
     this.spawnTimeout = 0;
-    // this.removeTimeout = 16000;
     this.bombs = [];
 
     this.playboard = new Playboard(
@@ -89,9 +90,11 @@ class PlayScene {
     );
   }
 
-  //METHODS//////////////////////////
+  /* ---------------------
+        UPDATE & DRAW
+  --------------------- */ 
 
-  //Update
+  // Update
   public update() {
     this.playboard.update();
     this.scoreInterface.update();
@@ -105,10 +108,10 @@ class PlayScene {
     }
     this.checkBombAndPlayerCollision();
     this.checkBorderCollision();
-    this.updateBombs(); // Spawn, updateTime, remove
+    this.updateBombs(); // spawnBomb, updateBombsTimeToLive, removeDeadBombs
   }
 
-  //Draw
+  // Draw
   public draw() {
     // this.playGameMusic();
     this.playboard.draw();
@@ -127,6 +130,11 @@ class PlayScene {
     //   sounds.backgroundMusic.play();
     // }
   }
+
+  /* -----------------------------
+        GOAL-RELATED METHODS
+  ----------------------------- */ 
+
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
     for (let i = 0; i < this.bombs.length; i++) {
@@ -204,6 +212,17 @@ class PlayScene {
       pop();
     }
   }
+
+  /* -----------------------------
+        BOMB-RELATED METHODS
+  ----------------------------- */ 
+
+    // A collection of all three funcitons regarding BOMBS lifetime from start to finish.
+    private updateBombs() {
+      this.spawnBombs();
+      this.updateBombsTimeToLive();
+      this.removeDeadBombs();
+    }
 
     //Spawn bombs
     private spawnBombs() {
@@ -293,13 +312,6 @@ class PlayScene {
       }
     }
     this.bombs = tmpArray;
-  }
-
-  // A collection of all three funcitons regarding BOMBS lifetime from start to finish.
-  private updateBombs() {
-    this.spawnBombs();
-    this.updateBombsTimeToLive();
-    this.removeDeadBombs();
   }
 
   // Checks collision between players and bombs
