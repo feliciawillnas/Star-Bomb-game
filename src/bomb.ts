@@ -33,7 +33,9 @@ class Bomb {
 
   // Update
   public update(playboardWidth: number, playboardHeight: number) {
-    this.moveBomb();
+    if (this.timeToLive > 200) {
+        this.moveBomb();
+    }
     this.checkBorderCollision(playboardWidth, playboardHeight);
   }
 
@@ -54,7 +56,6 @@ class Bomb {
         image(images.redBomb, this.x, this.y)
     } else if (this.timeToLive <= 4000 && this.timeToLive > 3500){
         image(images.neonGreenBombClear, this.x, this.y);
-
 
     // Bomb blinks every 0.25 second
     } else if (this.timeToLive <= 3500 && this.timeToLive > 3250){
