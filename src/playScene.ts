@@ -142,8 +142,8 @@ class PlayScene {
       if (
         this.bombs[i].x <=
           width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
-        this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop &&
-        this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop
+        this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4 &&
+        this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
       ) {
         this.bombs.splice(i, 1);
         this.scorePlayer2 = this.scorePlayer2 + 10;
@@ -156,8 +156,8 @@ class PlayScene {
       if (
         this.bombs[i].x >=
           width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
-        this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop &&
-        this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop
+        this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4  &&
+        this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
       ) {
         this.bombs.splice(i, 1);
         this.scorePlayer1 = this.scorePlayer1 + 10;
