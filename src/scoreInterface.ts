@@ -19,7 +19,7 @@ class ScoreInterface {
     // Drawing scoreboard
     noStroke();
     stroke('black');
-    strokeWeight(5);
+    strokeWeight(7);
     fill(255, 255, 255, 50);
     rect(windowWidth / 2, height / 2 - this.boardHeight / 2 - 40, this.boardWidth, 100);
     fill(255, 255, 255);
@@ -35,17 +35,29 @@ class ScoreInterface {
 
     // Player Scores
     push();
+    push();
+    fill("blue");
+    drawingContext.shadowOffsetY = 10;
+    drawingContext.shadowOffsetX = 10;
+    drawingContext.shadowColor = 'black';
     text(
       scorePlayer1,
       width / 2 - this.boardWidth / 4,
       height / 2 - this.boardHeight / 2 - 20
     );
+    pop();
+    push()
+    fill("purple");
+    drawingContext.shadowOffsetY = 10;
+    drawingContext.shadowOffsetX = 10;
+    drawingContext.shadowColor = 'black';
     text(
       scorePlayer2,
       width / 2 + this.boardWidth / 4,
       height / 2 - this.boardHeight / 2 - 20
-      );
-      pop();
+    );
+    pop()
+    pop();
     }
     
 }
