@@ -101,9 +101,10 @@ class PlayScene {
     this.playerTwo.update();
 
     for (const bomb of this.bombs) {
-      bomb.update(this.playboard.width, this.playboard.height);
+      bomb.update();
     }
-    this.checkCollision();
+    this.checkBombAndPlayerCollision();
+    this.checkBorderCollision();
     this.updateBombs(); // Spawn, updateTime, remove
   }
 
@@ -302,7 +303,7 @@ class PlayScene {
   }
 
   // Checks collision between players and bombs
-  private checkCollision() {
+  private checkBombAndPlayerCollision() {
     const allBombs = [...this.bombs];
     const players = [this.playerOne, this.playerTwo];
 
@@ -373,6 +374,85 @@ class PlayScene {
       }
     }
   }
+
+// Check collision with borders
+private checkBorderCollision() {
+  const playboardLeftBorder = width / 2 - this.playboard.width / 2;
+  const playboardRightBorder = width / 2 + this.playboard.width / 2;
+  const playboardTopBorder = height / 2 - this.playboard.height / 2 + 40;
+  const playboardBottomBorder = height / 2 + this.playboard.height / 2 + 40;
+  const allBombs = [...this.bombs];
+  
+  for (const bomb of allBombs) {
+    
+    const bombRadius = bomb.diameter / 2;
+  
+    // Checks collision with right border
+    // The if conditionals decides the bombs speed (vx) after collision
+    if (bomb.x > playboardRightBorder - bombRadius) {
+    
+      if (bomb.vx > 0 && bomb.vx < 1) {
+        bomb.vx = -1;
+      } else if (bomb.vx > 1 && bomb.vx <= 2) {
+        bomb.vx = -2;
+      } else if (bomb.vx > 2 && bomb.vx <= 3) {
+        bomb.vx = -3;
+      } else if (bomb.vx > 3 && bomb.vx <= 4) {
+        bomb.vx = -4;
+      } else if (bomb.vx > 4) {
+        bomb.vx = -5;
+      }
+    }
+  
+    // Checks collision with left border
+    // The if conditionals decides the bombs speed (vx) after collision
+    if (bomb.x < playboardLeftBorder + bombRadius) {
+      if (bomb.vx < 0 && bomb.vx > -1) {
+        bomb.vx = 1;
+      } else if (bomb.vx < -1 && bomb.vx >= -2) {
+        bomb.vx = 2;
+      } else if (bomb.vx < -2 && bomb.vx >= -3) {
+        bomb.vx = 3;
+      } else if (bomb.vx < -3 && bomb.vx >= -4) {
+        bomb.vx = 4;
+      } else if (bomb.vx < -4) {
+        bomb.vx = 5;
+      }
+    }
+  
+    // Checks collision with top border
+    // The if conditionals decides the bombs speed (vy) after collision
+    if (bomb.y < playboardTopBorder + bombRadius) {
+      if (bomb.vy < 0 && bomb.vy > -1) {
+        bomb.vy = 1;
+      } else if (bomb.vy < -1 && bomb.vy >= -2) {
+        bomb.vy = 2;
+      } else if (bomb.vy < -2 && bomb.vy >= -3) {
+        bomb.vy = 3;
+      } else if (bomb.vy < -3 && bomb.vy >= -4) {
+        bomb.vy = 4;
+      } else if (bomb.vy < -4) {
+        bomb.vy = 5;
+      }
+    }
+  
+    // Checks collision with bottom border
+    // The if conditionals decides the bombs speed (vy) after collision
+    if (bomb.y > playboardBottomBorder - bombRadius) {
+      if (bomb.vy > 0 && bomb.vy < 1) {
+        bomb.vy = -1;
+      } else if (bomb.vy > 1 && bomb.vy <= 2) {
+        bomb.vy = -2;
+      } else if (bomb.vy > 2 && bomb.vy <= 3) {
+        bomb.vy = -3;
+      } else if (bomb.vy > 3 && bomb.vy <= 4) {
+        bomb.vy = -4;
+      } else if (bomb.vy > 4) {
+        bomb.vy = -5;
+      }
+    }
+  }
+}
 
   // public playGameMusic() {
   //   if (!sounds.gameMusic.isPlaying()) {
