@@ -6,16 +6,16 @@ class PowerUp {
     public x: number;
     public y: number;
     public diameter: number;
-    public powerUpType: string;
+    public type: string;
   
     /* --------------------
           CONSTRUCTOR
     -------------------- */ 
-    constructor(diameter: number, x: number, y: number, powerUpType: string) {
+    constructor(diameter: number, x: number, y: number, type: string) {
       this.x = x;
       this.y = y;
       this.diameter = diameter;
-      this.powerUpType = powerUpType;
+      this.type = type;
     }
   
     /* ------------------
@@ -23,11 +23,12 @@ class PowerUp {
     ------------------ */ 
     // Draw
     public draw() {
-
+        noStroke();
+        ellipse(this.x, this.y, this.diameter)
     }
   
     // Update
     public update() {
-        
+
     }
 }

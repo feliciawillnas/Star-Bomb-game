@@ -9,6 +9,7 @@ class PlayScene {
   private bombs: Bomb[];
   private powerUps: PowerUp[];
   private spawnTimeout: number;
+  private spawnTimeoutPowerUp: number;
 
   public playerOne: Player;
   public playerTwo: Player;
@@ -53,6 +54,7 @@ class PlayScene {
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
 
     this.spawnTimeout = 0;
+    this.spawnTimeoutPowerUp = 5000;
     this.bombs = [];
     this.powerUps = [];
 
@@ -115,6 +117,7 @@ class PlayScene {
 
     this.checkCollision();
     this.updateBombs(); // spawnBomb, updateBombsTimeToLive, removeDeadBombs
+    this.spawnPowerUps()
   }
 
   // Draw
@@ -493,9 +496,84 @@ private checkBorderCollision() {
         POWERUP-RELATED METHODS
   ----------------------------- */ 
 
+  private spawnPowerUps() {
+      const diameter = 30;
+      const powerUpRadius = diameter / 2;
+      const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
+      const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
+      const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
+      const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
+      const playAreaX1 = playAreaLeftBorder + powerUpRadius + 100;
+      const playAreaX2 = playAreaRightBorder - powerUpRadius - 100;
+      const playAreaY1 = playAreaTopBorder + powerUpRadius + 50;
+      const playAreaY2 = playAreaBottomBorder - powerUpRadius - 50;
+      let x = random(playAreaX1, playAreaX2);
+      let y = random(playAreaY1, playAreaY2)
+      const players = [this.playerOne, this.playerTwo];
+      let unavailableSpacesX = []
+      let unavailableSpacesY = []
+      this.spawnTimeoutPowerUp -= deltaTime;
+      let type = "reverse-controls";
+        
+      if (this.spawnTimeoutPowerUp < 0) {
+  
+          // Kontrollerar om spelare existerar på x-axeln
+          for (const player of players) {
+              if (x > (player.x - player.diameter / 2 - powerUpRadius - 50) && x < (player.x + player.diameter / 2 + powerUpRadius + 50)) {
+                  unavailableSpacesX.push(player.x);
+              }
+          }
+  
+          // Kontrollerar om spelare existerar på y-axeln
+          for (const player of players) {
+              if (y > (player.y - player.diameter / 2 - powerUpRadius - 50) && y < (player.y + player.diameter / 2 + powerUpRadius + 50)) {
+                  unavailableSpacesY.push(player.y);
+              }
+          }
+  
+          // Kontrollerar om powerup existerar på x-axeln
+          for (const powerUp of this.powerUps) {
+            if (x > (powerUp.x - powerUp.diameter - 5) && x < (powerUp.x + powerUp.diameter + 5)) {
+              unavailableSpacesX.push(powerUp.x);
+            }
+          }
+
+          // Kontrollerar om powerup existerar på y-axeln
+          for (const powerUp of this.powerUps) {
+              if (y > (powerUp.y - powerUp.diameter - 5) && y < (powerUp.y + powerUp.diameter + 5)) {
+                  unavailableSpacesY.push(powerUp.y);
+              }
+          }
+
+          // Lägger till powerup på spelplan om randomvärdet inte kolliderar med existerande powerups
+          // eller spelare på x- eller y-axeln
+          if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
+              this.powerUps.push(new PowerUp(diameter, x, y, type));
+              this.spawnTimeoutPowerUp = 10000;
+          }
+      }
+  }
+
   private checkPowerUpCollision() {
-    const allPowerUps = [...this.powerUps];
     const players = [this.playerOne, this.playerTwo];
+
+    for (let i = 0; i < this.powerUps.length; i++) {
+      for (const player of players) {
+
+        let dx = player.x - this.powerUps[i].x;
+        let dy = player.y - this.powerUps[i].y;
+        let distance = sqrt(dx * dx + dy * dy);
+        let minDist = player.diameter / 2 + this.powerUps[i].diameter / 2;
+
+        if (distance < minDist) {
+          this.powerUps.splice(i, 1);
+        }
+      }
+    }
+
+
+
+
   }
 
   // public playGameMusic() {
