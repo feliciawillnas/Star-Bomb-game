@@ -1,11 +1,13 @@
 class PlayScene {
-  //ATTRIBUTE////////////////////////////
+
+  /* ------------------
+        ATTRIBUTES
+  ------------------ */ 
   public goal: Goal;
   public scoreInterface: ScoreInterface;
   public playboard: Playboard;
   private bombs: Bomb[];
   private spawnTimeout: number;
-  // private removeTimeout: number;
 
   public playerOne: Player;
   public playerTwo: Player;
@@ -18,14 +20,14 @@ class PlayScene {
   private boardHeight: number;
   private goalW: number;
   private goalH: number;
-  // private bombs: Bomb[];
-  // private spawnTimeout: number;
 
   private startTime: any;
   private showGoalTextP1: boolean;
   private showGoalTextP2: boolean;
 
-  //CONSTRUCTOR////////////////////////
+  /* --------------------
+        CONSTRUCTOR
+  -------------------- */ 
   constructor() {
     this.offsetTop = 40;
     this.boardWidth = 1000;
@@ -48,6 +50,7 @@ class PlayScene {
     this.showGoalTextP2 = false;
 
     this.spawnTimeout = 0;
+
 
     this.bombs = [];
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
@@ -87,9 +90,11 @@ class PlayScene {
     );
   }
 
-  //METHODS//////////////////////////
+  /* ---------------------
+        UPDATE & DRAW
+  --------------------- */ 
 
-  //Update
+  // Update
   public update() {
     this.playboard.update();
     this.scoreInterface.update();
@@ -99,13 +104,14 @@ class PlayScene {
     this.playerTwo.update();
 
     for (const bomb of this.bombs) {
-      bomb.update(this.playboard.width, this.playboard.height);
+      bomb.update();
     }
-    this.checkCollision();
-    this.updateBombs(); // Spawn, updateTime, remove
+    this.checkBombAndPlayerCollision();
+    this.checkBorderCollision();
+    this.updateBombs(); // spawnBomb, updateBombsTimeToLive, removeDeadBombs
   }
 
-  //Draw
+  // Draw
   public draw() {
     this.playboard.draw();
     this.scoreInterface.draw(this.scorePlayer1, this.scorePlayer2);
@@ -133,35 +139,44 @@ class PlayScene {
     pop();
   }
 
+
+  /* -----------------------------
+        GOAL-RELATED METHODS
+  ----------------------------- */ 
+
+
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
     for (let i = 0; i < this.bombs.length; i++) {
-      // Vänster mål
-      if (
-        this.bombs[i].x <=
-          width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
-        this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop &&
-        this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop
-      ) {
-        this.bombs.splice(i, 1);
-        this.scorePlayer2 = this.scorePlayer2 + 10;
-        // Give score to player
-        this.startTime = millis();
-        this.showGoalTextP1 = true;
-      }
-
-      // Höger mål
-      if (
-        this.bombs[i].x >=
-          width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
-        this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop &&
-        this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop
-      ) {
-        this.bombs.splice(i, 1);
-        this.scorePlayer1 = this.scorePlayer1 + 10;
-        // Give score to player
-        this.startTime = millis();
-        this.showGoalTextP2 = true;
+      // Only score if bomb has not exploded
+      if (this.bombs[i].timeToLive > 200) {
+        // Vänster mål
+        if (
+          this.bombs[i].x <=
+            width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
+          this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4 &&
+          this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
+        ) {
+          this.bombs.splice(i, 1);
+          this.scorePlayer2 = this.scorePlayer2 + 10;
+          // Give score to player
+          this.startTime = millis();
+          this.showGoalTextP1 = true;
+        }
+  
+        // Höger mål
+        if (
+          this.bombs[i].x >=
+            width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
+          this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4  &&
+          this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
+        ) {
+          this.bombs.splice(i, 1);
+          this.scorePlayer1 = this.scorePlayer1 + 10;
+          // Give score to player
+          this.startTime = millis();
+          this.showGoalTextP2 = true;
+        }
       }
     }
   }
@@ -211,67 +226,75 @@ class PlayScene {
     }
   }
 
-  //Spawn bombs
-  private spawnBombs() {
-    const diameter = 40;
-    const bombRadius = diameter / 2;
-    const playAreaLeftBorder = width / 2 - this.playboard.width / 2;
-    const playAreaRightBorder = width / 2 + this.playboard.width / 2;
-    const playAreaTopBorder =
-      height / 2 - this.playboard.height / 2 + this.playboard.offsetTop;
-    const playAreaBottomBorder =
-      height / 2 + this.playboard.height / 2 + this.playboard.offsetTop;
-    const playAreaX1 = playAreaLeftBorder + bombRadius + 100;
-    const playAreaX2 = playAreaRightBorder - bombRadius - 100;
-    const playAreaY1 = playAreaTopBorder + bombRadius + 50;
-    const playAreaY2 = playAreaBottomBorder - bombRadius - 50;
-    let x = random(playAreaX1, playAreaX2);
-    let y = random(playAreaY1, playAreaY2);
-    const players = [this.playerOne, this.playerTwo];
-    let unavailableSpacesX = [];
-    let unavailableSpacesY = [];
-    this.spawnTimeout -= deltaTime;
 
-    if (this.spawnTimeout < 0) {
-      // Kontrollerar om spelare existerar på x-axeln
-      for (const player of players) {
-        if (
-          x > player.x - player.diameter / 2 - bombRadius - 50 &&
-          x < player.x + player.diameter / 2 + bombRadius + 50
-        ) {
-          unavailableSpacesX.push(player.x);
-        }
-      }
+  /* -----------------------------
+        BOMB-RELATED METHODS
+  ----------------------------- */ 
 
-      // Kontrollerar om spelare existerar på y-axeln
-      for (const player of players) {
-        if (
-          y > player.y - player.diameter / 2 - bombRadius - 50 &&
-          y < player.y + player.diameter / 2 + bombRadius + 50
-        ) {
-          unavailableSpacesY.push(player.y);
-        }
-      }
+    // A collection of all three funcitons regarding BOMBS lifetime from start to finish.
+    private updateBombs() {
+      this.spawnBombs();
+      this.updateBombsTimeToLive();
+      this.removeDeadBombs();
+    }
 
-      // Kontrollerar om bomb existerar på x-axeln
-      for (const bomb of this.bombs) {
-        if (x > bomb.x - bomb.diameter - 5 && x < bomb.x + bomb.diameter + 5) {
-          unavailableSpacesX.push(bomb.x);
-        }
-      }
+    //Spawn bombs
+    private spawnBombs() {
+      const diameter = 40;
+      const bombRadius = diameter / 2;
+      const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
+      const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
+      const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
+      const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
+      const playAreaX1 = playAreaLeftBorder + bombRadius + 100;
+      const playAreaX2 = playAreaRightBorder - bombRadius - 100;
+      const playAreaY1 = playAreaTopBorder + bombRadius + 50;
+      const playAreaY2 = playAreaBottomBorder - bombRadius - 50;
+      let x = random(playAreaX1, playAreaX2);
+      let y = random(playAreaY1, playAreaY2)
+      const players = [this.playerOne, this.playerTwo];
+      let unavailableSpacesX = []
+      let unavailableSpacesY = []
+      this.spawnTimeout -= deltaTime;
+      let timeToLive = random(6000, 20000);
+        
+      if (this.spawnTimeout < 0) {
+  
+          // Kontrollerar om spelare existerar på x-axeln
+          for (const player of players) {
+              if (x > (player.x - player.diameter / 2 - bombRadius - 50) && x < (player.x + player.diameter / 2 + bombRadius + 50)) {
+                  unavailableSpacesX.push(player.x);
+              }
+          }
+  
+          // Kontrollerar om spelare existerar på y-axeln
+          for (const player of players) {
+              if (y > (player.y - player.diameter / 2 - bombRadius - 50) && y < (player.y + player.diameter / 2 + bombRadius + 50)) {
+                  unavailableSpacesY.push(player.y);
+              }
+          }
+  
+          // Kontrollerar om bomb existerar på x-axeln
+          for (const bomb of this.bombs) {
+              if (x > (bomb.x - bomb.diameter - 5) && x < (bomb.x + bomb.diameter + 5)) {
+                unavailableSpacesX.push(bomb.x);
+              }
+          }
+  
+          // Kontrollerar om bomb existerar på y-axeln
+          for (const bomb of this.bombs) {
+              if (y > (bomb.y - bomb.diameter - 5) && y < (bomb.y + bomb.diameter + 5)) {
+                  unavailableSpacesY.push(bomb.y);
+              }
+          }
+  
+          // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande bomber
+          // eller spelare på x- eller y-axeln
+          if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
+              this.bombs.push(new Bomb(diameter, x, y, timeToLive));
+              this.spawnTimeout = 1000;
+          }
 
-      // Kontrollerar om bomb existerar på y-axeln
-      for (const bomb of this.bombs) {
-        if (y > bomb.y - bomb.diameter - 5 && y < bomb.y + bomb.diameter + 5) {
-          unavailableSpacesY.push(bomb.y);
-        }
-      }
-
-      // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande bomber
-      // eller spelare på x- eller y-axeln
-      if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
-        this.bombs.push(new Bomb(diameter, x, y, 15_000));
-        this.spawnTimeout = 1000;
       }
     }
   }
@@ -307,15 +330,8 @@ class PlayScene {
     this.bombs = tmpArray;
   }
 
-  // A collection of all three funcitons regarding BOMBS lifetime from start to finish.
-  private updateBombs() {
-    this.spawnBombs();
-    this.updateBombsTimeToLive();
-    this.removeDeadBombs();
-  }
-
   // Checks collision between players and bombs
-  private checkCollision() {
+  private checkBombAndPlayerCollision() {
     const allBombs = [...this.bombs];
     const players = [this.playerOne, this.playerTwo];
 
@@ -386,4 +402,86 @@ class PlayScene {
       }
     }
   }
+
+
+// Check collision with borders
+private checkBorderCollision() {
+  const playboardLeftBorder = width / 2 - this.playboard.width / 2;
+  const playboardRightBorder = width / 2 + this.playboard.width / 2;
+  const playboardTopBorder = height / 2 - this.playboard.height / 2 + 40;
+  const playboardBottomBorder = height / 2 + this.playboard.height / 2 + 40;
+  const allBombs = [...this.bombs];
+  
+  for (const bomb of allBombs) {
+    
+    const bombRadius = bomb.diameter / 2;
+  
+    // Checks collision with right border
+    // The if conditionals decides the bombs speed (vx) after collision
+    if (bomb.x > playboardRightBorder - bombRadius) {
+    
+      if (bomb.vx > 0 && bomb.vx < 1) {
+        bomb.vx = -1;
+      } else if (bomb.vx > 1 && bomb.vx <= 2) {
+        bomb.vx = -2;
+      } else if (bomb.vx > 2 && bomb.vx <= 3) {
+        bomb.vx = -3;
+      } else if (bomb.vx > 3 && bomb.vx <= 4) {
+        bomb.vx = -4;
+      } else if (bomb.vx > 4) {
+        bomb.vx = -5;
+      }
+    }
+  
+    // Checks collision with left border
+    // The if conditionals decides the bombs speed (vx) after collision
+    if (bomb.x < playboardLeftBorder + bombRadius) {
+      if (bomb.vx < 0 && bomb.vx > -1) {
+        bomb.vx = 1;
+      } else if (bomb.vx < -1 && bomb.vx >= -2) {
+        bomb.vx = 2;
+      } else if (bomb.vx < -2 && bomb.vx >= -3) {
+        bomb.vx = 3;
+      } else if (bomb.vx < -3 && bomb.vx >= -4) {
+        bomb.vx = 4;
+      } else if (bomb.vx < -4) {
+        bomb.vx = 5;
+      }
+    }
+  
+    // Checks collision with top border
+    // The if conditionals decides the bombs speed (vy) after collision
+    if (bomb.y < playboardTopBorder + bombRadius) {
+      if (bomb.vy < 0 && bomb.vy > -1) {
+        bomb.vy = 1;
+      } else if (bomb.vy < -1 && bomb.vy >= -2) {
+        bomb.vy = 2;
+      } else if (bomb.vy < -2 && bomb.vy >= -3) {
+        bomb.vy = 3;
+      } else if (bomb.vy < -3 && bomb.vy >= -4) {
+        bomb.vy = 4;
+      } else if (bomb.vy < -4) {
+        bomb.vy = 5;
+      }
+    }
+  
+    // Checks collision with bottom border
+    // The if conditionals decides the bombs speed (vy) after collision
+    if (bomb.y > playboardBottomBorder - bombRadius) {
+      if (bomb.vy > 0 && bomb.vy < 1) {
+        bomb.vy = -1;
+      } else if (bomb.vy > 1 && bomb.vy <= 2) {
+        bomb.vy = -2;
+      } else if (bomb.vy > 2 && bomb.vy <= 3) {
+        bomb.vy = -3;
+      } else if (bomb.vy > 3 && bomb.vy <= 4) {
+        bomb.vy = -4;
+      } else if (bomb.vy > 4) {
+        bomb.vy = -5;
+      }
+    }
+  }
+}
+
+  
 }
