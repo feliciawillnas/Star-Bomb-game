@@ -22,6 +22,7 @@ interface Images {
 interface Sounds {
   // bang: p5.SoundFile;
   // pop: p5.SoundFile;
+  startSceneMusic: p5.SoundFile;
   gameMusic: p5.SoundFile;
 }
 
@@ -36,6 +37,7 @@ let symbolFont: p5.Font;
 function preload() {
   // SOUNDS ///////////////////
   sounds = {
+    startSceneMusic: loadSound("../assets/sounds/startscene_music.mp3"),
     gameMusic: loadSound("../assets/sounds/star_rider.mp3"),
   };
   // IMGAES //////////////////
@@ -74,6 +76,7 @@ function setup() {
 
   game = new Game();
 
+  sounds.startSceneMusic.setVolume(0.1)
   sounds.gameMusic.setVolume(0.1)
 }
 

@@ -25,6 +25,8 @@ class PlayScene {
   private showGoalTextP1: boolean;
   private showGoalTextP2: boolean;
 
+  private buttonText: string;
+
   //CONSTRUCTOR////////////////////////
   constructor() {
     this.offsetTop = 40;
@@ -47,12 +49,11 @@ class PlayScene {
     this.showGoalTextP1 = false;
     this.showGoalTextP2 = false;
 
-    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
-
     this.spawnTimeout = 0;
-    // this.removeTimeout = 16000;
-    this.bombs = [];
+    this.buttonText = "mute"
 
+    this.bombs = [];
+    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
     this.playboard = new Playboard(
       this.offsetTop,
       this.boardWidth,
@@ -121,7 +122,20 @@ class PlayScene {
     }
     this.checkForGoal();
     this.drawGoal();
+    this.drawMuteButton();
+  
   }
+
+
+
+  private drawMuteButton(){
+    fill("#69B7C2")
+    rect(width - 40, height - 30, 60, 30)
+    text(this.buttonText, width - 40, height- 25)
+  }
+
+
+
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
     for (let i = 0; i < this.bombs.length; i++) {
