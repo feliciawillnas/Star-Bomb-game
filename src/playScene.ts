@@ -512,8 +512,8 @@ private checkBorderCollision() {
       const players = [this.playerOne, this.playerTwo];
       let unavailableSpacesX = []
       let unavailableSpacesY = []
+      let allTypesOfPowerUps = ["reverse-controls", "goal-shield", "slow-down", "force-push"]
       this.spawnTimeoutPowerUp -= deltaTime;
-      let type = "reverse-controls";
         
       if (this.spawnTimeoutPowerUp < 0) {
   
@@ -548,8 +548,8 @@ private checkBorderCollision() {
           // Lägger till powerup på spelplan om randomvärdet inte kolliderar med existerande powerups
           // eller spelare på x- eller y-axeln
           if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
-              this.powerUps.push(new PowerUp(diameter, x, y, type));
-              this.spawnTimeoutPowerUp = 10000;
+              this.powerUps.push(new PowerUp(diameter, x, y, random(allTypesOfPowerUps)));
+              this.spawnTimeoutPowerUp = 1000;
           }
       }
   }
@@ -566,14 +566,22 @@ private checkBorderCollision() {
         let minDist = player.diameter / 2 + this.powerUps[i].diameter / 2;
 
         if (distance < minDist) {
+          if (this.powerUps[i].type == "slow-down") {
+              // metod
+          }
+          if (this.powerUps[i].type == "reverse-controls") {
+              // metod
+          }
+          if (this.powerUps[i].type == "goal-shield") {
+              // metod
+          }
+          if (this.powerUps[i].type == "force-push") {
+              // metod
+          }
           this.powerUps.splice(i, 1);
         }
       }
     }
-
-
-
-
   }
 
   // public playGameMusic() {

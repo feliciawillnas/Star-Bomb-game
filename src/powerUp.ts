@@ -24,6 +24,18 @@ class PowerUp {
     // Draw
     public draw() {
         noStroke();
+        if (this.type == "slow-down") {
+            fill(255, 0, 0)
+        }
+        if (this.type == "reverse-controls") {
+            fill(0, 255, 0)
+        }
+        if (this.type == "goal-shield") {
+            fill(0, 0, 255)
+        }
+        if (this.type == "force-push") {
+            fill(255, 255, 0)
+        }
         ellipse(this.x, this.y, this.diameter)
     }
   
