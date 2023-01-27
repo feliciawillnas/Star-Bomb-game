@@ -47,12 +47,10 @@ class PlayScene {
     this.showGoalTextP1 = false;
     this.showGoalTextP2 = false;
 
-    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
-
     this.spawnTimeout = 0;
-    // this.removeTimeout = 16000;
-    this.bombs = [];
 
+    this.bombs = [];
+    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
     this.playboard = new Playboard(
       this.offsetTop,
       this.boardWidth,
@@ -109,7 +107,6 @@ class PlayScene {
 
   //Draw
   public draw() {
-    // this.playGameMusic();
     this.playboard.draw();
     this.scoreInterface.draw(this.scorePlayer1, this.scorePlayer2);
     this.goal.draw();
@@ -122,10 +119,20 @@ class PlayScene {
     }
     this.checkForGoal();
     this.drawGoal();
-    // if (!sounds.backgroundMusic.isPlaying()) {
-    //   sounds.backgroundMusic.play();
-    // }
+    this.drawVolumeSlider();
   }
+
+  // Text: "Volume: x%"
+  private drawVolumeSlider() {
+    push();
+    noStroke();
+    fill("white");
+    textSize(10);
+    text("Volume:", 50, 60);
+    text(int(slider.value() * 100) + "%", 105, 60);
+    pop();
+  }
+
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
     for (let i = 0; i < this.bombs.length; i++) {
@@ -175,7 +182,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
-          height/2 - this.goalH / 2
+          height / 2 - this.goalH / 2
         );
       } else {
         this.showGoalTextP1 = false;
@@ -184,7 +191,7 @@ class PlayScene {
     }
   }
 
- // Draws the text "GOAL!" over the right goal when a bomb crosses its goal line.
+  // Draws the text "GOAL!" over the right goal when a bomb crosses its goal line.
   private drawMadeGoalP2() {
     if (this.showGoalTextP2) {
       push();
@@ -195,7 +202,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
-          height / 2 - this.goalH / 2 
+          height / 2 - this.goalH / 2
         );
       } else {
         this.showGoalTextP2 = false;
@@ -204,63 +211,70 @@ class PlayScene {
     }
   }
 
-    //Spawn bombs
-    private spawnBombs() {
-      const diameter = 40;
-      const bombRadius = diameter / 2;
-      const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
-      const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
-      const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
-      const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
-      const playAreaX1 = playAreaLeftBorder + bombRadius + 100;
-      const playAreaX2 = playAreaRightBorder - bombRadius - 100;
-      const playAreaY1 = playAreaTopBorder + bombRadius + 50;
-      const playAreaY2 = playAreaBottomBorder - bombRadius - 50;
-      let x = random(playAreaX1, playAreaX2);
-      let y = random(playAreaY1, playAreaY2)
-      const players = [this.playerOne, this.playerTwo];
-      let unavailableSpacesX = []
-      let unavailableSpacesY = []
-      this.spawnTimeout -= deltaTime;
-        
-      if (this.spawnTimeout < 0) {
-  
-          // Kontrollerar om spelare existerar på x-axeln
-          for (const player of players) {
-              if (x > (player.x - player.diameter / 2 - bombRadius - 50) && x < (player.x + player.diameter / 2 + bombRadius + 50)) {
-                  unavailableSpacesX.push(player.x);
-              }
-          }
-  
-          // Kontrollerar om spelare existerar på y-axeln
-          for (const player of players) {
-              if (y > (player.y - player.diameter / 2 - bombRadius - 50) && y < (player.y + player.diameter / 2 + bombRadius + 50)) {
-                  unavailableSpacesY.push(player.y);
-              }
-          }
-  
-          // Kontrollerar om bomb existerar på x-axeln
-          for (const bomb of this.bombs) {
-              if (x > (bomb.x - bomb.diameter - 5) && x < (bomb.x + bomb.diameter + 5)) {
-                unavailableSpacesX.push(bomb.x);
-              }
-          }
-  
-          // Kontrollerar om bomb existerar på y-axeln
-          for (const bomb of this.bombs) {
-              if (y > (bomb.y - bomb.diameter - 5) && y < (bomb.y + bomb.diameter + 5)) {
-                  unavailableSpacesY.push(bomb.y);
-              }
-          }
-  
-          // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande bomber
-          // eller spelare på x- eller y-axeln
-          if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
-              this.bombs.push(new Bomb(diameter, x, y, 15_000));
-              this.spawnTimeout = 1000;
-          }
+  //Spawn bombs
+  private spawnBombs() {
+    const diameter = 40;
+    const bombRadius = diameter / 2;
+    const playAreaLeftBorder = width / 2 - this.playboard.width / 2;
+    const playAreaRightBorder = width / 2 + this.playboard.width / 2;
+    const playAreaTopBorder =
+      height / 2 - this.playboard.height / 2 + this.playboard.offsetTop;
+    const playAreaBottomBorder =
+      height / 2 + this.playboard.height / 2 + this.playboard.offsetTop;
+    const playAreaX1 = playAreaLeftBorder + bombRadius + 100;
+    const playAreaX2 = playAreaRightBorder - bombRadius - 100;
+    const playAreaY1 = playAreaTopBorder + bombRadius + 50;
+    const playAreaY2 = playAreaBottomBorder - bombRadius - 50;
+    let x = random(playAreaX1, playAreaX2);
+    let y = random(playAreaY1, playAreaY2);
+    const players = [this.playerOne, this.playerTwo];
+    let unavailableSpacesX = [];
+    let unavailableSpacesY = [];
+    this.spawnTimeout -= deltaTime;
+
+    if (this.spawnTimeout < 0) {
+      // Kontrollerar om spelare existerar på x-axeln
+      for (const player of players) {
+        if (
+          x > player.x - player.diameter / 2 - bombRadius - 50 &&
+          x < player.x + player.diameter / 2 + bombRadius + 50
+        ) {
+          unavailableSpacesX.push(player.x);
+        }
+      }
+
+      // Kontrollerar om spelare existerar på y-axeln
+      for (const player of players) {
+        if (
+          y > player.y - player.diameter / 2 - bombRadius - 50 &&
+          y < player.y + player.diameter / 2 + bombRadius + 50
+        ) {
+          unavailableSpacesY.push(player.y);
+        }
+      }
+
+      // Kontrollerar om bomb existerar på x-axeln
+      for (const bomb of this.bombs) {
+        if (x > bomb.x - bomb.diameter - 5 && x < bomb.x + bomb.diameter + 5) {
+          unavailableSpacesX.push(bomb.x);
+        }
+      }
+
+      // Kontrollerar om bomb existerar på y-axeln
+      for (const bomb of this.bombs) {
+        if (y > bomb.y - bomb.diameter - 5 && y < bomb.y + bomb.diameter + 5) {
+          unavailableSpacesY.push(bomb.y);
+        }
+      }
+
+      // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande bomber
+      // eller spelare på x- eller y-axeln
+      if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
+        this.bombs.push(new Bomb(diameter, x, y, 15_000));
+        this.spawnTimeout = 1000;
       }
     }
+  }
 
   // Decreases each bombs timeToLive by one per second.
   private updateBombsTimeToLive() {
@@ -280,8 +294,7 @@ class PlayScene {
       let bomb = this.bombs[i];
       if (bomb.timeToLive > 0) {
         tmpArray.push(bomb);
-      } 
-      else if (bomb.timeToLive < 0) {
+      } else if (bomb.timeToLive < 0) {
         // If bomb timer is 0 give points to players.
         if (bomb.x > width / 2) {
           this.scorePlayer1 = this.scorePlayer1 + 2;
@@ -373,10 +386,4 @@ class PlayScene {
       }
     }
   }
-
-  // public playGameMusic() {
-  //   if (!sounds.gameMusic.isPlaying()) {
-  //     sounds.gameMusic.loop();
-  //   }
-  // }
 }
