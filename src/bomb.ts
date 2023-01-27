@@ -28,7 +28,7 @@ class Bomb {
   // Draw
   public draw() {
     this.drawBombTimer();
-    this.drawExplosion();
+    this.drawBombImage();
   }
 
   // Update
@@ -37,13 +37,16 @@ class Bomb {
     this.checkBorderCollision(playboardWidth, playboardHeight);
   }
 
-  // Shows explosion image last 0.2 seconds of detonation time.
-  private drawExplosion() {
-    if (this.timeToLive > 200){
+  // Draws bomb image
+  // When timer is under 5 seconds, draw a red bomb
+  // When timer is under 0.2 seconds, draw an explosion
+  private drawBombImage() {
+    if (this.timeToLive > 5500){
         image(images.neonGreenBombClear, this.x, this.y);
-    }
-    else {
-      image(images.explosion, this.x, this.y, 40, 40);
+    } else if (this.timeToLive > 200 && this.timeToLive <= 5500) {
+        image(images.redBomb, this.x, this.y)
+    } else {
+        image(images.explosion, this.x, this.y, 40, 40);
     }
   }
 
