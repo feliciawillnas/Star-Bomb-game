@@ -101,9 +101,11 @@ class Bomb {
     } else if (this.timeToLive <= 400 && this.timeToLive > 300) {
         image(images.neonGreenBombClear, this.x, this.y)
 
-    // Draws explosion image
+    // Draws explosion image and adds an "explosion effect" that
+    // pushes nearby bombs away
     } else{
         image(images.explosion, this.x, this.y, 40, 40);
+        this.diameter += 10
     }
   }
 
