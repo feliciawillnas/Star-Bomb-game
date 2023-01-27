@@ -1,7 +1,6 @@
 //---- GLOBAL VARIABLES ----//
 /*Instances*/
 let game: Game;
-
 let images: Images;
 let sounds: Sounds;
 
@@ -35,11 +34,11 @@ let symbolFont: p5.Font;
  * sound files, images etc...
  */
 function preload() {
-  // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
+  // SOUNDS ///////////////////
   sounds = {
     gameMusic: loadSound("../assets/sounds/star_rider.mp3"),
   };
-
+  // IMGAES //////////////////
   images = {
     background: loadImage("../assets/images/background.jpg"),
     galaxGoal: loadImage("../assets/images/galax.jpg"),
@@ -49,12 +48,11 @@ function preload() {
     rocketImgBlue2: loadImage("../assets/images/blueRocket2.png"),
     rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
     explosion: loadImage("../assets/images/explosion.png"),
-
     // neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
     neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),
-
     neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
   };
+  // FONTS ////////////////////
   gameFont = loadFont("../assets/fonts/PressStart2P-Regular.ttf");
   symbolFont = loadFont("../assets/fonts/symbolerFont.otf");
 }
@@ -75,6 +73,8 @@ function setup() {
   textFont(gameFont);
 
   game = new Game();
+
+  sounds.gameMusic.setVolume(0.05)
 }
 
 /**

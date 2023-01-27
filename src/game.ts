@@ -11,7 +11,7 @@ class Game implements IStartGame {
 
   //CONSTRUCTOR//////////////////////////
   constructor() {
-    this.scene = "playScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
+    this.scene = "startScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
     this.startScene = new StartScene(game);
     this.endScene = new EndScene();
@@ -44,6 +44,7 @@ class Game implements IStartGame {
   public startGame() {
     if (keyIsDown(32)) {
       this.scene = "playScene";
+      sounds.gameMusic.loop()
     }
   }
 }
