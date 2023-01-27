@@ -27,6 +27,7 @@ class Player {
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
     this.move = 4;
+    this.i = 0
 
     // Spelarnas startpositioner flyttas vid in- och utzoomning. Ska det vara så?
     if (player === 1) {
@@ -37,7 +38,7 @@ class Player {
       this.diameter = this.heightPlayer + 15;
       this.angle = 90;
       this.color = 'blue';
-      this.img = [images.rocketImgBlue1, images.rocketImgBlue1];
+      this.img = [images.rocketImgBlue1, images.rocketImgBlue2];
       this.rotateLeft = 65;
       this.rotateRight = 68;
       this.forward = 87;
