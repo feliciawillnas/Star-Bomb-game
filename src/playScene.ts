@@ -500,7 +500,7 @@ private checkBorderCollision() {
 
   // Spawns powerups
   private spawnPowerUps() {
-      const diameter = 30;
+      const diameter = 24;
       const powerUpRadius = diameter / 2;
       const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
       const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
