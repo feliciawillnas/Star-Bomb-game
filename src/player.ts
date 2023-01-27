@@ -9,7 +9,7 @@ class Player {
   private color: string;
   private img: p5.Image;
   public move: number;
-  private i: number;
+  
 
   private offsetTop: number;
   private boardWidth: number;
@@ -27,7 +27,7 @@ class Player {
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
     this.move = 4;
-    this.i = 0
+    
 
     // Spelarnas startpositioner flyttas vid in- och utzoomning. Ska det vara så?
     if (player === 1) {
