@@ -49,11 +49,11 @@ class PlayScene {
     this.showGoalTextP1 = false;
     this.showGoalTextP2 = false;
 
-    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
-
     this.spawnTimeout = 0;
-    this.bombs = [];
 
+
+    this.bombs = [];
+    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
     this.playboard = new Playboard(
       this.offsetTop,
       this.boardWidth,
@@ -113,7 +113,6 @@ class PlayScene {
 
   // Draw
   public draw() {
-    // this.playGameMusic();
     this.playboard.draw();
     this.scoreInterface.draw(this.scorePlayer1, this.scorePlayer2);
     this.goal.draw();
@@ -126,14 +125,25 @@ class PlayScene {
     }
     this.checkForGoal();
     this.drawGoal();
-    // if (!sounds.backgroundMusic.isPlaying()) {
-    //   sounds.backgroundMusic.play();
-    // }
+    this.drawVolumeSlider();
   }
+
+  // Text: "Volume: x%"
+  private drawVolumeSlider() {
+    push();
+    noStroke();
+    fill("white");
+    textSize(10);
+    text("Volume:", 50, 60);
+    text(int(slider.value() * 100) + "%", 105, 60);
+    pop();
+  }
+
 
   /* -----------------------------
         GOAL-RELATED METHODS
   ----------------------------- */ 
+
 
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
@@ -187,7 +197,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
-          height/2 - this.goalH / 2
+          height / 2 - this.goalH / 2
         );
       } else {
         this.showGoalTextP1 = false;
@@ -196,7 +206,7 @@ class PlayScene {
     }
   }
 
- // Draws the text "GOAL!" over the right goal when a bomb crosses its goal line.
+  // Draws the text "GOAL!" over the right goal when a bomb crosses its goal line.
   private drawMadeGoalP2() {
     if (this.showGoalTextP2) {
       push();
@@ -207,7 +217,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
-          height / 2 - this.goalH / 2 
+          height / 2 - this.goalH / 2
         );
       } else {
         this.showGoalTextP2 = false;
@@ -215,6 +225,7 @@ class PlayScene {
       pop();
     }
   }
+
 
   /* -----------------------------
         BOMB-RELATED METHODS
@@ -283,8 +294,10 @@ class PlayScene {
               this.bombs.push(new Bomb(diameter, x, y, timeToLive));
               this.spawnTimeout = 1000;
           }
+
       }
     }
+  }
 
   // Decreases each bombs timeToLive by one per second.
   private updateBombsTimeToLive() {
@@ -304,8 +317,7 @@ class PlayScene {
       let bomb = this.bombs[i];
       if (bomb.timeToLive > 0) {
         tmpArray.push(bomb);
-      } 
-      else if (bomb.timeToLive < 0) {
+      } else if (bomb.timeToLive < 0) {
         // If bomb timer is 0 give points to players.
         if (bomb.x > width / 2) {
           this.scorePlayer1 = this.scorePlayer1 + 2;
@@ -391,6 +403,7 @@ class PlayScene {
     }
   }
 
+
 // Check collision with borders
 private checkBorderCollision() {
   const playboardLeftBorder = width / 2 - this.playboard.width / 2;
@@ -470,9 +483,5 @@ private checkBorderCollision() {
   }
 }
 
-  // public playGameMusic() {
-  //   if (!sounds.gameMusic.isPlaying()) {
-  //     sounds.gameMusic.loop();
-  //   }
-  // }
+  
 }

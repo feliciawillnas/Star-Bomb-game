@@ -30,12 +30,20 @@ class StartScene {
     fill("white");
     stroke("black");
     strokeWeight(10);
-    //GameTitle
+    // Text: GameTitle
     push();
     textSize(60);
     text(this.gameTitle, width / 2, height / 2 - 140);
     images.neonGreenBombStor.resize(123, 107);
     image(images.neonGreenBombStor, width / 2 + 162, height / 2 - 190);
+    pop();
+
+    // Text: "Volume: x%"
+    push();
+    noStroke();
+    textSize(10);
+    text("Volume:", 50, 60);
+    text(int(slider.value() * 100) + "%", 105, 60);
     pop();
 
     //Text: "Press space to"

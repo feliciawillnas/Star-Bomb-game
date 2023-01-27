@@ -1,9 +1,9 @@
 //---- GLOBAL VARIABLES ----//
 /*Instances*/
 let game: Game;
-
 let images: Images;
 let sounds: Sounds;
+let slider: any;
 
 interface Images {
   background: p5.Image;
@@ -24,7 +24,9 @@ interface Images {
 interface Sounds {
   // bang: p5.SoundFile;
   // pop: p5.SoundFile;
+  startSceneLoop: p5.SoundFile;
   gameMusic: p5.SoundFile;
+  endSceneMusic: p5.SoundFile;
 }
 
 let gameFont: p5.Font;
@@ -36,11 +38,13 @@ let symbolFont: p5.Font;
  * sound files, images etc...
  */
 function preload() {
-  // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
+  // SOUNDS ///////////////////
   sounds = {
+    startSceneLoop: loadSound("../assets/sounds/startscene_loop.mp3"),
     gameMusic: loadSound("../assets/sounds/star_rider.mp3"),
+    endSceneMusic: loadSound("../assets/sounds/screenHeroes.mp3"),
   };
-
+  // IMGAES //////////////////
   images = {
     background: loadImage("../assets/images/background.jpg"),
     galaxGoal: loadImage("../assets/images/galax.jpg"),
@@ -50,12 +54,14 @@ function preload() {
     rocketImgBlue2: loadImage("../assets/images/blueRocket2.png"),
     rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
     explosion: loadImage("../assets/images/explosion.png"),
+
     redBomb: loadImage("../assets/images/neonGreenBombRed.png"),
+
     // neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
     neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),
-
     neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
   };
+  // FONTS ////////////////////
   gameFont = loadFont("../assets/fonts/PressStart2P-Regular.ttf");
   symbolFont = loadFont("../assets/fonts/symbolerFont.otf");
 }
@@ -67,6 +73,10 @@ function preload() {
  * in the draw function below
  */
 function setup() {
+  slider = createSlider(0, 1, 0.2, 0.01);
+  slider.position(10, 10);
+  slider.style("width", "80px");
+
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
   imageMode(CENTER);
@@ -84,6 +94,9 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
+  sounds.startSceneLoop.setVolume(slider.value());
+  sounds.gameMusic.setVolume(slider.value());
+
   game.update();
   game.draw();
 }

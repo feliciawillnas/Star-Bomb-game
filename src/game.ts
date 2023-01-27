@@ -11,7 +11,7 @@ class Game implements IStartGame {
 
   //CONSTRUCTOR//////////////////////////
   constructor() {
-    this.scene = "playScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
+    this.scene = "startScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
     this.startScene = new StartScene(game);
     this.endScene = new EndScene();
@@ -31,6 +31,8 @@ class Game implements IStartGame {
   //Draw
   public draw() {
     this.startGame();
+    this.startSceneMusic();
+
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
     if (this.scene == "playScene") {
@@ -41,9 +43,21 @@ class Game implements IStartGame {
     }
   }
 
+  private startSceneMusic() {
+    if (this.scene == "startScene") {
+      // sounds.startSceneMusic.loop();
+      if (!sounds.startSceneLoop.isPlaying()) {
+        sounds.startSceneLoop.loop();
+        sounds.gameMusic.stop();
+      }
+    }
+  }
+
   public startGame() {
     if (keyIsDown(32)) {
       this.scene = "playScene";
+      sounds.gameMusic.loop();
+      sounds.startSceneLoop.stop();
     }
   }
 }
