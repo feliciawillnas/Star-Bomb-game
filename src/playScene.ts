@@ -498,6 +498,7 @@ private checkBorderCollision() {
         POWERUP-RELATED METHODS
   ----------------------------- */ 
 
+  // Spawns powerups
   private spawnPowerUps() {
       const diameter = 30;
       const powerUpRadius = diameter / 2;
@@ -556,33 +557,44 @@ private checkBorderCollision() {
       }
   }
 
+  // Checks collision between powerups and players and applies powerups
   private checkPowerUpCollision() {
     const players = [this.playerOne, this.playerTwo];
 
     for (let i = 0; i < this.powerUps.length; i++) {
-      for (const player of players) {
+      for (let p = 0; p < players.length; p++) {
 
-        let dx = player.x - this.powerUps[i].x;
-        let dy = player.y - this.powerUps[i].y;
+        let dx = players[p].x - this.powerUps[i].x;
+        let dy = players[p].y - this.powerUps[i].y;
         let distance = sqrt(dx * dx + dy * dy);
-        let minDist = player.diameter / 2 + this.powerUps[i].diameter / 2;
+        let minDist = players[p].diameter / 2 + this.powerUps[i].diameter / 2;
 
         if (distance < minDist) {
+
           if (this.powerUps[i].type == "slow-down") {
-              // metod
+              if (p == 0) {
+                players[1].slowDownPlayer();
+              } else {
+                players[0].slowDownPlayer();
+              }
           }
+
           if (this.powerUps[i].type == "reverse-controls") {
               // metod
           }
+
           if (this.powerUps[i].type == "goal-shield") {
               // metod
           }
+
           if (this.powerUps[i].type == "force-push") {
               // metod
           }
+
           if (this.powerUps[i].type == "bonus-points") {
-            // metod
-        }
+              // metod
+          }
+
           this.powerUps.splice(i, 1);
         }
       }

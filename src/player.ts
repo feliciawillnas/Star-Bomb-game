@@ -9,6 +9,7 @@ class Player {
   private color: string;
   private img: p5.Image;
   public move: number;
+  private slowDownTime: number;
 
   private offsetTop: number;
   private boardWidth: number;
@@ -26,6 +27,7 @@ class Player {
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
     this.move = 5;
+    this.slowDownTime = 0;
 
     // Spelarnas startpositioner flyttas vid in- och utzoomning. Ska det vara så?
     if (player === 1) {
@@ -63,6 +65,10 @@ class Player {
     this.controlPlayerOne();
     this.controlPlayerTwo();
     this.keepPlayersInsideScreen();
+    this.slowDownTime -= deltaTime;
+    if (this.slowDownTime <= 0) {
+        this.move = 5;
+    }
   }
   //Draw
   public draw() {
@@ -80,6 +86,7 @@ class Player {
     image(this.img, 0, 0, this.widthPlayer, this.heightPlayer);
     pop();
   }
+
   private controlPlayerOne() {
     if (keyIsDown(this.rotateLeft)) {
       this.angle = this.angle - this.move;
@@ -132,5 +139,10 @@ class Player {
     if (this.y + this.diameter / 2 >= height / 2 + this.boardHeight / 2 + this.offsetTop) {
       this.y = this.y - this.move * 2;
     }
+  }
+
+  public slowDownPlayer() {
+      this.move = 2;
+      this.slowDownTime = 5000;
   }
 }
