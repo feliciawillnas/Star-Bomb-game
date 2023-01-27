@@ -139,7 +139,7 @@ class PlayScene {
   private checkForGoal() {
     for (let i = 0; i < this.bombs.length; i++) {
       // Only score if bomb has not exploded
-      if (this.bombs[i].timeToLive > 200) {
+      if (this.bombs[i].timeToLive > 300) {
         // Vänster mål
         if (
           this.bombs[i].x <=
