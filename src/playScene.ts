@@ -174,6 +174,7 @@ class PlayScene {
           // Give score to player
           this.startTime = millis();
           this.showGoalTextP1 = true;
+          break;
         }
   
         // Höger mål
@@ -188,6 +189,7 @@ class PlayScene {
           // Give score to player
           this.startTime = millis();
           this.showGoalTextP2 = true;
+          break;
         }
       }
     }
