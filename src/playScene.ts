@@ -242,6 +242,7 @@ class PlayScene {
       let unavailableSpacesX = []
       let unavailableSpacesY = []
       this.spawnTimeout -= deltaTime;
+      let timeToLive = random(6000, 20000);
         
       if (this.spawnTimeout < 0) {
   
@@ -276,7 +277,7 @@ class PlayScene {
           // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande bomber
           // eller spelare på x- eller y-axeln
           if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
-              this.bombs.push(new Bomb(diameter, x, y, 15_000));
+              this.bombs.push(new Bomb(diameter, x, y, timeToLive));
               this.spawnTimeout = 1000;
           }
       }
