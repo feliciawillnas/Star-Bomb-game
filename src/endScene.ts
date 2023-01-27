@@ -2,10 +2,11 @@ class EndScene {
     //ATTRIBUTE////////////////////////////
     protected gameTitle: string;
     protected creatorNames: string;
-    protected game: IStartGame;
+    protected game: Game;
+    // constructor(game: IStartGame) { /kommenterat ut, ha kvar?
   
     //CONSTRUCTOR////////////////////////
-    constructor(game: IStartGame) {
+    constructor(game: Game) {
       this.gameTitle = "STAR  B MB";
       this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS";
       this.game = game;
