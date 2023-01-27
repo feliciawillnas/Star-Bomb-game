@@ -1,8 +1,9 @@
-interface IStartGame {
-  startGame(): void;
-}
+// interface IStartGame {
+//   startGame(): void;
+// }
+// class Game implements IStartGame { //kommenterat ut pga fel, ska vi ha kvar?
 
-class Game implements IStartGame {
+class Game {
   //ATTRIBUTE////////////////////////////
   public scene: string;
   public playScene: PlayScene;
@@ -30,10 +31,16 @@ class Game implements IStartGame {
       this.endScene.update();
     }  
   }
-
+  
+    public startGame() {
+      if (keyIsDown(32)) {
+        this.scene = "playScene";
+      }
+    }
+    
   //Draw
   public draw() {
-    this.startGame();
+    // this.startGame();
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
     if (this.scene == "playScene") {
@@ -45,10 +52,5 @@ class Game implements IStartGame {
     if (this.scene == "endScene") {
       this.endScene.draw();
     }  }
-
-  public startGame() {
-    if (keyIsDown(32)) {
-      this.scene = "playScene";
-    }
   }
-}
+

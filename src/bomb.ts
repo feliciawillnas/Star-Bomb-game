@@ -1,100 +1,137 @@
 class Bomb {
 
-    //ATTRIBUTE////////////////////////////
-    public x = 0;
-    public y = 0;
-    public vx = 2;
-    public vy = 2;
-    public diameter = 50;
+  /* ------------------
+        ATTRIBUTES
+  ------------------ */ 
+  public x: number;
+  public y: number;
+  public vx: number;
+  public vy: number;
+  public diameter: number;
+  public timeToLive: number; // The bombs lifetime
 
-    //CONSTRUCTOR////////////////////////
-    constructor(diameter: number, x: number, y: number) {
-        this.diameter = diameter;
-        this.x = x;
-        this.y = y;
+  /* --------------------
+        CONSTRUCTOR
+  -------------------- */ 
+  constructor(diameter: number, x: number, y: number, timeToLive: number) {
+    this.x = x;
+    this.y = y;
+    this.vx = 0;
+    this.vy = 0;
+    this.diameter = diameter;
+    this.timeToLive = timeToLive; // Sets the detonation time.
+  }
+
+  /* ------------------
+        METHODS
+  ------------------ */ 
+  // Draw
+  public draw() {
+    this.drawBombTimer();
+    this.drawExplosion();
+  }
+
+  // Update
+  public update(playboardWidth: number, playboardHeight: number) {
+    this.moveBomb();
+    this.checkBorderCollision(playboardWidth, playboardHeight);
+  }
+
+  // Shows explosion image last 0.2 seconds of detonation time.
+  private drawExplosion() {
+    if (this.timeToLive > 200){
+        image(images.neonGreenBombClear, this.x, this.y);
     }
-
-    //METHODS//////////////////////////
-    
-    //Draw
-    public draw() {
-        noStroke();
-        fill(0, 0, 0, 0);
-        image(images.neonGreenBomb, this.x, this.y);
-        ellipse(this.x, this.y, this.diameter);
+    else {
+      image(images.explosion, this.x, this.y, 40, 40);
     }
+  }
 
-    //Update
-    public update(playboardWidth: number, playboardHeight: number) {
-        this.moveBomb();
-        this.checkCollision(playboardWidth, playboardHeight);
-    }
+  // Shows a countdown timer inside every bomb.
+  private drawBombTimer() {
+    // noStroke();
+    fill("lime");
+    textSize(8);
+    let intTimeToLive = round(this.timeToLive / 1000);
+    text(intTimeToLive, this.x, this.y + 5);
+  }
 
-    //Move bomb
-    private moveBomb() {
-        this.x += this.vx
-        this.y += this.vy
-    }
+  //Move bomb
+  private moveBomb() {
+    this.x += this.vx;
+    this.y += this.vy;
+  }
 
-// Check collision
-private checkCollision(playboardWidth: number, playboardHeight: number) {
-    const playboardLeftBorder = (width / 2 - playboardWidth / 2)
-    const playboardRightBorder = (width / 2 + playboardWidth / 2)
-    const playboardTopBorder = (height / 2 - playboardHeight / 2 + 40)
-    const playboardBottomBorder = (height / 2 + playboardHeight / 2 + 40)
+  // Check collision with borders
+  private checkBorderCollision(playboardWidth: number, playboardHeight: number) {
+    const playboardLeftBorder = width / 2 - playboardWidth / 2;
+    const playboardRightBorder = width / 2 + playboardWidth / 2;
+    const playboardTopBorder = height / 2 - playboardHeight / 2 + 40;
+    const playboardBottomBorder = height / 2 + playboardHeight / 2 + 40;
     const bombRadius = this.diameter / 2;
 
-    //Check collision with walls
+    // Checks collision with right border
+    // The if conditionals decides the bombs speed (vx) after collision
     if (this.x > playboardRightBorder - bombRadius) {
-        if (this.vx > 0 && this.vx < 1) {
-            this.vx = -1;
-        } else if (this.vx > 1 && this.vx <= 2) {
-            this.vx = -2;
-        } else if (this.vx > 2 && this.vx <= 3) {
-            this.vx = -3;
-        } else if (this.vx > 3 && this.vx <= 4) {
-            this.vx = -4;
-        } else if (this.vx > 4) {
-            this.vx = -5;
-        }
-    } if (this.x < playboardLeftBorder + bombRadius) {
-        if (this.vx < 0 && this.vx > -1) {
-            this.vx = 1;
-        } else if (this.vx < -1 && this.vx >= -2) {
-            this.vx = 2;
-        } else if (this.vx < -2 && this.vx >= -3) {
-            this.vx = 3;
-        } else if (this.vx < -3 && this.vx >= -4) {
-            this.vx = 4;
-        } else if (this.vx < -4) {
-            this.vx = 5;
-        }
+      if (this.vx > 0 && this.vx < 1) {
+        this.vx = -1;
+      } else if (this.vx > 1 && this.vx <= 2) {
+        this.vx = -2;
+      } else if (this.vx > 2 && this.vx <= 3) {
+        this.vx = -3;
+      } else if (this.vx > 3 && this.vx <= 4) {
+        this.vx = -4;
+      } else if (this.vx > 4) {
+        this.vx = -5;
+      }
     }
 
-    if (this.y < playboardTopBorder + bombRadius) {
-        if (this.vy < 0 && this.vy > -1) {
-            this.vy = 1;
-        } else if (this.vy < -1 && this.vy >= -2) {
-            this.vy = 2;
-        } else if (this.vy < -2 && this.vy >= -3) {
-            this.vy = 3;
-        } else if (this.vy < -3 && this.vy >= -4) {
-            this.vy = 4;
-        } else if (this.vy < -4) {
-            this.vy = 5;
-        }
-    } if (this.y > playboardBottomBorder - bombRadius) {
-        if (this.vy > 0 && this.vy < 1) {
-            this.vy = -1;
-        } else if (this.vy > 1 && this.vy <= 2) {
-            this.vy = -2;
-        } else if (this.vy > 2 && this.vy <= 3) {
-            this.vy = -3;
-        } else if (this.vy > 3 && this.vy <= 4) {
-            this.vy = -4;
-        } else if (this.vy > 4) {
-            this.vy = -5;
-        }
+    // Checks collision with left border
+    // The if conditionals decides the bombs speed (vx) after collision
+    if (this.x < playboardLeftBorder + bombRadius) {
+      if (this.vx < 0 && this.vx > -1) {
+        this.vx = 1;
+      } else if (this.vx < -1 && this.vx >= -2) {
+        this.vx = 2;
+      } else if (this.vx < -2 && this.vx >= -3) {
+        this.vx = 3;
+      } else if (this.vx < -3 && this.vx >= -4) {
+        this.vx = 4;
+      } else if (this.vx < -4) {
+        this.vx = 5;
+      }
     }
-}
+
+    // Checks collision with top border
+    // The if conditionals decides the bombs speed (vy) after collision
+    if (this.y < playboardTopBorder + bombRadius) {
+      if (this.vy < 0 && this.vy > -1) {
+        this.vy = 1;
+      } else if (this.vy < -1 && this.vy >= -2) {
+        this.vy = 2;
+      } else if (this.vy < -2 && this.vy >= -3) {
+        this.vy = 3;
+      } else if (this.vy < -3 && this.vy >= -4) {
+        this.vy = 4;
+      } else if (this.vy < -4) {
+        this.vy = 5;
+      }
+    }
+
+    // Checks collision with bottom border
+    // The if conditionals decides the bombs speed (vy) after collision
+    if (this.y > playboardBottomBorder - bombRadius) {
+      if (this.vy > 0 && this.vy < 1) {
+        this.vy = -1;
+      } else if (this.vy > 1 && this.vy <= 2) {
+        this.vy = -2;
+      } else if (this.vy > 2 && this.vy <= 3) {
+        this.vy = -3;
+      } else if (this.vy > 3 && this.vy <= 4) {
+        this.vy = -4;
+      } else if (this.vy > 4) {
+        this.vy = -5;
+      }
+    }
+  }
 }

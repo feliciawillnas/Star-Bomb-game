@@ -1,7 +1,6 @@
 //---- GLOBAL VARIABLES ----//
 /*Instances*/
 let game: Game;
-
 let images: Images;
 let sounds: Sounds;
 
@@ -17,12 +16,17 @@ interface Images {
   neonGreenBombBig: p5.Image;
   rocketImgBlue1Big: p5.Image;
   rocketImgPink2Big: p5.Image;
+  explosion: p5.Image;
+
+  // neonGreenBomb: p5.Image;
+  neonGreenBombStor: p5.Image;
+  neonGreenBombClear: p5.Image;
 }
 
 interface Sounds {
-  bang: p5.SoundFile;
-  pop: p5.SoundFile;
-  music: p5.SoundFile;
+  // bang: p5.SoundFile;
+  // pop: p5.SoundFile;
+  gameMusic: p5.SoundFile;
 }
 
 let gameFont: p5.Font;
@@ -35,6 +39,10 @@ let symbolFont: p5.Font;
  */
 function preload() {
   // sound: p5.SoundFile = loadSound('../assets/mySound.wav');
+  sounds = {
+    gameMusic: loadSound("../assets/sounds/star_rider.mp3"),
+  };
+
   images = {
     background: loadImage("../assets/images/background.jpg"),
     galaxGoal: loadImage("../assets/images/galax.jpg"),
@@ -45,9 +53,13 @@ function preload() {
     rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
     neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
     neonGreenBombBig: loadImage("../assets/images/neonGreenBombBig.png"),
+    neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),
+    neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
     rocketImgBlue1Big: loadImage("../assets/images/blueRocket1big.png"),
     rocketImgPink2Big: loadImage("../assets/images/pinkRocket2big.png"),
+    explosion: loadImage("../assets/images/explosion.png"),
   };
+
   gameFont = loadFont("../assets/fonts/PressStart2P-Regular.ttf");
   symbolFont = loadFont("../assets/fonts/symbolerFont.otf");
 }

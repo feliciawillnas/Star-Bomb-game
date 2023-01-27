@@ -34,8 +34,8 @@ class StartScene {
     push();
     textSize(60);
     text(this.gameTitle, width / 2, height / 2 - 140);
-    images.neonGreenBomb.resize(123, 107);
-    image(images.neonGreenBomb, width / 2 + 162, height / 2 - 190);
+    images.neonGreenBombStor.resize(123, 107);
+    image(images.neonGreenBombStor, width / 2 + 162, height / 2 - 190);
     pop();
 
     //Text: "Press space to"
