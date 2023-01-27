@@ -514,7 +514,7 @@ private checkBorderCollision() {
       const players = [this.playerOne, this.playerTwo];
       let unavailableSpacesX = []
       let unavailableSpacesY = []
-      let allTypesOfPowerUps = ["reverse-controls", "goal-shield", "slow-down", "force-push"]
+      let allTypesOfPowerUps = ["reverse-controls", "goal-shield", "slow-down", "force-push", "bonus-points"]
       this.spawnTimeoutPowerUp -= deltaTime;
         
       if (this.spawnTimeoutPowerUp < 0) {
@@ -580,6 +580,9 @@ private checkBorderCollision() {
           if (this.powerUps[i].type == "force-push") {
               // metod
           }
+          if (this.powerUps[i].type == "bonus-points") {
+            // metod
+        }
           this.powerUps.splice(i, 1);
         }
       }

@@ -36,6 +36,9 @@ class PowerUp {
         if (this.type == "force-push") {
             fill(255, 255, 0)
         }
+        if (this.type == "bonus-points") {
+            fill(0, 255, 255)
+        }
         ellipse(this.x, this.y, this.diameter)
     }
   
