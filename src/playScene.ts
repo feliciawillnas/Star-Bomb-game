@@ -7,6 +7,7 @@ class PlayScene {
   public scoreInterface: ScoreInterface;
   public playboard: Playboard;
   private bombs: Bomb[];
+  private powerUps: PowerUp[];
   private spawnTimeout: number;
 
   public playerOne: Player;
@@ -53,6 +54,7 @@ class PlayScene {
 
     this.spawnTimeout = 0;
     this.bombs = [];
+    this.powerUps = [];
 
     this.playboard = new Playboard(
       this.offsetTop,
@@ -103,11 +105,15 @@ class PlayScene {
     this.playerOne.update();
     this.playerTwo.update();
 
+    for (const powerUp of this.powerUps) {
+      powerUp.update();
+    }
+
     for (const bomb of this.bombs) {
       bomb.update();
     }
-    this.checkBombAndPlayerCollision();
-    this.checkBorderCollision();
+
+    this.checkCollision();
     this.updateBombs(); // spawnBomb, updateBombsTimeToLive, removeDeadBombs
   }
 
@@ -121,14 +127,27 @@ class PlayScene {
     this.playerOne.draw();
     this.playerTwo.draw();
 
+
+    for (const powerUp of this.powerUps) {
+      powerUp.draw();
+    }
+
     for (const bomb of this.bombs) {
       bomb.draw();
     }
-    this.checkForGoal();
+
     this.drawGoal();
     // if (!sounds.backgroundMusic.isPlaying()) {
     //   sounds.backgroundMusic.play();
     // }
+  }
+
+  // A collection of collision checking methods
+  private checkCollision() {
+    this.checkBombAndPlayerCollision();
+    this.checkBorderCollision();
+    this.checkPowerUpCollision();
+    this.checkForGoal();
   }
 
   /* -----------------------------
@@ -220,7 +239,7 @@ class PlayScene {
         BOMB-RELATED METHODS
   ----------------------------- */ 
 
-    // A collection of all three funcitons regarding BOMBS lifetime from start to finish.
+    // A collection of functions regarding BOMBS lifetime from start to finish.
     private updateBombs() {
       this.spawnBombs();
       this.updateBombsTimeToLive();
@@ -469,6 +488,15 @@ private checkBorderCollision() {
     }
   }
 }
+
+  /* -----------------------------
+        POWERUP-RELATED METHODS
+  ----------------------------- */ 
+
+  private checkPowerUpCollision() {
+    const allPowerUps = [...this.powerUps];
+    const players = [this.playerOne, this.playerTwo];
+  }
 
   // public playGameMusic() {
   //   if (!sounds.gameMusic.isPlaying()) {
