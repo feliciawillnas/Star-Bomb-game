@@ -46,8 +46,8 @@ class Game implements IStartGame {
   private startSceneMusic() {
     if (this.scene == "startScene") {
       // sounds.startSceneMusic.loop();
-      if (!sounds.startSceneMusic.isPlaying()) {
-        sounds.startSceneMusic.loop();
+      if (!sounds.startSceneLoop.isPlaying()) {
+        sounds.startSceneLoop.loop();
         sounds.gameMusic.stop();
       }
     }
@@ -57,6 +57,7 @@ class Game implements IStartGame {
     if (keyIsDown(32)) {
       this.scene = "playScene";
       sounds.gameMusic.loop();
+      sounds.startSceneLoop.stop();
     }
   }
 }
