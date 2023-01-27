@@ -7,7 +7,7 @@ class Player {
   public diameter: number;
   private angle: number;
   private color: string;
-  private img: p5.Image[];
+  private img: p5.Image;
   public move: number;
   private i: number;
 
@@ -38,7 +38,7 @@ class Player {
       this.diameter = this.heightPlayer + 15;
       this.angle = 90;
       this.color = 'blue';
-      this.img = [images.rocketImgBlue1, images.rocketImgBlue2];
+      this.img = images.rocketImgBlue1gif;
       this.rotateLeft = 65;
       this.rotateRight = 68;
       this.forward = 87;
@@ -51,7 +51,7 @@ class Player {
       this.diameter = this.heightPlayer + 15;
       this.angle = -90;
       this.color = 'purple';
-      this.img = [images.rocketImgPink1, images.rocketImgPink2]
+      this.img = images.rocketImgPink1gif;
       this.rotateLeft = 37;
       this.rotateRight = 39;
       this.forward = 38;
@@ -81,7 +81,7 @@ class Player {
     circle(this.x, this.y, this.diameter);
     translate(this.x, this.y);
     rotate(this.angle);
-    image(this.img[this.i], 0, 0, this.widthPlayer, this.heightPlayer);
+    image(this.img, 0, 0, this.widthPlayer, this.heightPlayer);
     pop();
     
   }
