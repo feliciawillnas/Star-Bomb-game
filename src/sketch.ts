@@ -27,6 +27,7 @@ interface Sounds {
   startSceneLoop: p5.SoundFile;
   gameMusic: p5.SoundFile;
   endSceneMusic: p5.SoundFile;
+  bombExplosion: p5.SoundFile;
 }
 
 let gameFont: p5.Font;
@@ -43,6 +44,7 @@ function preload() {
     startSceneLoop: loadSound("../assets/sounds/startscene_loop.mp3"),
     gameMusic: loadSound("../assets/sounds/star_rider.mp3"),
     endSceneMusic: loadSound("../assets/sounds/screenHeroes.mp3"),
+    bombExplosion: loadSound("../assets/sounds/distant-explosion"),
   };
   // IMGAES //////////////////
   images = {
