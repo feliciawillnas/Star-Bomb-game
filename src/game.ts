@@ -31,7 +31,6 @@ class Game implements IStartGame {
   //Draw
   public draw() {
     this.startGame();
-    this.startSceneMusic();
 
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
@@ -40,20 +39,19 @@ class Game implements IStartGame {
     }
     if (this.scene == "startScene") {
       this.startScene.draw();
+      this.startSceneMusic();
     }
   }
-
+  // Loops the music during the start scene of the game.
   private startSceneMusic() {
     if (this.scene == "startScene") {
       if (!sounds.startSceneLoop.isPlaying()) {
         sounds.startSceneLoop.loop();
-      } else {
-        sounds.gameMusic.stop();
       }
     }
   }
 
-  // Starts playScene when space-key is pressed.
+  // Starts playScene when space-key is pressed. Also activates the gameMusic.
   public startGame() {
     if (keyIsDown(32)) {
       this.scene = "playScene";
