@@ -51,13 +51,14 @@ class PlayScene {
     this.showGoalTextP1 = false;
     this.showGoalTextP2 = false;
 
-    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
-
     this.spawnTimeout = 0;
     this.spawnTimeoutPowerUp = 5000;
     this.bombs = [];
     this.powerUps = [];
 
+
+    this.bombs = [];
+    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
     this.playboard = new Playboard(
       this.offsetTop,
       this.boardWidth,
@@ -115,14 +116,13 @@ class PlayScene {
       bomb.update();
     }
 
-    this.checkCollision();
+    this.checkCollisions();
     this.updateBombs(); // spawnBomb, updateBombsTimeToLive, removeDeadBombs
     this.spawnPowerUps()
   }
 
   // Draw
   public draw() {
-    // this.playGameMusic();
     this.playboard.draw();
     this.scoreInterface.draw(this.scorePlayer1, this.scorePlayer2);
     this.goal.draw();
@@ -140,17 +140,26 @@ class PlayScene {
     }
 
     this.drawGoal();
-    // if (!sounds.backgroundMusic.isPlaying()) {
-    //   sounds.backgroundMusic.play();
-    // }
+    this.drawVolumeSlider();
   }
 
   // A collection of collision checking methods
-  private checkCollision() {
+  private checkCollisions() {
     this.checkBombAndPlayerCollision();
     this.checkBorderCollision();
     this.checkPowerUpCollision();
     this.checkForGoal();
+  }
+
+  // Text: "Volume: x%"
+  private drawVolumeSlider() {
+    push();
+    noStroke();
+    fill("white");
+    textSize(10);
+    text("Volume:", 50, 60);
+    text(int(slider.value() * 100) + "%", 105, 60);
+    pop();
   }
 
   /* -----------------------------
@@ -164,8 +173,7 @@ class PlayScene {
       if (this.bombs[i].timeToLive > 300) {
         // Vänster mål
         if (
-          this.bombs[i].x <=
-            width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
+          this.bombs[i].x <= width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
           this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4 &&
           this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
         ) {
@@ -179,8 +187,7 @@ class PlayScene {
   
         // Höger mål
         if (
-          this.bombs[i].x >=
-            width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
+          this.bombs[i].x >= width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
           this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4  &&
           this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
         ) {
@@ -211,7 +218,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
-          height/2 - this.goalH / 2
+          height / 2 - this.goalH / 2
         );
       } else {
         this.showGoalTextP1 = false;
@@ -220,7 +227,7 @@ class PlayScene {
     }
   }
 
- // Draws the text "GOAL!" over the right goal when a bomb crosses its goal line.
+  // Draws the text "GOAL!" over the right goal when a bomb crosses its goal line.
   private drawMadeGoalP2() {
     if (this.showGoalTextP2) {
       push();
@@ -231,7 +238,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
-          height / 2 - this.goalH / 2 
+          height / 2 - this.goalH / 2
         );
       } else {
         this.showGoalTextP2 = false;
@@ -307,8 +314,10 @@ class PlayScene {
               this.bombs.push(new Bomb(diameter, x, y, timeToLive));
               this.spawnTimeout = 1000;
           }
+
       }
     }
+  
 
   // Decreases each bombs timeToLive by one per second.
   private updateBombsTimeToLive() {
@@ -328,8 +337,7 @@ class PlayScene {
       let bomb = this.bombs[i];
       if (bomb.timeToLive > 0) {
         tmpArray.push(bomb);
-      } 
-      else if (bomb.timeToLive < 0) {
+      } else if (bomb.timeToLive < 0) {
         // If bomb timer is 0 give points to players.
         if (bomb.x > width / 2) {
           this.scorePlayer1 = this.scorePlayer1 + 2;
@@ -415,84 +423,85 @@ class PlayScene {
     }
   }
 
-// Check collision with borders
-private checkBorderCollision() {
-  const playboardLeftBorder = width / 2 - this.playboard.width / 2;
-  const playboardRightBorder = width / 2 + this.playboard.width / 2;
-  const playboardTopBorder = height / 2 - this.playboard.height / 2 + 40;
-  const playboardBottomBorder = height / 2 + this.playboard.height / 2 + 40;
-  const allBombs = [...this.bombs];
-  
-  for (const bomb of allBombs) {
+
+  // Check collision with borders
+  private checkBorderCollision() {
+    const playboardLeftBorder = width / 2 - this.playboard.width / 2;
+    const playboardRightBorder = width / 2 + this.playboard.width / 2;
+    const playboardTopBorder = height / 2 - this.playboard.height / 2 + 40;
+    const playboardBottomBorder = height / 2 + this.playboard.height / 2 + 40;
+    const allBombs = [...this.bombs];
     
-    const bombRadius = bomb.diameter / 2;
-  
-    // Checks collision with right border
-    // The if conditionals decides the bombs speed (vx) after collision
-    if (bomb.x > playboardRightBorder - bombRadius) {
+    for (const bomb of allBombs) {
+      
+      const bombRadius = bomb.diameter / 2;
     
-      if (bomb.vx > 0 && bomb.vx < 1) {
-        bomb.vx = -1;
-      } else if (bomb.vx > 1 && bomb.vx <= 2) {
-        bomb.vx = -2;
-      } else if (bomb.vx > 2 && bomb.vx <= 3) {
-        bomb.vx = -3;
-      } else if (bomb.vx > 3 && bomb.vx <= 4) {
-        bomb.vx = -4;
-      } else if (bomb.vx > 4) {
-        bomb.vx = -5;
+      // Checks collision with right border
+      // The if conditionals decides the bombs speed (vx) after collision
+      if (bomb.x > playboardRightBorder - bombRadius) {
+      
+        if (bomb.vx > 0 && bomb.vx < 1) {
+          bomb.vx = -1;
+        } else if (bomb.vx > 1 && bomb.vx <= 2) {
+          bomb.vx = -2;
+        } else if (bomb.vx > 2 && bomb.vx <= 3) {
+          bomb.vx = -3;
+        } else if (bomb.vx > 3 && bomb.vx <= 4) {
+          bomb.vx = -4;
+        } else if (bomb.vx > 4) {
+          bomb.vx = -5;
+        }
       }
-    }
-  
-    // Checks collision with left border
-    // The if conditionals decides the bombs speed (vx) after collision
-    if (bomb.x < playboardLeftBorder + bombRadius) {
-      if (bomb.vx < 0 && bomb.vx > -1) {
-        bomb.vx = 1;
-      } else if (bomb.vx < -1 && bomb.vx >= -2) {
-        bomb.vx = 2;
-      } else if (bomb.vx < -2 && bomb.vx >= -3) {
-        bomb.vx = 3;
-      } else if (bomb.vx < -3 && bomb.vx >= -4) {
-        bomb.vx = 4;
-      } else if (bomb.vx < -4) {
-        bomb.vx = 5;
+    
+      // Checks collision with left border
+      // The if conditionals decides the bombs speed (vx) after collision
+      if (bomb.x < playboardLeftBorder + bombRadius) {
+        if (bomb.vx < 0 && bomb.vx > -1) {
+          bomb.vx = 1;
+        } else if (bomb.vx < -1 && bomb.vx >= -2) {
+          bomb.vx = 2;
+        } else if (bomb.vx < -2 && bomb.vx >= -3) {
+          bomb.vx = 3;
+        } else if (bomb.vx < -3 && bomb.vx >= -4) {
+          bomb.vx = 4;
+        } else if (bomb.vx < -4) {
+          bomb.vx = 5;
+        }
       }
-    }
-  
-    // Checks collision with top border
-    // The if conditionals decides the bombs speed (vy) after collision
-    if (bomb.y < playboardTopBorder + bombRadius) {
-      if (bomb.vy < 0 && bomb.vy > -1) {
-        bomb.vy = 1;
-      } else if (bomb.vy < -1 && bomb.vy >= -2) {
-        bomb.vy = 2;
-      } else if (bomb.vy < -2 && bomb.vy >= -3) {
-        bomb.vy = 3;
-      } else if (bomb.vy < -3 && bomb.vy >= -4) {
-        bomb.vy = 4;
-      } else if (bomb.vy < -4) {
-        bomb.vy = 5;
+    
+      // Checks collision with top border
+      // The if conditionals decides the bombs speed (vy) after collision
+      if (bomb.y < playboardTopBorder + bombRadius) {
+        if (bomb.vy < 0 && bomb.vy > -1) {
+          bomb.vy = 1;
+        } else if (bomb.vy < -1 && bomb.vy >= -2) {
+          bomb.vy = 2;
+        } else if (bomb.vy < -2 && bomb.vy >= -3) {
+          bomb.vy = 3;
+        } else if (bomb.vy < -3 && bomb.vy >= -4) {
+          bomb.vy = 4;
+        } else if (bomb.vy < -4) {
+          bomb.vy = 5;
+        }
       }
-    }
-  
-    // Checks collision with bottom border
-    // The if conditionals decides the bombs speed (vy) after collision
-    if (bomb.y > playboardBottomBorder - bombRadius) {
-      if (bomb.vy > 0 && bomb.vy < 1) {
-        bomb.vy = -1;
-      } else if (bomb.vy > 1 && bomb.vy <= 2) {
-        bomb.vy = -2;
-      } else if (bomb.vy > 2 && bomb.vy <= 3) {
-        bomb.vy = -3;
-      } else if (bomb.vy > 3 && bomb.vy <= 4) {
-        bomb.vy = -4;
-      } else if (bomb.vy > 4) {
-        bomb.vy = -5;
+    
+      // Checks collision with bottom border
+      // The if conditionals decides the bombs speed (vy) after collision
+      if (bomb.y > playboardBottomBorder - bombRadius) {
+        if (bomb.vy > 0 && bomb.vy < 1) {
+          bomb.vy = -1;
+        } else if (bomb.vy > 1 && bomb.vy <= 2) {
+          bomb.vy = -2;
+        } else if (bomb.vy > 2 && bomb.vy <= 3) {
+          bomb.vy = -3;
+        } else if (bomb.vy > 3 && bomb.vy <= 4) {
+          bomb.vy = -4;
+        } else if (bomb.vy > 4) {
+          bomb.vy = -5;
+        }
       }
     }
   }
-}
 
   /* -----------------------------
         POWERUP-RELATED METHODS
@@ -552,7 +561,7 @@ private checkBorderCollision() {
           // eller spelare på x- eller y-axeln
           if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
               this.powerUps.push(new PowerUp(diameter, x, y, random(allTypesOfPowerUps)));
-              this.spawnTimeoutPowerUp = 1000;
+              this.spawnTimeoutPowerUp = 2000;
           }
       }
   }
@@ -600,10 +609,4 @@ private checkBorderCollision() {
       }
     }
   }
-
-  // public playGameMusic() {
-  //   if (!sounds.gameMusic.isPlaying()) {
-  //     sounds.gameMusic.loop();
-  //   }
-  // }
 }
