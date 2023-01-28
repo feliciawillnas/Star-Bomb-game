@@ -45,18 +45,21 @@ class Game implements IStartGame {
 
   private startSceneMusic() {
     if (this.scene == "startScene") {
-      // sounds.startSceneMusic.loop();
       if (!sounds.startSceneLoop.isPlaying()) {
         sounds.startSceneLoop.loop();
+      } else {
         sounds.gameMusic.stop();
       }
     }
   }
 
+  // Starts playScene when space-key is pressed.
   public startGame() {
     if (keyIsDown(32)) {
       this.scene = "playScene";
-      sounds.gameMusic.loop();
+      if (!sounds.gameMusic.isPlaying()) {
+        sounds.gameMusic.loop();
+      }
       sounds.startSceneLoop.stop();
     }
   }
