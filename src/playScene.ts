@@ -142,56 +142,76 @@ class PlayScene {
         GOAL-RELATED METHODS
   ----------------------------- */
 
+  private inRightGoal(bomb: Bomb): boolean {
+    if (
+      bomb.x >=
+        width / 2 + this.boardWidth / 2 - bomb.diameter / 2 &&
+      bomb.y <=
+        height / 2 +
+        this.goalH / 2 +
+        this.offsetTop -
+        bomb.diameter / 4 &&
+      bomb.y >=
+        height / 2 -
+        this.goalH / 2 +
+        this.offsetTop +
+        bomb.diameter / 4) {
+        return true;
+      }
+      return false;
+  }
+
+  private inLeftGoal(bomb: Bomb): boolean {
+    if (
+      bomb.x <=
+        width / 2 - this.boardWidth / 2 + bomb.diameter / 2 &&
+      bomb.y <=
+        height / 2 +
+          this.goalH / 2 +
+          this.offsetTop -
+          bomb.diameter / 4 &&
+      bomb.y >=
+        height / 2 -
+          this.goalH / 2 +
+          this.offsetTop +
+          bomb.diameter / 4){
+      return true;
+    }
+    return false;
+  }
+
+  private player1Score(points: number) {
+    this.scorePlayer1 += points;
+    // Give score to player
+    this.startTime = millis();
+    this.showGoalTextP1 = true;
+  }
+  private player2Score(points: number) {
+    this.scorePlayer2 += points;
+    // Give score to player
+    this.startTime = millis();
+    this.showGoalTextP2 = true;
+  }
+
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
+    let bombs = []
     for (let i = 0; i < this.bombs.length; i++) {
+      let bomb = this.bombs[i];
       // Only score if bomb has not exploded
-      if (this.bombs[i].timeToLive > 200) {
-        // Vänster mål
-        if (
-          this.bombs[i].x <=
-            width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
-          this.bombs[i].y <=
-            height / 2 +
-              this.goalH / 2 +
-              this.offsetTop -
-              this.bombs[i].diameter / 4 &&
-          this.bombs[i].y >=
-            height / 2 -
-              this.goalH / 2 +
-              this.offsetTop +
-              this.bombs[i].diameter / 4
-        ) {
-          this.bombs.splice(i, 1);
-          this.scorePlayer2 = this.scorePlayer2 + 10;
-          // Give score to player
-          this.startTime = millis();
-          this.showGoalTextP1 = true;
-        }
-
-        // Höger mål
-        if (
-          this.bombs[i].x >=
-            width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
-          this.bombs[i].y <=
-            height / 2 +
-              this.goalH / 2 +
-              this.offsetTop -
-              this.bombs[i].diameter / 4 &&
-          this.bombs[i].y >=
-            height / 2 -
-              this.goalH / 2 +
-              this.offsetTop +
-              this.bombs[i].diameter / 4
-        ) {
-          this.bombs.splice(i, 1);
-          this.scorePlayer1 = this.scorePlayer1 + 10;
-          // Give score to player
-          this.startTime = millis();
-          this.showGoalTextP2 = true;
-        }
+      if (bomb.timeToLive <= 200) {
+        bombs.push(bomb);
+        continue
+      }
+      if (this.inLeftGoal(bomb)) {
+        this.player2Score(10);
+      } else if (this.inRightGoal(bomb)) {
+        this.player1Score(10)
+      } else {
+        bombs.push(bomb);
       }
     }
+    this.bombs = bombs;
   }
 
   private drawGoal() {
@@ -497,3 +517,4 @@ class PlayScene {
     }
   }
 }
+
