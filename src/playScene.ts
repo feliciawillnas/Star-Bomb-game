@@ -1,8 +1,7 @@
 class PlayScene {
-
   /* ------------------
         ATTRIBUTES
-  ------------------ */ 
+  ------------------ */
   public goal: Goal;
   public scoreInterface: ScoreInterface;
   public playboard: Playboard;
@@ -26,12 +25,12 @@ class PlayScene {
   private leftGoalShieldTime: number
 
   private startTime: any;
-  private showGoalTextP1: boolean;
-  private showGoalTextP2: boolean;
+  private showLeftGoalText: boolean;
+  private showRightGoalText: boolean;
 
   /* --------------------
         CONSTRUCTOR
-  -------------------- */ 
+  -------------------- */
   constructor() {
     this.offsetTop = 40;
     this.boardWidth = 1000;
@@ -50,8 +49,10 @@ class PlayScene {
     this.scorePlayer2 = 0;
 
     this.startTime = null;
-    this.showGoalTextP1 = false;
-    this.showGoalTextP2 = false;
+    this.showLeftGoalText = false;
+    this.showRightGoalText = false;
+
+    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
 
     this.spawnTimeout = 0;
     this.spawnTimeoutPowerUp = 5000;
@@ -60,8 +61,6 @@ class PlayScene {
     this.bombs = [];
     this.powerUps = [];
 
-    this.bombs = [];
-    this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
     this.playboard = new Playboard(
       this.offsetTop,
       this.boardWidth,
@@ -100,7 +99,7 @@ class PlayScene {
 
   /* ---------------------
         UPDATE & DRAW
-  --------------------- */ 
+  --------------------- */
 
   // Update
   public update() {
@@ -193,40 +192,63 @@ if (this.leftGoalShieldTime > 0) {
 
   /* -----------------------------
         GOAL-RELATED METHODS
-  ----------------------------- */ 
+  ----------------------------- */
 
-  // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
+  // If the bomb enters the left goal. Bomb in goal = true, not in goal = false.
+  private inLeftGoal(bomb: Bomb): boolean {
+    if (
+      bomb.x <= width / 2 - this.boardWidth / 2 - bomb.diameter / 2
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  // If the bomb enters the right goal. Bomb in goal = true, not in goal = false.
+  private inRightGoal(bomb: Bomb): boolean {
+    if (
+      bomb.x >= width / 2 + this.boardWidth / 2 + bomb.diameter / 2
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  // Give score to player 1.
+  private player1Score(points: number) {
+    this.scorePlayer1 += points;
+    this.startTime = millis();
+    this.showRightGoalText = true;
+  }
+  // Give score to player 2.
+  private player2Score(points: number) {
+    this.scorePlayer2 += points;
+    this.startTime = millis();
+    this.showLeftGoalText = true;
+  }
+
+  // Gives points if a goal is scored.
   private checkForGoal() {
+    let bombs = [];
     for (let i = 0; i < this.bombs.length; i++) {
-      if (this.bombs[i] !== undefined) {
-        // Only score if bomb has not exploded
-        if (this.bombs[i].timeToLive > 300) {
-          // Vänster mål
-          if (
-            this.bombs[i].x <= width / 2 - this.boardWidth / 2 - this.bombs[i].diameter / 2
-          ) {
-            this.bombs.splice(i, 1);
-            this.scorePlayer2 = this.scorePlayer2 + 10;
-            // Give score to player
-            this.startTime = millis();
-            this.showGoalTextP1 = true;
-            break;
-          }
-    
-          // Höger mål
-          if (
-            this.bombs[i].x >= width / 2 + this.boardWidth / 2 + this.bombs[i].diameter / 2
-          ) {
-            this.bombs.splice(i, 1);
-            this.scorePlayer1 = this.scorePlayer1 + 10;
-            // Give score to player
-            this.startTime = millis();
-            this.showGoalTextP2 = true;
-            break;
-          }
-        }
+      let bomb = this.bombs[i];
+
+      // Only score if bomb has not exploded
+      if (bomb.timeToLive <= 200) {
+        bombs.push(bomb);
+        continue;
+      }
+      // Add amount of points of scored goal here.
+      if (this.inLeftGoal(bomb)) {
+        this.player2Score(10);
+      } else if (this.inRightGoal(bomb)) {
+        this.player1Score(10);
+      } else {
+        bombs.push(bomb);
       }
     }
+    // Overwrites the old list. We don't want to iterate over the loop when we have updated the list.
+    this.bombs = bombs;
   }
 
   private drawGoal() {
@@ -235,8 +257,8 @@ if (this.leftGoalShieldTime > 0) {
   }
 
   // Draws the text "GOAL!" over the left goal when a bomb crosses its goal line.
-  private drawMadeGoalP1() {
-    if (this.showGoalTextP1) {
+  private drawMadeGoalP2() {
+    if (this.showLeftGoalText) {
       push();
       textAlign(CENTER);
       textSize(25);
@@ -248,15 +270,15 @@ if (this.leftGoalShieldTime > 0) {
           height / 2 - this.goalH / 2
         );
       } else {
-        this.showGoalTextP1 = false;
+        this.showLeftGoalText = false;
       }
       pop();
     }
   }
 
   // Draws the text "GOAL!" over the right goal when a bomb crosses its goal line.
-  private drawMadeGoalP2() {
-    if (this.showGoalTextP2) {
+  private drawMadeGoalP1() {
+    if (this.showRightGoalText) {
       push();
       textAlign(CENTER);
       textSize(25);
@@ -268,7 +290,7 @@ if (this.leftGoalShieldTime > 0) {
           height / 2 - this.goalH / 2
         );
       } else {
-        this.showGoalTextP2 = false;
+        this.showRightGoalText = false;
       }
       pop();
     }
@@ -276,75 +298,80 @@ if (this.leftGoalShieldTime > 0) {
 
   /* -----------------------------
         BOMB-RELATED METHODS
-  ----------------------------- */ 
+  ----------------------------- */
 
-    // A collection of functions regarding BOMBS lifetime from start to finish.
-    private updateBombs() {
-      this.spawnBombs();
-      this.updateBombsTimeToLive();
-      this.removeDeadBombs();
-    }
+  // A collection of all three funcitons regarding BOMBS lifetime from start to finish.
+  private updateBombs() {
+    this.spawnBombs();
+    this.updateBombsTimeToLive();
+    this.removeDeadBombs();
+  }
 
-    //Spawn bombs
-    private spawnBombs() {
-      const diameter = 36;
-      const bombRadius = diameter / 2;
-      const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
-      const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
-      const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
-      const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
-      const playAreaX1 = playAreaLeftBorder + bombRadius + 100;
-      const playAreaX2 = playAreaRightBorder - bombRadius - 100;
-      const playAreaY1 = playAreaTopBorder + bombRadius + 50;
-      const playAreaY2 = playAreaBottomBorder - bombRadius - 50;
-      let x = random(playAreaX1, playAreaX2);
-      let y = random(playAreaY1, playAreaY2)
-      const players = [this.playerOne, this.playerTwo];
-      let unavailableSpacesX = []
-      let unavailableSpacesY = []
-      this.spawnTimeout -= deltaTime;
-      let timeToLive = random(6000, 20000);
-        
-      if (this.spawnTimeout < 0) {
-  
-          // Kontrollerar om spelare existerar på x-axeln
-          for (const player of players) {
-              if (x > (player.x - player.diameter / 2 - bombRadius - 50) && x < (player.x + player.diameter / 2 + bombRadius + 50)) {
-                  unavailableSpacesX.push(player.x);
-              }
-          }
-  
-          // Kontrollerar om spelare existerar på y-axeln
-          for (const player of players) {
-              if (y > (player.y - player.diameter / 2 - bombRadius - 50) && y < (player.y + player.diameter / 2 + bombRadius + 50)) {
-                  unavailableSpacesY.push(player.y);
-              }
-          }
-  
-          // Kontrollerar om bomb existerar på x-axeln
-          for (const bomb of this.bombs) {
-              if (x > (bomb.x - bomb.diameter - 5) && x < (bomb.x + bomb.diameter + 5)) {
-                unavailableSpacesX.push(bomb.x);
-              }
-          }
-  
-          // Kontrollerar om bomb existerar på y-axeln
-          for (const bomb of this.bombs) {
-              if (y > (bomb.y - bomb.diameter - 5) && y < (bomb.y + bomb.diameter + 5)) {
-                  unavailableSpacesY.push(bomb.y);
-              }
-          }
-  
-          // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande bomber
-          // eller spelare på x- eller y-axeln
-          if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
-              this.bombs.push(new Bomb(diameter, x, y, timeToLive));
-              this.spawnTimeout = 2000;
-          }
+  //Spawn bombs
+  private spawnBombs() {
+    const diameter = 40;
+    const bombRadius = diameter / 2;
+    const playAreaLeftBorder = width / 2 - this.playboard.width / 2;
+    const playAreaRightBorder = width / 2 + this.playboard.width / 2;
+    const playAreaTopBorder =
+      height / 2 - this.playboard.height / 2 + this.playboard.offsetTop;
+    const playAreaBottomBorder =
+      height / 2 + this.playboard.height / 2 + this.playboard.offsetTop;
+    const playAreaX1 = playAreaLeftBorder + bombRadius + 100;
+    const playAreaX2 = playAreaRightBorder - bombRadius - 100;
+    const playAreaY1 = playAreaTopBorder + bombRadius + 50;
+    const playAreaY2 = playAreaBottomBorder - bombRadius - 50;
+    let x = random(playAreaX1, playAreaX2);
+    let y = random(playAreaY1, playAreaY2);
+    const players = [this.playerOne, this.playerTwo];
+    let unavailableSpacesX = [];
+    let unavailableSpacesY = [];
+    this.spawnTimeout -= deltaTime;
+    let timeToLive = random(6000, 20000);
 
+    if (this.spawnTimeout < 0) {
+      // Kontrollerar om spelare existerar på x-axeln
+      for (const player of players) {
+        if (
+          x > player.x - player.diameter / 2 - bombRadius - 50 &&
+          x < player.x + player.diameter / 2 + bombRadius + 50
+        ) {
+          unavailableSpacesX.push(player.x);
+        }
+      }
+
+      // Kontrollerar om spelare existerar på y-axeln
+      for (const player of players) {
+        if (
+          y > player.y - player.diameter / 2 - bombRadius - 50 &&
+          y < player.y + player.diameter / 2 + bombRadius + 50
+        ) {
+          unavailableSpacesY.push(player.y);
+        }
+      }
+
+      // Kontrollerar om bomb existerar på x-axeln
+      for (const bomb of this.bombs) {
+        if (x > bomb.x - bomb.diameter - 5 && x < bomb.x + bomb.diameter + 5) {
+          unavailableSpacesX.push(bomb.x);
+        }
+      }
+
+      // Kontrollerar om bomb existerar på y-axeln
+      for (const bomb of this.bombs) {
+        if (y > bomb.y - bomb.diameter - 5 && y < bomb.y + bomb.diameter + 5) {
+          unavailableSpacesY.push(bomb.y);
+        }
+      }
+
+      // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande bomber
+      // eller spelare på x- eller y-axeln
+      if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
+        this.bombs.push(new Bomb(diameter, x, y, timeToLive));
+        this.spawnTimeout = 1000;
       }
     }
-  
+  }
 
   // Decreases each bombs timeToLive by one per second.
   private updateBombsTimeToLive() {
@@ -450,6 +477,7 @@ if (this.leftGoalShieldTime > 0) {
     }
   }
 
+  // Check collision with borders
 
   // Check collision with borders
   private checkBorderCollision() {
