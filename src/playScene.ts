@@ -169,34 +169,36 @@ class PlayScene {
   // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
   private checkForGoal() {
     for (let i = 0; i < this.bombs.length; i++) {
-      // Only score if bomb has not exploded
-      if (this.bombs[i].timeToLive > 300) {
-        // Vänster mål
-        if (
-          this.bombs[i].x <= width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
-          this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4 &&
-          this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
-        ) {
-          this.bombs.splice(i, 1);
-          this.scorePlayer2 = this.scorePlayer2 + 10;
-          // Give score to player
-          this.startTime = millis();
-          this.showGoalTextP1 = true;
-          break;
-        }
-  
-        // Höger mål
-        if (
-          this.bombs[i].x >= width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
-          this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4  &&
-          this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
-        ) {
-          this.bombs.splice(i, 1);
-          this.scorePlayer1 = this.scorePlayer1 + 10;
-          // Give score to player
-          this.startTime = millis();
-          this.showGoalTextP2 = true;
-          break;
+      if (this.bombs[i] !== undefined) {
+        // Only score if bomb has not exploded
+        if (this.bombs[i].timeToLive > 300) {
+          // Vänster mål
+          if (
+            this.bombs[i].x <= width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
+            this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4 &&
+            this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
+          ) {
+            this.bombs.splice(i, 1);
+            this.scorePlayer2 = this.scorePlayer2 + 10;
+            // Give score to player
+            this.startTime = millis();
+            this.showGoalTextP1 = true;
+            break;
+          }
+    
+          // Höger mål
+          if (
+            this.bombs[i].x >= width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
+            this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4  &&
+            this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
+          ) {
+            this.bombs.splice(i, 1);
+            this.scorePlayer1 = this.scorePlayer1 + 10;
+            // Give score to player
+            this.startTime = millis();
+            this.showGoalTextP2 = true;
+            break;
+          }
         }
       }
     }
@@ -260,7 +262,7 @@ class PlayScene {
 
     //Spawn bombs
     private spawnBombs() {
-      const diameter = 40;
+      const diameter = 36;
       const bombRadius = diameter / 2;
       const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
       const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
@@ -312,7 +314,7 @@ class PlayScene {
           // eller spelare på x- eller y-axeln
           if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
               this.bombs.push(new Bomb(diameter, x, y, timeToLive));
-              this.spawnTimeout = 1000;
+              this.spawnTimeout = 2000;
           }
 
       }
@@ -442,14 +444,8 @@ class PlayScene {
       
         if (bomb.vx > 0 && bomb.vx < 1) {
           bomb.vx = -1;
-        } else if (bomb.vx > 1 && bomb.vx <= 2) {
+        } else if (bomb.vx > 1 && bomb.vx >= 2) {
           bomb.vx = -2;
-        } else if (bomb.vx > 2 && bomb.vx <= 3) {
-          bomb.vx = -3;
-        } else if (bomb.vx > 3 && bomb.vx <= 4) {
-          bomb.vx = -4;
-        } else if (bomb.vx > 4) {
-          bomb.vx = -5;
         }
       }
     
@@ -458,14 +454,8 @@ class PlayScene {
       if (bomb.x < playboardLeftBorder + bombRadius) {
         if (bomb.vx < 0 && bomb.vx > -1) {
           bomb.vx = 1;
-        } else if (bomb.vx < -1 && bomb.vx >= -2) {
+        } else if (bomb.vx < -1 && bomb.vx <= -2) {
           bomb.vx = 2;
-        } else if (bomb.vx < -2 && bomb.vx >= -3) {
-          bomb.vx = 3;
-        } else if (bomb.vx < -3 && bomb.vx >= -4) {
-          bomb.vx = 4;
-        } else if (bomb.vx < -4) {
-          bomb.vx = 5;
         }
       }
     
@@ -572,39 +562,40 @@ class PlayScene {
 
     for (let i = 0; i < this.powerUps.length; i++) {
       for (let p = 0; p < players.length; p++) {
-
-        let dx = players[p].x - this.powerUps[i].x;
-        let dy = players[p].y - this.powerUps[i].y;
-        let distance = sqrt(dx * dx + dy * dy);
-        let minDist = players[p].diameter / 2 + this.powerUps[i].diameter / 2;
-
-        if (distance < minDist) {
-
-          if (this.powerUps[i].type == "slow-down") {
-              if (p == 0) {
-                players[1].slowDownPlayer();
-              } else {
-                players[0].slowDownPlayer();
-              }
+        if (this.powerUps[i] !== undefined) {
+          let dx = players[p].x - this.powerUps[i].x;
+          let dy = players[p].y - this.powerUps[i].y;
+          let distance = sqrt(dx * dx + dy * dy);
+          let minDist = players[p].diameter / 2 + this.powerUps[i].diameter / 2;
+  
+          if (distance < minDist) {
+  
+            if (this.powerUps[i].type == "slow-down") {
+                if (p == 0) {
+                  players[1].slowDownPlayer();
+                } else {
+                  players[0].slowDownPlayer();
+                }
+            }
+  
+            if (this.powerUps[i].type == "reverse-controls") {
+                // metod
+            }
+  
+            if (this.powerUps[i].type == "goal-shield") {
+                // metod
+            }
+  
+            if (this.powerUps[i].type == "force-push") {
+                // metod
+            }
+  
+            if (this.powerUps[i].type == "bonus-points") {
+                // metod
+            }
+  
+            this.powerUps.splice(i, 1);
           }
-
-          if (this.powerUps[i].type == "reverse-controls") {
-              // metod
-          }
-
-          if (this.powerUps[i].type == "goal-shield") {
-              // metod
-          }
-
-          if (this.powerUps[i].type == "force-push") {
-              // metod
-          }
-
-          if (this.powerUps[i].type == "bonus-points") {
-              // metod
-          }
-
-          this.powerUps.splice(i, 1);
         }
       }
     }
