@@ -11,7 +11,7 @@ class Player {
   public move: number;
   private slowDownTime: number;
   private reverseControlsTime: number;
-  private forcePushTime: number;
+  private smallPlayerTime: number;
 
   private offsetTop: number;
   private boardWidth: number;
@@ -31,7 +31,7 @@ class Player {
     this.move = 5;
     this.slowDownTime = 0;
     this.reverseControlsTime = 0;
-    this.forcePushTime = 0;
+    this.smallPlayerTime = 0;
 
     // Spelarnas startpositioner flyttas vid in- och utzoomning. Ska det vara så?
     if (player === 1) {
@@ -69,35 +69,12 @@ class Player {
     this.controlPlayerOne();
     this.controlPlayerTwo();
     this.keepPlayersInsideScreen();
-
-    // Slows down player while powerup is activated
-    this.slowDownTime -= deltaTime;
-    if (this.slowDownTime <= 0) {
-        this.move = 5;
-    }
-
-    // Slows down player while powerup is activated
-    this.forcePushTime -= deltaTime;
-    if (this.forcePushTime <= 0) {
-        this.diameter = this.heightPlayer + 15;
-    }    
-
-    // Reverse controls for player while powerup is activated
-    this.reverseControlsTime -= deltaTime;
-    if (this.reverseControlsTime <= 0) {
-        if (this.color === "blue") {
-            this.rotateLeft = 65;
-            this.rotateRight = 68;
-        }
-        if (this.color === "purple") {
-            this.rotateLeft = 37;
-            this.rotateRight = 39;
-        }
-    }
+    this.checkActivatedPowerups();
   }
   //Draw
   public draw() {
     this.drawPlayer();
+    this.drawPowerupEffect();
   }
 
   private drawPlayer() {
@@ -108,9 +85,17 @@ class Player {
     circle(this.x, this.y, this.diameter);
     translate(this.x, this.y);
     rotate(this.angle);
-    image(this.img, 0, 0, this.widthPlayer, this.heightPlayer);
-    pop();
 
+    // Draws image depending on if small player powerup is activated
+    if (this.smallPlayerTime < 0) {
+      image(this.img, 0, 0, this.widthPlayer, this.heightPlayer);
+    } else {
+      image(this.img, 0, 0, this.widthPlayer/3, this.heightPlayer/3);
+    }
+    pop();
+  }
+
+  private drawPowerupEffect() {
     // Draw reverse control effect on player while powerup is activated
     if (this.reverseControlsTime > 0 && this.slowDownTime <= 0) {
       push()
@@ -199,17 +184,45 @@ class Player {
     }
   }
 
-  public slowDownPlayer() {
-      this.move = 2;
-      this.slowDownTime = 5000;
+  private checkActivatedPowerups() {
+    // Slows down player while powerup is activated
+    this.slowDownTime -= deltaTime;
+    if (this.slowDownTime <= 0) {
+        this.move = 5;
+    }
+
+    // Reverse controls for player while powerup is activated
+    this.reverseControlsTime -= deltaTime;
+    if (this.reverseControlsTime <= 0) {
+        if (this.color === "blue") {
+            this.rotateLeft = 65;
+            this.rotateRight = 68;
+        }
+        if (this.color === "purple") {
+            this.rotateLeft = 37;
+            this.rotateRight = 39;
+        }
+    }
+
+    // Makes player small while powerup is activated
+    this.smallPlayerTime -= deltaTime;
+    if (this.smallPlayerTime > 0 && this.diameter !>= 35) {
+        this.diameter -= 10;
+    } else if (this.smallPlayerTime <= 0 && this.diameter !<= 75) {
+        this.diameter += 10;
+    }
   }
 
-  public forcePushPlayer() {
-    this.diameter = this.diameter * 3;
-    this.forcePushTime = 50;
-}
-
-  public applyReverseControls() {
+  public slowDownPlayer() {
+    this.move = 2;
+    this.slowDownTime = 5000;
+  }
+  
+  public makePlayerSmall() {
+    this.smallPlayerTime = 10000;
+  }
+  
+  public activateReverseControls() {
       if (this.color === "blue") {
           this.rotateLeft = 68;
           this.rotateRight = 65;

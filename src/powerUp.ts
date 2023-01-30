@@ -33,7 +33,7 @@ class PowerUp {
         if (this.type == "goal-shield") {
             fill(0, 0, 255)
         }
-        if (this.type == "force-push") {
+        if (this.type == "small-player") {
             fill(255, 255, 0)
         }
         if (this.type == "bonus-points") {

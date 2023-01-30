@@ -596,7 +596,7 @@ class PlayScene {
       const players = [this.playerOne, this.playerTwo];
       let unavailableSpacesX = []
       let unavailableSpacesY = []
-      let allTypesOfPowerUps = ["reverse-controls", "goal-shield", "slow-down", "force-push", "bonus-points"]
+      let allTypesOfPowerUps = ["reverse-controls", "goal-shield", "slow-down", "small-player", "bonus-points"]
       this.spawnTimeoutPowerUp -= deltaTime;
         
       if (this.spawnTimeoutPowerUp < 0) {
@@ -664,9 +664,9 @@ class PlayScene {
             // Reverse control powerup – green color
             if (this.powerUps[i].type == "reverse-controls") {
               if (p == 0) {
-                players[1].applyReverseControls();
+                players[1].activateReverseControls();
               } else {
-                players[0].applyReverseControls();
+                players[0].activateReverseControls();
               }
             }
             // Goal shield powerup – blue color
@@ -677,12 +677,12 @@ class PlayScene {
                 this.rightGoalShieldTime = 10000;
               }
             }
-            // Force push powerup – yellow color
-            if (this.powerUps[i].type == "force-push") {
+            // Small player powerup – yellow color
+            if (this.powerUps[i].type == "small-player") {
               if (p == 0) {
-                players[0].forcePushPlayer();
+                players[1].makePlayerSmall();
               } else {
-                players[1].forcePushPlayer();
+                players[0].makePlayerSmall();
               }
             }
             // Bonus powerup – cyan color
