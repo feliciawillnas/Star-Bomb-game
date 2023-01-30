@@ -46,8 +46,7 @@ class PlayScene {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
-    // TODO - gör om till klocka
-    this.gameTime = 120_000;
+    this.gameTime = 12_000;
     this.gameTimeMin = 0;
     this.gameTimeSec = 0;
 
@@ -158,10 +157,6 @@ class PlayScene {
 
     this.gameTimeMin = floor(this.gameTime / 60_000);
     this.gameTimeSec = this.gameTime % 60_000;
-
-    if (this.gameTime < 0) {
-      this.gameTime = 60_000;
-    }
   }
 
   /* -----------------------------

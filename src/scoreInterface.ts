@@ -66,20 +66,31 @@ class ScoreInterface {
     );
     pop();
 
-    // Game Time
+    // Game Timer
     push();
     noStroke();
     stroke("black");
     strokeWeight(7);
     fill(255, 255, 255);
+    // Makes every even second < 11 to turn red.
+    if (gameTimeMin <= 0 && gameTimeSec < 11_000) {
+      if (int(gameTimeSec / 1000) % 2 == 0) {
+        fill("red");
+      }
+    }
     textSize(28);
     text("0" + gameTimeMin, width / 2 - 40, height / 2 - this.boardHeight / 2);
     text(":", width / 2, height / 2 - this.boardHeight / 2);
+    textAlign(RIGHT);
     text(
       int(gameTimeSec / 1000),
-      width / 2 + 40,
+      width / 2 + 65,
       height / 2 - this.boardHeight / 2
     );
+    //Adds a 0 before seconds below 10.
+    if (gameTimeSec < 10_000) {
+      text("0", width / 2 + 35, height / 2 - this.boardHeight / 2);
+    }
     pop();
     pop();
   }
