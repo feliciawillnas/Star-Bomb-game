@@ -133,10 +133,20 @@ class PlayScene {
     noStroke();
     fill("white");
     textSize(10);
-    text("Volume:", 50, 60);
-    text(int(slider.value() * 100) + "%", 105, 60);
+    text("Music:", 45, 20);
+    text(int(slider.value() * 100) + "%", 120, 40);
+    pop();
+
+    push();
+    noStroke();
+    fill("white");
+    textSize(10);
+    text("Sound effect:", 80, 60);
+    text(int(slider2.value() * 100) + "%", 120, 80);
     pop();
   }
+
+  
 
   /* -----------------------------
         GOAL-RELATED METHODS
@@ -207,7 +217,6 @@ class PlayScene {
       textSize(25);
       fill(255);
       if (millis() - this.startTime < 1000) {
-        sounds.goalSound2.play();
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
@@ -228,7 +237,7 @@ class PlayScene {
       textSize(25);
       fill(255);
       if (millis() - this.startTime < 1000) {
-        sounds.goalSound2.play();
+        // sounds.goalSound.play();
         text(
           "GOAL!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
@@ -236,6 +245,7 @@ class PlayScene {
         );
       } else {
         this.showGoalTextP2 = false;
+        // sounds.goalSound.stop();
       }
       pop();
     }
