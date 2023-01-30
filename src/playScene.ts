@@ -13,6 +13,9 @@ class PlayScene {
 
   private scorePlayer1: number;
   private scorePlayer2: number;
+  private gameTime: number;
+  public gameTimeMin: number;
+  public gameTimeSec: number;
 
   private offsetTop: number;
   private boardWidth: number;
@@ -43,6 +46,10 @@ class PlayScene {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
+    // TODO - gör om till klocka
+    this.gameTime = 60_000;
+    this.gameTimeMin = 0;
+    this.gameTimeSec = 0;
 
     this.startTimeGoalText = null;
     this.showLeftGoalText = false;
@@ -105,6 +112,7 @@ class PlayScene {
     for (const bomb of this.bombs) {
       bomb.update();
     }
+    this.countdownGameTime();
     this.checkBombAndPlayerCollision();
     this.checkBorderCollision();
     this.updateBombs(); // spawnBomb, updateBombsTimeToLive, removeDeadBombs
@@ -113,7 +121,11 @@ class PlayScene {
   // Draw
   public draw() {
     this.playboard.draw();
-    this.scoreInterface.draw(this.scorePlayer1, this.scorePlayer2);
+    this.scoreInterface.draw(
+      this.scorePlayer1,
+      this.scorePlayer2,
+      this.gameTime
+    );
     this.goal.draw();
     this.playboard.draw();
     this.playerOne.draw();
@@ -136,6 +148,17 @@ class PlayScene {
     text("Volume:", 50, 60);
     text(int(slider.value() * 100) + "%", 105, 60);
     pop();
+  }
+
+  // GAME TIME
+
+  private countdownGameTime() {
+    this.gameTime -= deltaTime;
+
+    // let totalSeconds = 300;
+    this.gameTimeMin = floor(this.gameTime / 60_000);
+    // console.log(this.gameTimeMin);
+    this.gameTimeSec = this.gameTime % 60_000;
   }
 
   /* -----------------------------

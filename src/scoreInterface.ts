@@ -13,7 +13,7 @@ class ScoreInterface {
   //Update
   public update() {}
   //Draw
-  public draw(scorePlayer1: number, scorePlayer2: number) {
+  public draw(scorePlayer1: number, scorePlayer2: number, gameTime: number) {
     // Drawing scoreboard
     noStroke();
     stroke("black");
@@ -66,11 +66,19 @@ class ScoreInterface {
     noStroke();
     stroke("black");
     strokeWeight(7);
-    // fill(255, 255, 255, 50);
-    // rect(width / 2, height / 2 - this.boardHeight / 2 - 10, 180, 40);
     fill(255, 255, 255);
     textSize(28);
-    text("4:30", width / 2, height / 2 - this.boardHeight / 2);
+    text(
+      "0" + game.playScene.gameTimeMin,
+      width / 2 - 40,
+      height / 2 - this.boardHeight / 2
+    );
+    text(":", width / 2, height / 2 - this.boardHeight / 2);
+    text(
+      int(game.playScene.gameTimeSec / 1000),
+      width / 2 + 40,
+      height / 2 - this.boardHeight / 2
+    );
     pop();
     pop();
   }
