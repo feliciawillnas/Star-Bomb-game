@@ -29,7 +29,8 @@ interface Sounds {
   endSceneMusic: p5.SoundFile;
   bombExplosion: p5.SoundFile;
   bombExplosion2: p5.SoundFile;
-  goalSound: p5.SoundFile;
+  goalSound2: p5.SoundFile;
+  // goalSound: p5.SoundFile;
 }
 
 let gameFont: p5.Font;
@@ -48,7 +49,8 @@ function preload() {
     endSceneMusic: loadSound("../assets/sounds/screenHeroes.mp3"),
     bombExplosion: loadSound("../assets/sounds/distant-explosion.mp3"),
     bombExplosion2: loadSound("../assets/sounds/explosion-2.mp3"),
-    goalSound: loadSound("../assets/sounds/goalSound.mp3")
+    goalSound2: loadSound ("../assets/sounds/goal-sound2.mp3"),
+    // goalSound: loadSound("../assets/sounds/goal-sound.mp3"),
   };
   // IMGAES //////////////////
   images = {
