@@ -174,9 +174,7 @@ class PlayScene {
         if (this.bombs[i].timeToLive > 300) {
           // Vänster mål
           if (
-            this.bombs[i].x <= width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
-            this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4 &&
-            this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
+            this.bombs[i].x <= width / 2 - this.boardWidth / 2 - this.bombs[i].diameter / 2
           ) {
             this.bombs.splice(i, 1);
             this.scorePlayer2 = this.scorePlayer2 + 10;
@@ -188,9 +186,7 @@ class PlayScene {
     
           // Höger mål
           if (
-            this.bombs[i].x >= width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
-            this.bombs[i].y <= height / 2 + this.goalH / 2 + this.offsetTop - this.bombs[i].diameter / 4  &&
-            this.bombs[i].y >= height / 2 - this.goalH / 2 + this.offsetTop + this.bombs[i].diameter / 4
+            this.bombs[i].x >= width / 2 + this.boardWidth / 2 + this.bombs[i].diameter / 2
           ) {
             this.bombs.splice(i, 1);
             this.scorePlayer1 = this.scorePlayer1 + 10;
@@ -440,7 +436,9 @@ class PlayScene {
     
       // Checks collision with right border
       // The if conditionals decides the bombs speed (vx) after collision
-      if (bomb.x > playboardRightBorder - bombRadius) {
+      if ((bomb.x > playboardRightBorder - bombRadius && bomb.y < playboardTopBorder + 140 + bomb.diameter / 4)
+      ||
+      (bomb.x > playboardRightBorder - bombRadius && bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)) {
       
         if (bomb.vx > 0 && bomb.vx < 1) {
           bomb.vx = -1;
@@ -448,10 +446,12 @@ class PlayScene {
           bomb.vx = -2;
         }
       }
-    
+
       // Checks collision with left border
       // The if conditionals decides the bombs speed (vx) after collision
-      if (bomb.x < playboardLeftBorder + bombRadius) {
+      if ((bomb.x < playboardLeftBorder + bombRadius && bomb.y < playboardTopBorder + 140 + bomb.diameter / 4) 
+      ||
+      (bomb.x < playboardLeftBorder + bombRadius && bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)) {
         if (bomb.vx < 0 && bomb.vx > -1) {
           bomb.vx = 1;
         } else if (bomb.vx < -1 && bomb.vx <= -2) {
@@ -461,7 +461,13 @@ class PlayScene {
     
       // Checks collision with top border
       // The if conditionals decides the bombs speed (vy) after collision
-      if (bomb.y < playboardTopBorder + bombRadius) {
+      if (
+        (bomb.y < playboardTopBorder + bombRadius)
+        ||
+        (bomb.x > playboardRightBorder - bombRadius && bomb.y < playboardTopBorder + 140 + bombRadius)
+        || 
+        (bomb.x < playboardLeftBorder + bombRadius && bomb.y < playboardTopBorder + 140 + bombRadius)
+      ) {
         if (bomb.vy < 0 && bomb.vy > -1) {
           bomb.vy = 1;
         } else if (bomb.vy < -1 && bomb.vy >= -2) {
@@ -477,7 +483,13 @@ class PlayScene {
     
       // Checks collision with bottom border
       // The if conditionals decides the bombs speed (vy) after collision
-      if (bomb.y > playboardBottomBorder - bombRadius) {
+      if (
+        (bomb.y > playboardBottomBorder - bombRadius) 
+        || 
+        (bomb.x > playboardRightBorder - bombRadius && bomb.y > playboardBottomBorder - 140 - bombRadius)
+        || 
+        (bomb.x < playboardLeftBorder + bombRadius && bomb.y > playboardBottomBorder - 140 - bombRadius)
+      ) {
         if (bomb.vy > 0 && bomb.vy < 1) {
           bomb.vy = -1;
         } else if (bomb.vy > 1 && bomb.vy <= 2) {
