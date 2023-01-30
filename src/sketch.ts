@@ -44,7 +44,7 @@ function preload() {
     startSceneLoop: loadSound("../assets/sounds/startscene_loop.mp3"),
     gameMusic: loadSound("../assets/sounds/star_rider.mp3"),
     endSceneMusic: loadSound("../assets/sounds/screenHeroes.mp3"),
-    bombExplosion: loadSound("../assets/sounds/distant-explosion"),
+    bombExplosion: loadSound("../assets/sounds/distant-explosion.mp3"),
   };
   // IMGAES //////////////////
   images = {

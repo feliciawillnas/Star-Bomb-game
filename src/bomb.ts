@@ -106,6 +106,7 @@ class Bomb {
     } else if (this.timeToLive <= 300 && this.timeToLive > 200) {
         image(images.explosion, this.x, this.y, 40, 40);
         this.diameter += 10;
+        sounds.bombExplosion.play();
     } else{
         image(images.explosion, this.x, this.y, 40, 40);
         this.diameter -= 10;
