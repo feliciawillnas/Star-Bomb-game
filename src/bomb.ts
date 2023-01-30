@@ -1,8 +1,7 @@
 class Bomb {
 
-  /* ------------------
-        ATTRIBUTES
-  ------------------ */ 
+  //ATTRIBUTES///////////////////////////////
+
   public x: number;
   public y: number;
   public vx: number;
@@ -10,9 +9,7 @@ class Bomb {
   public diameter: number;
   public timeToLive: number; // The bombs lifetime
 
-  /* --------------------
-        CONSTRUCTOR
-  -------------------- */ 
+  //CONSTRUCTOR////////////////////////
   constructor(diameter: number, x: number, y: number, timeToLive: number) {
     this.x = x;
     this.y = y;
@@ -22,28 +19,93 @@ class Bomb {
     this.timeToLive = timeToLive; // Sets the detonation time.
   }
 
-  /* ------------------
-        METHODS
-  ------------------ */ 
-  // Draw
+  //METHODS//////////////////////////
+
+  //Draw
   public draw() {
+
     this.drawBombTimer();
-    this.drawExplosion();
+    this.drawBombImage();
   }
 
   // Update
-  public update(playboardWidth: number, playboardHeight: number) {
-    this.moveBomb();
-    this.checkBorderCollision(playboardWidth, playboardHeight);
+  public update() {
+    if (this.timeToLive > 200) {
+        this.moveBomb();
+    }
   }
 
-  // Shows explosion image last 0.2 seconds of detonation time.
-  private drawExplosion() {
-    if (this.timeToLive > 200){
+  // Draws bomb image
+  // When timer is under 5 seconds, draw a red bomb
+  // When timer is under 0.2 seconds, draw an explosion
+  private drawBombImage() {
+
+    // Normal bomb image
+    if (this.timeToLive > 5500){
         image(images.neonGreenBombClear, this.x, this.y);
-    }
-    else {
-      image(images.explosion, this.x, this.y, 40, 40);
+
+    // Bomb blinks every half second
+    } else if (this.timeToLive <= 5500 && this.timeToLive > 5000) {
+        image(images.redBomb, this.x, this.y)
+    } else if (this.timeToLive <= 5000 && this.timeToLive > 4500){
+        image(images.neonGreenBombClear, this.x, this.y);
+    } else if (this.timeToLive <= 4500 && this.timeToLive > 4000) {
+        image(images.redBomb, this.x, this.y)
+    } else if (this.timeToLive <= 4000 && this.timeToLive > 3500){
+        image(images.neonGreenBombClear, this.x, this.y);
+
+    // Bomb blinks every 0.25 second
+    } else if (this.timeToLive <= 3500 && this.timeToLive > 3250){
+        image(images.redBomb, this.x, this.y);
+    } else if (this.timeToLive <= 3250 && this.timeToLive > 3000) {
+        image(images.neonGreenBombClear, this.x, this.y)
+    } else if (this.timeToLive <= 3000 && this.timeToLive > 2750){
+        image(images.redBomb, this.x, this.y);
+    } else if (this.timeToLive <= 2750 && this.timeToLive > 2500) {
+        image(images.neonGreenBombClear, this.x, this.y)
+    } else if (this.timeToLive <= 2500 && this.timeToLive > 2250){
+        image(images.redBomb, this.x, this.y);
+    } else if (this.timeToLive <= 2250 && this.timeToLive > 2000){
+        image(images.neonGreenBombClear, this.x, this.y);
+    } else if (this.timeToLive <= 2000 && this.timeToLive > 1750) {
+        image(images.redBomb, this.x, this.y)
+    } else if (this.timeToLive <= 1750 && this.timeToLive > 1500){
+        image(images.neonGreenBombClear, this.x, this.y);
+
+    // Bomb blinks every 0.1 second
+    } else if (this.timeToLive <= 1500 && this.timeToLive > 1400) {
+        image(images.redBomb, this.x, this.y)
+    } else if (this.timeToLive <= 1400 && this.timeToLive > 1300){
+        image(images.neonGreenBombClear, this.x, this.y);
+    } else if (this.timeToLive <= 1300 && this.timeToLive > 1200) {
+        image(images.redBomb, this.x, this.y)
+    } else if (this.timeToLive <= 1200 && this.timeToLive > 1100){
+        image(images.neonGreenBombClear, this.x, this.y);
+    } else if (this.timeToLive <= 1100 && this.timeToLive > 1000) {
+        image(images.redBomb, this.x, this.y)
+    } else if (this.timeToLive <= 1000 && this.timeToLive > 900) {
+        image(images.neonGreenBombClear, this.x, this.y)
+    } else if (this.timeToLive <= 900 && this.timeToLive > 800){
+        image(images.redBomb, this.x, this.y);
+    } else if (this.timeToLive <= 800 && this.timeToLive > 700) {
+        image(images.neonGreenBombClear, this.x, this.y)
+    } else if (this.timeToLive <= 700 && this.timeToLive > 600){
+        image(images.redBomb, this.x, this.y);
+    } else if (this.timeToLive <= 600 && this.timeToLive > 500) {
+        image(images.neonGreenBombClear, this.x, this.y)
+    } else if (this.timeToLive <= 500 && this.timeToLive > 400){
+        image(images.redBomb, this.x, this.y);
+    } else if (this.timeToLive <= 400 && this.timeToLive > 300) {
+        image(images.neonGreenBombClear, this.x, this.y)
+
+    // Draws explosion image and adds an "explosion effect" that
+    // pushes nearby bombs away
+    } else if (this.timeToLive <= 300 && this.timeToLive > 200) {
+        image(images.explosion, this.x, this.y, 40, 40);
+        this.diameter += 10;
+    } else{
+        image(images.explosion, this.x, this.y, 40, 40);
+        this.diameter -= 10;
     }
   }
 
@@ -56,82 +118,9 @@ class Bomb {
     text(intTimeToLive, this.x, this.y + 5);
   }
 
-  //Move bomb
+  // Moves bomb
   private moveBomb() {
     this.x += this.vx;
     this.y += this.vy;
-  }
-
-  // Check collision with borders
-  private checkBorderCollision(playboardWidth: number, playboardHeight: number) {
-    const playboardLeftBorder = width / 2 - playboardWidth / 2;
-    const playboardRightBorder = width / 2 + playboardWidth / 2;
-    const playboardTopBorder = height / 2 - playboardHeight / 2 + 40;
-    const playboardBottomBorder = height / 2 + playboardHeight / 2 + 40;
-    const bombRadius = this.diameter / 2;
-
-    // Checks collision with right border
-    // The if conditionals decides the bombs speed (vx) after collision
-    if (this.x > playboardRightBorder - bombRadius) {
-      if (this.vx > 0 && this.vx < 1) {
-        this.vx = -1;
-      } else if (this.vx > 1 && this.vx <= 2) {
-        this.vx = -2;
-      } else if (this.vx > 2 && this.vx <= 3) {
-        this.vx = -3;
-      } else if (this.vx > 3 && this.vx <= 4) {
-        this.vx = -4;
-      } else if (this.vx > 4) {
-        this.vx = -5;
-      }
-    }
-
-    // Checks collision with left border
-    // The if conditionals decides the bombs speed (vx) after collision
-    if (this.x < playboardLeftBorder + bombRadius) {
-      if (this.vx < 0 && this.vx > -1) {
-        this.vx = 1;
-      } else if (this.vx < -1 && this.vx >= -2) {
-        this.vx = 2;
-      } else if (this.vx < -2 && this.vx >= -3) {
-        this.vx = 3;
-      } else if (this.vx < -3 && this.vx >= -4) {
-        this.vx = 4;
-      } else if (this.vx < -4) {
-        this.vx = 5;
-      }
-    }
-
-    // Checks collision with top border
-    // The if conditionals decides the bombs speed (vy) after collision
-    if (this.y < playboardTopBorder + bombRadius) {
-      if (this.vy < 0 && this.vy > -1) {
-        this.vy = 1;
-      } else if (this.vy < -1 && this.vy >= -2) {
-        this.vy = 2;
-      } else if (this.vy < -2 && this.vy >= -3) {
-        this.vy = 3;
-      } else if (this.vy < -3 && this.vy >= -4) {
-        this.vy = 4;
-      } else if (this.vy < -4) {
-        this.vy = 5;
-      }
-    }
-
-    // Checks collision with bottom border
-    // The if conditionals decides the bombs speed (vy) after collision
-    if (this.y > playboardBottomBorder - bombRadius) {
-      if (this.vy > 0 && this.vy < 1) {
-        this.vy = -1;
-      } else if (this.vy > 1 && this.vy <= 2) {
-        this.vy = -2;
-      } else if (this.vy > 2 && this.vy <= 3) {
-        this.vy = -3;
-      } else if (this.vy > 3 && this.vy <= 4) {
-        this.vy = -4;
-      } else if (this.vy > 4) {
-        this.vy = -5;
-      }
-    }
   }
 }

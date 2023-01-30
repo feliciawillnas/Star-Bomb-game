@@ -31,15 +31,11 @@ class Game {
     }  
   }
   
-    public startGame() {
-      if (keyIsDown(32)) {
-        this.scene = "playScene";
-      }
-    }
     
   //Draw
   public draw() {
-    // this.startGame();
+    this.startGame();
+    
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
     if (this.scene == "playScene") {
@@ -47,9 +43,31 @@ class Game {
     }
     if (this.scene == "startScene") {
       this.startScene.draw();
+      this.startSceneMusic();
+    }
+  }
+  // Loops the music during the start scene of the game.
+  private startSceneMusic() {
+    if (this.scene == "startScene") {
+      if (!sounds.startSceneLoop.isPlaying()) {
+        sounds.startSceneLoop.loop();
+      }
     }
     if (this.scene == "endScene") {
       this.endScene.draw();
     }  }
   }
+
+
+  // Starts playScene when space-key is pressed. Also activates the gameMusic.
+  public startGame() {
+    if (keyIsDown(32)) {
+      this.scene = "playScene";
+      if (!sounds.gameMusic.isPlaying()) {
+        sounds.gameMusic.loop();
+      }
+      sounds.startSceneLoop.stop();
+    }
+  }
+}
 
