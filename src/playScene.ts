@@ -194,9 +194,9 @@ class PlayScene {
       }
       // Add amount of points of scored goal here.
       if (this.inLeftGoal(bomb)) {
-        this.player2Score(10);
-      } else if (this.inRightGoal(bomb)) {
         this.player1Score(10);
+      } else if (this.inRightGoal(bomb)) {
+        this.player2Score(10);
       } else {
         bombs.push(bomb);
       }
@@ -219,7 +219,7 @@ class PlayScene {
       if (millis() - this.startTime < 1000) {
         text(
           "GOAL!",
-          width / 2 + this.boardWidth / 2 + this.goalW / 2,
+          width / 2 - this.boardWidth / 2 - this.goalW / 2,
           height / 2 - this.goalH / 2
         );
       } else {
@@ -239,7 +239,7 @@ class PlayScene {
       if (millis() - this.startTime < 1000) {
         text(
           "GOAL!",
-          width / 2 - this.boardWidth / 2 - this.goalW / 2,
+          width / 2 + this.boardWidth / 2 + this.goalW / 2,
           height / 2 - this.goalH / 2
         );
       } else {
