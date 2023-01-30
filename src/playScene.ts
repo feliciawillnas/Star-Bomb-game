@@ -55,11 +55,10 @@ class PlayScene {
 
     this.spawnTimeout = 0;
     this.spawnTimeoutPowerUp = 5000;
-    this.rightGoalShieldTime = 0;
-    this.leftGoalShieldTime = 0;
+    this.rightGoalShieldTime = 10;
+    this.leftGoalShieldTime = 10;
     this.bombs = [];
     this.powerUps = [];
-
 
     this.bombs = [];
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
@@ -460,7 +459,7 @@ if (this.leftGoalShieldTime > 0) {
     const playboardBottomBorder = height / 2 + this.playboard.height / 2 + 40;
     const allBombs = [...this.bombs];
     this.rightGoalShieldTime -= deltaTime;
-    this.leftGoalShieldTime -= deltaTime;
+    this.leftGoalShieldTime -= deltaTime;      
     
     for (const bomb of allBombs) {
       
@@ -656,9 +655,9 @@ if (this.leftGoalShieldTime > 0) {
             // Cyan powerup – bonus points
             if (this.powerUps[i].type == "bonus-points") {
               if (p == 0) {
-                players[1].applyReverseControls();
+                this.scorePlayer1 = this.scorePlayer1 + 50;
               } else {
-                players[0].applyReverseControls();
+                this.scorePlayer2 = this.scorePlayer2 + 50;
               }
             }
   
