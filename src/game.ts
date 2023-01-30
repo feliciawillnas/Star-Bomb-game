@@ -45,6 +45,9 @@ class Game {
       this.startScene.draw();
       this.startSceneMusic();
     }
+    if (this.scene == "endScene") {
+      this.endScene.draw();
+    }
   }
   // Loops the music during the start scene of the game.
   private startSceneMusic() {
@@ -55,7 +58,7 @@ class Game {
     }
     if (this.scene == "endScene") {
       this.endScene.draw();
-    }  }
+    }  
   }
 
 

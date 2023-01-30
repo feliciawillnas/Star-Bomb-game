@@ -59,7 +59,6 @@ function preload() {
     rocketImgPink1: loadImage("../assets/images/pinkRocket1.png"),
     rocketImgBlue2: loadImage("../assets/images/blueRocket2.png"),
     rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
-    explosion: loadImage("../assets/images/explosion.png"),
     rocketImgBlue1gif: loadImage("../assets/images/blueRocket.gif"),
     rocketImgPink1gif: loadImage("../assets/images/pinkRocket.gif"),
 
