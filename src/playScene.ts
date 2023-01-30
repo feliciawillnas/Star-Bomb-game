@@ -50,7 +50,7 @@ class PlayScene {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
-    this.gameTime = 12_000;
+    this.gameTime = 180_999;
     this.gameTimeMin = 0;
     this.gameTimeSec = 0;
 
@@ -608,8 +608,8 @@ class PlayScene {
       const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
       const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
       const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
-      const playAreaX1 = playAreaLeftBorder + powerUpRadius + 100;
-      const playAreaX2 = playAreaRightBorder - powerUpRadius - 100;
+      const playAreaX1 = playAreaLeftBorder + powerUpRadius + 400;
+      const playAreaX2 = playAreaRightBorder - powerUpRadius - 400;
       const playAreaY1 = playAreaTopBorder + powerUpRadius + 50;
       const playAreaY2 = playAreaBottomBorder - powerUpRadius - 50;
       let x = random(playAreaX1, playAreaX2);
@@ -656,7 +656,7 @@ class PlayScene {
           // eller spelare på x- eller y-axeln
           if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
               this.powerUps.push(new PowerUp(diameter, x, y, random(allTypesOfPowerUps)));
-              this.spawnTimeoutPowerUp = 2000;
+              this.spawnTimeoutPowerUp = random(7_000, 20_000);
           }
       }
   }

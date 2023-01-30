@@ -33,7 +33,7 @@ class Player {
     this.offsetTop = offsetTop;
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
-    this.move = 5;
+    this.move = 20;
     this.slowDownTime = 0;
     this.reverseControlsTime = 0;
     this.smallPlayerTime = 0;
@@ -178,7 +178,7 @@ class Player {
     // Slows down player while powerup is activated
     this.slowDownTime -= deltaTime;
     if (this.slowDownTime <= 0) {
-        this.move = 5;
+        this.move = 10;
     }
 
     // Reverse controls for player while powerup is activated
@@ -204,7 +204,7 @@ class Player {
   }
 
   public slowDownPlayer() {
-    this.move = 2;
+    this.move = 4;
     this.slowDownTime = 5000;
   }
   
