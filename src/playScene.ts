@@ -171,7 +171,8 @@ class PlayScene {
               this.goalH / 2 +
               this.offsetTop +
               this.bombs[i].diameter / 4
-        ) {
+        )  
+        {
           this.bombs.splice(i, 1);
           this.scorePlayer2 = this.scorePlayer2 + 10;
           // Give score to player
@@ -220,7 +221,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
-          height / 2 - this.goalH / 2
+          height / 2 - this.goalH / 2,
         );
       } else {
         this.showGoalTextP1 = false;
