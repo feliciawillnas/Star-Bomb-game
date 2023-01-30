@@ -11,6 +11,7 @@ class Player {
   public move: number;
   private slowDownTime: number;
   private reverseControlsTime: number;
+  private forcePushTime: number;
 
   private offsetTop: number;
   private boardWidth: number;
@@ -30,6 +31,7 @@ class Player {
     this.move = 5;
     this.slowDownTime = 0;
     this.reverseControlsTime = 0;
+    this.forcePushTime = 0;
 
     // Spelarnas startpositioner flyttas vid in- och utzoomning. Ska det vara så?
     if (player === 1) {
@@ -73,6 +75,12 @@ class Player {
     if (this.slowDownTime <= 0) {
         this.move = 5;
     }
+
+    // Slows down player while powerup is activated
+    this.forcePushTime -= deltaTime;
+    if (this.forcePushTime <= 0) {
+        this.diameter = this.heightPlayer + 15;
+    }    
 
     // Reverse controls for player while powerup is activated
     this.reverseControlsTime -= deltaTime;
@@ -195,6 +203,11 @@ class Player {
       this.move = 2;
       this.slowDownTime = 5000;
   }
+
+  public forcePushPlayer() {
+    this.diameter = this.diameter * 3;
+    this.forcePushTime = 50;
+}
 
   public applyReverseControls() {
       if (this.color === "blue") {

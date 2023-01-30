@@ -196,7 +196,7 @@ class PlayScene {
   // If the bomb enters the left goal. Bomb in goal = true, not in goal = false.
   private inLeftGoal(bomb: Bomb): boolean {
     if (
-      bomb.x <= width / 2 - this.boardWidth / 2 - bomb.diameter / 2
+      bomb.x <= width / 2 - this.boardWidth / 2
     ) {
       return true;
     }
@@ -206,7 +206,7 @@ class PlayScene {
   // If the bomb enters the right goal. Bomb in goal = true, not in goal = false.
   private inRightGoal(bomb: Bomb): boolean {
     if (
-      bomb.x >= width / 2 + this.boardWidth / 2 + bomb.diameter / 2
+      bomb.x >= width / 2 + this.boardWidth / 2
     ) {
       return true;
     }
@@ -486,7 +486,7 @@ class PlayScene {
     const playboardBottomBorder = height / 2 + this.playboard.height / 2 + 40;
     const allBombs = [...this.bombs];
     this.rightGoalShieldTime -= deltaTime;
-    this.leftGoalShieldTime -= deltaTime;      
+    this.leftGoalShieldTime -= deltaTime;
     
     for (const bomb of allBombs) {
       
@@ -504,9 +504,9 @@ class PlayScene {
         (this.rightGoalShieldTime > 0 && bomb.x > playboardRightBorder - bombRadius)
       ) {
       
-        if (bomb.vx > 0 && bomb.vx < 1) {
+        if (bomb.vx >= 0 && bomb.vx <= 1) {
           bomb.vx = -1;
-        } else if (bomb.vx > 1 && bomb.vx >= 2) {
+        } else if (bomb.vx > 1) {
           bomb.vx = -2;
         }
       }
@@ -522,9 +522,9 @@ class PlayScene {
         ||
         (this.leftGoalShieldTime > 0 && bomb.x < playboardLeftBorder + bombRadius)
       ) {
-          if (bomb.vx < 0 && bomb.vx > -1) {
+          if (bomb.vx < 0 && bomb.vx >= -1) {
             bomb.vx = 1;
-          } else if (bomb.vx < -1 && bomb.vx <= -2) {
+          } else if (bomb.vx < -1) {
             bomb.vx = 2;
           }
       }
@@ -538,7 +538,7 @@ class PlayScene {
         || 
         (bomb.x < playboardLeftBorder + bombRadius && bomb.y < playboardTopBorder + 140 + bombRadius)
       ) {
-        if (bomb.vy < 0 && bomb.vy > -1) {
+        if (bomb.vy <= 0 && bomb.vy >= -1) {
           bomb.vy = 1;
         } else if (bomb.vy < -1 && bomb.vy >= -2) {
           bomb.vy = 2;
@@ -560,7 +560,7 @@ class PlayScene {
         || 
         (bomb.x < playboardLeftBorder + bombRadius && bomb.y > playboardBottomBorder - 140 - bombRadius)
       ) {
-        if (bomb.vy > 0 && bomb.vy < 1) {
+        if (bomb.vy > 0 && bomb.vy <= 1) {
           bomb.vy = -1;
         } else if (bomb.vy > 1 && bomb.vy <= 2) {
           bomb.vy = -2;
@@ -680,9 +680,9 @@ class PlayScene {
             // Force push powerup – yellow color
             if (this.powerUps[i].type == "force-push") {
               if (p == 0) {
-                players[1].applyReverseControls();
+                players[0].forcePushPlayer();
               } else {
-                players[0].applyReverseControls();
+                players[1].forcePushPlayer();
               }
             }
             // Bonus powerup – cyan color
