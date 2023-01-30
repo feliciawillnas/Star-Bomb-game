@@ -1,8 +1,7 @@
 class Bomb {
 
-  /* ------------------
-        ATTRIBUTES
-  ------------------ */ 
+  //ATTRIBUTES///////////////////////////////
+
   public x: number;
   public y: number;
   public vx: number;
@@ -10,9 +9,7 @@ class Bomb {
   public diameter: number;
   public timeToLive: number; // The bombs lifetime
 
-  /* --------------------
-        CONSTRUCTOR
-  -------------------- */ 
+  //CONSTRUCTOR////////////////////////
   constructor(diameter: number, x: number, y: number, timeToLive: number) {
     this.x = x;
     this.y = y;
@@ -22,11 +19,11 @@ class Bomb {
     this.timeToLive = timeToLive; // Sets the detonation time.
   }
 
-  /* ------------------
-        METHODS
-  ------------------ */ 
-  // Draw
+  //METHODS//////////////////////////
+
+  //Draw
   public draw() {
+
     this.drawBombTimer();
     this.drawBombImage();
   }
