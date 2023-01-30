@@ -168,20 +168,20 @@ class PlayScene {
     return false;
   }
 
-  // Give score to player
+  // Give score to player 1.
   private player1Score(points: number) {
     this.scorePlayer1 += points;
     this.startTime = millis();
     this.showRightGoalText = true;
   }
-  // Give score to player
+  // Give score to player 2.
   private player2Score(points: number) {
     this.scorePlayer2 += points;
     this.startTime = millis();
     this.showLeftGoalText = true;
   }
 
-  // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
+  // Gives points if a goal is scored.
   private checkForGoal() {
     let bombs = [];
     for (let i = 0; i < this.bombs.length; i++) {
@@ -211,7 +211,7 @@ class PlayScene {
   }
 
   // Draws the text "GOAL!" over the left goal when a bomb crosses its goal line.
-  private drawMadeGoalP1() {
+  private drawMadeGoalP2() {
     if (this.showLeftGoalText) {
       push();
       textAlign(CENTER);
@@ -231,7 +231,7 @@ class PlayScene {
   }
 
   // Draws the text "GOAL!" over the right goal when a bomb crosses its goal line.
-  private drawMadeGoalP2() {
+  private drawMadeGoalP1() {
     if (this.showRightGoalText) {
       push();
       textAlign(CENTER);
