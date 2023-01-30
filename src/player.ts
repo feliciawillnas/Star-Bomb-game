@@ -67,11 +67,15 @@ class Player {
     this.controlPlayerOne();
     this.controlPlayerTwo();
     this.keepPlayersInsideScreen();
+
+    // Slows down player while powerup is activated
     this.slowDownTime -= deltaTime;
-    this.reverseControlsTime -= deltaTime;
     if (this.slowDownTime <= 0) {
         this.move = 5;
     }
+
+    // Reverse controls for player while powerup is activated
+    this.reverseControlsTime -= deltaTime;
     if (this.reverseControlsTime <= 0) {
         if (this.color === "blue") {
             this.rotateLeft = 65;
@@ -98,7 +102,39 @@ class Player {
     rotate(this.angle);
     image(this.img, 0, 0, this.widthPlayer, this.heightPlayer);
     pop();
-    
+
+    // Draw reverse control effect on player while powerup is activated
+    if (this.reverseControlsTime > 0 && this.slowDownTime <= 0) {
+      push()
+      strokeWeight(2);
+       fill(0, 255, 0)
+       ellipse(this.x+20, this.y-20, 10);
+      pop()
+    }
+
+    // Draw slow down effect on player while powerup is activated
+    if (this.slowDownTime > 0 && this.reverseControlsTime <= 0) {
+      push()
+      strokeWeight(2);
+       fill(255, 0, 0);
+       ellipse(this.x+20, this.y-20, 10);
+      pop()
+    }
+
+    // Draw both reverse control and slowdown effect on player while both are active
+    if (this.slowDownTime > 0 && this.reverseControlsTime > 0) {
+      push()
+      strokeWeight(1);
+        fill(0, 255, 0)
+        arc(this.x+20, this.y-20, 10, 10, 180, 360);
+      pop()
+
+      push()
+        strokeWeight(1);
+        fill(255, 0, 0)
+        arc(this.x+20, this.y-20, 10, 10, 360, 180);
+      pop()
+    }
   }
 
   private controlPlayerOne() {

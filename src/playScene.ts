@@ -132,7 +132,6 @@ class PlayScene {
     this.playerOne.draw();
     this.playerTwo.draw();
 
-
     for (const powerUp of this.powerUps) {
       powerUp.draw();
     }
@@ -141,31 +140,31 @@ class PlayScene {
       bomb.draw();
     }
 
-if (this.rightGoalShieldTime > 0) {
-  push();
-  stroke(255);
-  strokeWeight(10);
-  line(
-    width / 2 + this.boardWidth / 2,
-    height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop+10,
-    width / 2 + this.boardWidth / 2,
-    height / 2 + this.goalH / 2 + this.offsetTop - 10
-  );
-  pop();
-}
-
-if (this.leftGoalShieldTime > 0) {
-  push();
-  stroke(255);
-  strokeWeight(10);
-  line(
-    width / 2 - this.boardWidth / 2,
-    height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop+10,
-    width / 2 - this.boardWidth / 2,
-    height / 2 + this.goalH / 2 + this.offsetTop - 10
-  );
-  pop();
-}
+    if (this.rightGoalShieldTime > 0) {
+      push();
+      stroke(255);
+      strokeWeight(10);
+      line(
+        width / 2 + this.boardWidth / 2,
+        height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop+10,
+        width / 2 + this.boardWidth / 2,
+        height / 2 + this.goalH / 2 + this.offsetTop - 10
+      );
+      pop();
+    }
+    
+    if (this.leftGoalShieldTime > 0) {
+      push();
+      stroke(255);
+      strokeWeight(10);
+      line(
+        width / 2 - this.boardWidth / 2,
+        height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop+10,
+        width / 2 - this.boardWidth / 2,
+        height / 2 + this.goalH / 2 + this.offsetTop - 10
+      );
+      pop();
+    }
 
     this.drawGoal();
     this.drawVolumeSlider();
@@ -410,6 +409,7 @@ if (this.leftGoalShieldTime > 0) {
     const players = [this.playerOne, this.playerTwo];
 
     for (const bomb of allBombs) {
+
       //BOMBER KOLLIDERAR MED BOMBER
       for (const otherBombs of allBombs) {
         if (bomb === otherBombs) continue;
@@ -432,6 +432,7 @@ if (this.leftGoalShieldTime > 0) {
           otherBombs.vy += ay;
         }
       }
+
       // SPELARE KOLLIDERAR MED BOMBER
       for (const player of players) {
         let spring = 0.35;
@@ -478,8 +479,6 @@ if (this.leftGoalShieldTime > 0) {
   }
 
   // Check collision with borders
-
-  // Check collision with borders
   private checkBorderCollision() {
     const playboardLeftBorder = width / 2 - this.playboard.width / 2;
     const playboardRightBorder = width / 2 + this.playboard.width / 2;
@@ -496,9 +495,11 @@ if (this.leftGoalShieldTime > 0) {
       // Checks collision with right border
       // The if conditionals decides the bombs speed (vx) after collision
       if (
-        (this.rightGoalShieldTime <= 0 && bomb.x > playboardRightBorder - bombRadius && bomb.y < playboardTopBorder + 140 + bomb.diameter / 4)
+        (this.rightGoalShieldTime <= 0 && bomb.x > playboardRightBorder - bombRadius &&
+        bomb.y < playboardTopBorder + 140 + bomb.diameter / 4)
         ||
-        (this.rightGoalShieldTime <= 0 && bomb.x > playboardRightBorder - bombRadius && bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)
+        (this.rightGoalShieldTime <= 0 && bomb.x > playboardRightBorder - bombRadius &&
+        bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)
         ||
         (this.rightGoalShieldTime > 0 && bomb.x > playboardRightBorder - bombRadius)
       ) {
@@ -513,17 +514,19 @@ if (this.leftGoalShieldTime > 0) {
       // Checks collision with left border
       // The if conditionals decides the bombs speed (vx) after collision
       if (
-        (this.leftGoalShieldTime <= 0 && bomb.x < playboardLeftBorder + bombRadius && bomb.y < playboardTopBorder + 140 + bomb.diameter / 4) 
+        (this.leftGoalShieldTime <= 0 && bomb.x < playboardLeftBorder + bombRadius &&
+        bomb.y< playboardTopBorder + 140 + bomb.diameter / 4) 
         ||
-        (this.leftGoalShieldTime <= 0 && bomb.x < playboardLeftBorder + bombRadius && bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)
+        (this.leftGoalShieldTime <= 0 && bomb.x < playboardLeftBorder + bombRadius &&
+        bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)
         ||
         (this.leftGoalShieldTime > 0 && bomb.x < playboardLeftBorder + bombRadius)
       ) {
-        if (bomb.vx < 0 && bomb.vx > -1) {
-          bomb.vx = 1;
-        } else if (bomb.vx < -1 && bomb.vx <= -2) {
-          bomb.vx = 2;
-        }
+          if (bomb.vx < 0 && bomb.vx > -1) {
+            bomb.vx = 1;
+          } else if (bomb.vx < -1 && bomb.vx <= -2) {
+            bomb.vx = 2;
+          }
       }
     
       // Checks collision with top border within play area and inside goals
@@ -600,14 +603,16 @@ if (this.leftGoalShieldTime > 0) {
   
           // Kontrollerar om spelare existerar på x-axeln
           for (const player of players) {
-              if (x > (player.x - player.diameter / 2 - powerUpRadius - 50) && x < (player.x + player.diameter / 2 + powerUpRadius + 50)) {
+              if (x > (player.x - player.diameter / 2 - powerUpRadius - 50) &&
+                  x < (player.x + player.diameter / 2 + powerUpRadius + 50)) {
                   unavailableSpacesX.push(player.x);
               }
           }
   
           // Kontrollerar om spelare existerar på y-axeln
           for (const player of players) {
-              if (y > (player.y - player.diameter / 2 - powerUpRadius - 50) && y < (player.y + player.diameter / 2 + powerUpRadius + 50)) {
+              if (y > (player.y - player.diameter / 2 - powerUpRadius - 50) &&
+                  y < (player.y + player.diameter / 2 + powerUpRadius + 50)) {
                   unavailableSpacesY.push(player.y);
               }
           }
@@ -615,7 +620,7 @@ if (this.leftGoalShieldTime > 0) {
           // Kontrollerar om powerup existerar på x-axeln
           for (const powerUp of this.powerUps) {
             if (x > (powerUp.x - powerUp.diameter - 5) && x < (powerUp.x + powerUp.diameter + 5)) {
-              unavailableSpacesX.push(powerUp.x);
+                unavailableSpacesX.push(powerUp.x);
             }
           }
 
@@ -648,7 +653,7 @@ if (this.leftGoalShieldTime > 0) {
           let minDist = players[p].diameter / 2 + this.powerUps[i].diameter / 2;
   
           if (distance < minDist) {
-            // Red powerup – slow down
+            // Slow down powerup – red color
             if (this.powerUps[i].type == "slow-down") {
                 if (p == 0) {
                   players[1].slowDownPlayer();
@@ -656,7 +661,7 @@ if (this.leftGoalShieldTime > 0) {
                   players[0].slowDownPlayer();
                 }
             }
-            // Green powerup – reverse controls
+            // Reverse control powerup – green color
             if (this.powerUps[i].type == "reverse-controls") {
               if (p == 0) {
                 players[1].applyReverseControls();
@@ -664,7 +669,7 @@ if (this.leftGoalShieldTime > 0) {
                 players[0].applyReverseControls();
               }
             }
-            // Blue powerup – goal shield
+            // Goal shield powerup – blue color
             if (this.powerUps[i].type == "goal-shield") {
               if (p == 0) {
                 this.leftGoalShieldTime = 10000;
@@ -672,7 +677,7 @@ if (this.leftGoalShieldTime > 0) {
                 this.rightGoalShieldTime = 10000;
               }
             }
-            // Yellow powerup – force push
+            // Force push powerup – yellow color
             if (this.powerUps[i].type == "force-push") {
               if (p == 0) {
                 players[1].applyReverseControls();
@@ -680,7 +685,7 @@ if (this.leftGoalShieldTime > 0) {
                 players[0].applyReverseControls();
               }
             }
-            // Cyan powerup – bonus points
+            // Bonus powerup – cyan color
             if (this.powerUps[i].type == "bonus-points") {
               if (p == 0) {
                 this.scorePlayer1 = this.scorePlayer1 + 50;
