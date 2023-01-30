@@ -13,6 +13,9 @@ class PlayScene {
 
   private scorePlayer1: number;
   private scorePlayer2: number;
+  private gameTime: number;
+  public gameTimeMin: number;
+  public gameTimeSec: number;
 
   private offsetTop: number;
   private boardWidth: number;
@@ -20,7 +23,7 @@ class PlayScene {
   private goalW: number;
   private goalH: number;
 
-  private startTime: any;
+  private startTimeGoalText: any;
   private showLeftGoalText: boolean;
   private showRightGoalText: boolean;
 
@@ -43,8 +46,11 @@ class PlayScene {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
+    this.gameTime = 12_000;
+    this.gameTimeMin = 0;
+    this.gameTimeSec = 0;
 
-    this.startTime = null;
+    this.startTimeGoalText = null;
     this.showLeftGoalText = false;
     this.showRightGoalText = false;
 
@@ -105,6 +111,7 @@ class PlayScene {
     for (const bomb of this.bombs) {
       bomb.update();
     }
+    this.countdownGameTime();
     this.checkBombAndPlayerCollision();
     this.checkBorderCollision();
     this.updateBombs(); // spawnBomb, updateBombsTimeToLive, removeDeadBombs
@@ -113,7 +120,12 @@ class PlayScene {
   // Draw
   public draw() {
     this.playboard.draw();
-    this.scoreInterface.draw(this.scorePlayer1, this.scorePlayer2);
+    this.scoreInterface.draw(
+      this.scorePlayer1,
+      this.scorePlayer2,
+      this.gameTimeMin,
+      this.gameTimeSec
+    );
     this.goal.draw();
     this.playboard.draw();
     this.playerOne.draw();
@@ -136,6 +148,15 @@ class PlayScene {
     text("Volume:", 50, 60);
     text(int(slider.value() * 100) + "%", 105, 60);
     pop();
+  }
+
+  // GAME TIME
+
+  private countdownGameTime() {
+    this.gameTime -= deltaTime;
+
+    this.gameTimeMin = floor(this.gameTime / 60_000);
+    this.gameTimeSec = this.gameTime % 60_000;
   }
 
   /* -----------------------------
@@ -171,13 +192,13 @@ class PlayScene {
   // Give score to player 1.
   private player1Score(points: number) {
     this.scorePlayer1 += points;
-    this.startTime = millis();
+    this.startTimeGoalText = millis();
     this.showRightGoalText = true;
   }
   // Give score to player 2.
   private player2Score(points: number) {
     this.scorePlayer2 += points;
-    this.startTime = millis();
+    this.startTimeGoalText = millis();
     this.showLeftGoalText = true;
   }
 
@@ -217,7 +238,7 @@ class PlayScene {
       textAlign(CENTER);
       textSize(25);
       fill(255);
-      if (millis() - this.startTime < 1000) {
+      if (millis() - this.startTimeGoalText < 1000) {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
@@ -237,7 +258,7 @@ class PlayScene {
       textAlign(CENTER);
       textSize(25);
       fill(255);
-      if (millis() - this.startTime < 1000) {
+      if (millis() - this.startTimeGoalText < 1000) {
         text(
           "GOAL!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
