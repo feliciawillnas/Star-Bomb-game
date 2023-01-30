@@ -709,9 +709,9 @@ class PlayScene {
             // Bonus powerup – cyan color
             if (this.powerUps[i].type == "bonus-points") {
               if (p == 0) {
-                this.scorePlayer1 = this.scorePlayer1 + 50;
+                this.scorePlayer1 = this.scorePlayer1 + 20;
               } else {
-                this.scorePlayer2 = this.scorePlayer2 + 50;
+                this.scorePlayer2 = this.scorePlayer2 + 20;
               }
             }
   
