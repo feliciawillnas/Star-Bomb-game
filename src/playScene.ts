@@ -238,7 +238,6 @@ class PlayScene {
       textSize(25);
       fill(255);
       if (millis() - this.startTime < 1000) {
-        // sounds.goalSound.play();
         text(
           "GOAL!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
@@ -246,7 +245,6 @@ class PlayScene {
         );
       } else {
         this.showGoalTextP2 = false;
-        // sounds.goalSound.stop();
       }
       pop();
     }
