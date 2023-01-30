@@ -38,6 +38,7 @@ class Game {
     
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
+    // BRYT UT TILL EGEN METOD
     if (this.scene == "playScene") {
       this.playScene.draw();
     }
@@ -72,5 +73,11 @@ class Game {
       sounds.startSceneLoop.stop();
     }
   }
+
+  // public endGame() {
+  //   if(gameTime < 0 && this.scene == "playScene") {
+  //     this.scene = "endScene"
+  //   }
+  // }
 }
 

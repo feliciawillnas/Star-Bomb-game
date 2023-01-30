@@ -86,6 +86,7 @@ function preload() {
  * in the draw function below
  */
 function setup() {
+  // MUSIC TURNED OFF DURING DEVELOPMENT!!!
   slider = createSlider(0, 1, 0.0, 0.01);
   slider.position(10, 10);
   slider.style("width", "80px");
