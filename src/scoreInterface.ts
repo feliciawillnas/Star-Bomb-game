@@ -11,26 +11,29 @@ class ScoreInterface {
   //METHODS//////////////////////////
 
   //Update
-  public update() {
-    
-  }
+  public update() {}
   //Draw
   public draw(scorePlayer1: number, scorePlayer2: number) {
     // Drawing scoreboard
     noStroke();
-    stroke('black');
+    stroke("black");
     strokeWeight(7);
     fill(255, 255, 255, 50);
-    rect(windowWidth / 2, height / 2 - this.boardHeight / 2 - 40, this.boardWidth, 100);
+    rect(
+      windowWidth / 2,
+      height / 2 - this.boardHeight / 2 - 40,
+      this.boardWidth,
+      100
+    );
     fill(255, 255, 255);
     textSize(32);
     // Score text
     push();
     drawingContext.shadowOffsetY = 10;
     drawingContext.shadowOffsetX = 10;
-    drawingContext.shadowColor = 'black';
+    drawingContext.shadowColor = "black";
     strokeWeight(7);
-    text('SCORE', windowWidth / 2, height / 2 - this.boardHeight / 2 - 20);
+    text("SCORE", windowWidth / 2, height / 2 - this.boardHeight / 2 - 42);
     pop();
 
     // Player Scores
@@ -39,25 +42,36 @@ class ScoreInterface {
     fill("blue");
     drawingContext.shadowOffsetY = 10;
     drawingContext.shadowOffsetX = 10;
-    drawingContext.shadowColor = 'black';
+    drawingContext.shadowColor = "black";
     text(
       scorePlayer1,
       width / 2 - this.boardWidth / 4,
       height / 2 - this.boardHeight / 2 - 20
     );
     pop();
-    push()
+    push();
     fill("purple");
     drawingContext.shadowOffsetY = 10;
     drawingContext.shadowOffsetX = 10;
-    drawingContext.shadowColor = 'black';
+    drawingContext.shadowColor = "black";
     text(
       scorePlayer2,
       width / 2 + this.boardWidth / 4,
       height / 2 - this.boardHeight / 2 - 20
     );
-    pop()
     pop();
-    }
-    
+
+    // Game Time
+    push();
+    noStroke();
+    stroke("black");
+    strokeWeight(7);
+    // fill(255, 255, 255, 50);
+    // rect(width / 2, height / 2 - this.boardHeight / 2 - 10, 180, 40);
+    fill(255, 255, 255);
+    textSize(28);
+    text("4:30", width / 2, height / 2 - this.boardHeight / 2);
+    pop();
+    pop();
+  }
 }

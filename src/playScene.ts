@@ -20,7 +20,7 @@ class PlayScene {
   private goalW: number;
   private goalH: number;
 
-  private startTime: any;
+  private startTimeGoalText: any;
   private showLeftGoalText: boolean;
   private showRightGoalText: boolean;
 
@@ -44,7 +44,7 @@ class PlayScene {
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
 
-    this.startTime = null;
+    this.startTimeGoalText = null;
     this.showLeftGoalText = false;
     this.showRightGoalText = false;
 
@@ -171,13 +171,13 @@ class PlayScene {
   // Give score to player 1.
   private player1Score(points: number) {
     this.scorePlayer1 += points;
-    this.startTime = millis();
+    this.startTimeGoalText = millis();
     this.showRightGoalText = true;
   }
   // Give score to player 2.
   private player2Score(points: number) {
     this.scorePlayer2 += points;
-    this.startTime = millis();
+    this.startTimeGoalText = millis();
     this.showLeftGoalText = true;
   }
 
@@ -217,7 +217,7 @@ class PlayScene {
       textAlign(CENTER);
       textSize(25);
       fill(255);
-      if (millis() - this.startTime < 1000) {
+      if (millis() - this.startTimeGoalText < 1000) {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
@@ -237,7 +237,7 @@ class PlayScene {
       textAlign(CENTER);
       textSize(25);
       fill(255);
-      if (millis() - this.startTime < 1000) {
+      if (millis() - this.startTimeGoalText < 1000) {
         text(
           "GOAL!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
