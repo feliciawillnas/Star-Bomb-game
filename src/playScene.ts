@@ -569,7 +569,7 @@ class PlayScene {
           let minDist = players[p].diameter / 2 + this.powerUps[i].diameter / 2;
   
           if (distance < minDist) {
-  
+            // Red powerup
             if (this.powerUps[i].type == "slow-down") {
                 if (p == 0) {
                   players[1].slowDownPlayer();
@@ -577,21 +577,37 @@ class PlayScene {
                   players[0].slowDownPlayer();
                 }
             }
-  
+            // Green powerup
             if (this.powerUps[i].type == "reverse-controls") {
-                // metod
+              if (p == 0) {
+                players[1].applyReverseControls();
+              } else {
+                players[0].applyReverseControls();
+              }
             }
-  
+            // Blue powerup
             if (this.powerUps[i].type == "goal-shield") {
-                // metod
+              if (p == 0) {
+                players[1].applyReverseControls();
+              } else {
+                players[0].applyReverseControls();
+              }
             }
-  
+            // Yellow powerup
             if (this.powerUps[i].type == "force-push") {
-                // metod
+              if (p == 0) {
+                players[1].applyReverseControls();
+              } else {
+                players[0].applyReverseControls();
+              }
             }
-  
+            // Cyan powerup
             if (this.powerUps[i].type == "bonus-points") {
-                // metod
+              if (p == 0) {
+                players[1].applyReverseControls();
+              } else {
+                players[0].applyReverseControls();
+              }
             }
   
             this.powerUps.splice(i, 1);

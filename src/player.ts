@@ -10,6 +10,7 @@ class Player {
   private img: p5.Image;
   public move: number;
   private slowDownTime: number;
+  private reverseControlsTime: number;
 
   private offsetTop: number;
   private boardWidth: number;
@@ -28,6 +29,7 @@ class Player {
     this.boardHeight = boardHeight;
     this.move = 5;
     this.slowDownTime = 0;
+    this.reverseControlsTime = 0;
 
     // Spelarnas startpositioner flyttas vid in- och utzoomning. Ska det vara så?
     if (player === 1) {
@@ -66,8 +68,19 @@ class Player {
     this.controlPlayerTwo();
     this.keepPlayersInsideScreen();
     this.slowDownTime -= deltaTime;
+    this.reverseControlsTime -= deltaTime;
     if (this.slowDownTime <= 0) {
         this.move = 5;
+    }
+    if (this.reverseControlsTime <= 0) {
+        if (this.color === "blue") {
+            this.rotateLeft = 65;
+            this.rotateRight = 68;
+        }
+        if (this.color === "purple") {
+            this.rotateLeft = 37;
+            this.rotateRight = 39;
+        }
     }
   }
   //Draw
@@ -144,5 +157,16 @@ class Player {
   public slowDownPlayer() {
       this.move = 2;
       this.slowDownTime = 5000;
+  }
+
+  public applyReverseControls() {
+      if (this.color === "blue") {
+          this.rotateLeft = 68;
+          this.rotateRight = 65;
+      } else if (this.color === "purple") {
+          this.rotateLeft = 39;
+          this.rotateRight = 37;
+      }
+          this.reverseControlsTime = 5000;
   }
 }
