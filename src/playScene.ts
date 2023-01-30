@@ -22,6 +22,8 @@ class PlayScene {
   private boardHeight: number;
   private goalW: number;
   private goalH: number;
+  private rightGoalShieldTime: number
+  private leftGoalShieldTime: number
 
   private startTime: any;
   private showGoalTextP1: boolean;
@@ -53,6 +55,8 @@ class PlayScene {
 
     this.spawnTimeout = 0;
     this.spawnTimeoutPowerUp = 5000;
+    this.rightGoalShieldTime = 0;
+    this.leftGoalShieldTime = 0;
     this.bombs = [];
     this.powerUps = [];
 
@@ -138,6 +142,32 @@ class PlayScene {
     for (const bomb of this.bombs) {
       bomb.draw();
     }
+
+if (this.rightGoalShieldTime > 0) {
+  push();
+  stroke(255);
+  strokeWeight(10);
+  line(
+    width / 2 + this.boardWidth / 2,
+    height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop+10,
+    width / 2 + this.boardWidth / 2,
+    height / 2 + this.goalH / 2 + this.offsetTop - 10
+  );
+  pop();
+}
+
+if (this.leftGoalShieldTime > 0) {
+  push();
+  stroke(255);
+  strokeWeight(10);
+  line(
+    width / 2 - this.boardWidth / 2,
+    height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop+10,
+    width / 2 - this.boardWidth / 2,
+    height / 2 + this.goalH / 2 + this.offsetTop - 10
+  );
+  pop();
+}
 
     this.drawGoal();
     this.drawVolumeSlider();
@@ -429,6 +459,8 @@ class PlayScene {
     const playboardTopBorder = height / 2 - this.playboard.height / 2 + 40;
     const playboardBottomBorder = height / 2 + this.playboard.height / 2 + 40;
     const allBombs = [...this.bombs];
+    this.rightGoalShieldTime -= deltaTime;
+    this.leftGoalShieldTime -= deltaTime;
     
     for (const bomb of allBombs) {
       
@@ -436,9 +468,13 @@ class PlayScene {
     
       // Checks collision with right border
       // The if conditionals decides the bombs speed (vx) after collision
-      if ((bomb.x > playboardRightBorder - bombRadius && bomb.y < playboardTopBorder + 140 + bomb.diameter / 4)
-      ||
-      (bomb.x > playboardRightBorder - bombRadius && bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)) {
+      if (
+        (this.rightGoalShieldTime <= 0 && bomb.x > playboardRightBorder - bombRadius && bomb.y < playboardTopBorder + 140 + bomb.diameter / 4)
+        ||
+        (this.rightGoalShieldTime <= 0 && bomb.x > playboardRightBorder - bombRadius && bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)
+        ||
+        (this.rightGoalShieldTime > 0 && bomb.x > playboardRightBorder - bombRadius)
+      ) {
       
         if (bomb.vx > 0 && bomb.vx < 1) {
           bomb.vx = -1;
@@ -449,9 +485,13 @@ class PlayScene {
 
       // Checks collision with left border
       // The if conditionals decides the bombs speed (vx) after collision
-      if ((bomb.x < playboardLeftBorder + bombRadius && bomb.y < playboardTopBorder + 140 + bomb.diameter / 4) 
-      ||
-      (bomb.x < playboardLeftBorder + bombRadius && bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)) {
+      if (
+        (this.leftGoalShieldTime <= 0 && bomb.x < playboardLeftBorder + bombRadius && bomb.y < playboardTopBorder + 140 + bomb.diameter / 4) 
+        ||
+        (this.leftGoalShieldTime <= 0 && bomb.x < playboardLeftBorder + bombRadius && bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)
+        ||
+        (this.leftGoalShieldTime > 0 && bomb.x < playboardLeftBorder + bombRadius)
+      ) {
         if (bomb.vx < 0 && bomb.vx > -1) {
           bomb.vx = 1;
         } else if (bomb.vx < -1 && bomb.vx <= -2) {
@@ -459,7 +499,7 @@ class PlayScene {
         }
       }
     
-      // Checks collision with top border
+      // Checks collision with top border within play area and inside goals
       // The if conditionals decides the bombs speed (vy) after collision
       if (
         (bomb.y < playboardTopBorder + bombRadius)
@@ -481,7 +521,7 @@ class PlayScene {
         }
       }
     
-      // Checks collision with bottom border
+      // Checks collision with bottom border within play areea and inside goals
       // The if conditionals decides the bombs speed (vy) after collision
       if (
         (bomb.y > playboardBottomBorder - bombRadius) 
@@ -581,7 +621,7 @@ class PlayScene {
           let minDist = players[p].diameter / 2 + this.powerUps[i].diameter / 2;
   
           if (distance < minDist) {
-            // Red powerup
+            // Red powerup – slow down
             if (this.powerUps[i].type == "slow-down") {
                 if (p == 0) {
                   players[1].slowDownPlayer();
@@ -589,7 +629,7 @@ class PlayScene {
                   players[0].slowDownPlayer();
                 }
             }
-            // Green powerup
+            // Green powerup – reverse controls
             if (this.powerUps[i].type == "reverse-controls") {
               if (p == 0) {
                 players[1].applyReverseControls();
@@ -597,15 +637,15 @@ class PlayScene {
                 players[0].applyReverseControls();
               }
             }
-            // Blue powerup
+            // Blue powerup – goal shield
             if (this.powerUps[i].type == "goal-shield") {
               if (p == 0) {
-                players[1].applyReverseControls();
+                this.leftGoalShieldTime = 10000;
               } else {
-                players[0].applyReverseControls();
+                this.rightGoalShieldTime = 10000;
               }
             }
-            // Yellow powerup
+            // Yellow powerup – force push
             if (this.powerUps[i].type == "force-push") {
               if (p == 0) {
                 players[1].applyReverseControls();
@@ -613,7 +653,7 @@ class PlayScene {
                 players[0].applyReverseControls();
               }
             }
-            // Cyan powerup
+            // Cyan powerup – bonus points
             if (this.powerUps[i].type == "bonus-points") {
               if (p == 0) {
                 players[1].applyReverseControls();
