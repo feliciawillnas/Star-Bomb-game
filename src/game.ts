@@ -1,7 +1,6 @@
-// interface IStartGame {
-//   startGame(): void;
-// }
-// class Game implements IStartGame { //kommenterat ut pga fel, ska vi ha kvar?
+interface IStartGame {
+  startGame(): void;
+}
 
 class Game {
   //ATTRIBUTE////////////////////////////
@@ -12,7 +11,7 @@ class Game {
 
   //CONSTRUCTOR//////////////////////////
   constructor() {
-    this.scene = "endScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
+    this.scene = "startScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
     this.startScene = new StartScene(game);
     this.endScene = new EndScene(game);
