@@ -211,7 +211,8 @@ class PlayScene {
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
           height / 2 - this.goalH / 2
-        );
+        )
+        sounds.goalSound.play();
       } else {
         this.showGoalTextP1 = false;
       }
