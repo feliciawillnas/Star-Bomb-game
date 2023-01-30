@@ -2,7 +2,7 @@ interface IStartGame {
   startGame(): void;
 }
 
-class Game implements IStartGame {
+class Game {
   //ATTRIBUTE////////////////////////////
   public scene: string;
   public playScene: PlayScene;
@@ -14,7 +14,7 @@ class Game implements IStartGame {
     this.scene = "startScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
     this.startScene = new StartScene(game);
-    this.endScene = new EndScene();
+    this.endScene = new EndScene(game);
   }
 
   //METHODS//////////////////////////////
@@ -26,12 +26,16 @@ class Game implements IStartGame {
     if (this.scene == "startScene") {
       this.startScene.update();
     }
+    if (this.scene == "endScene") {
+      this.endScene.update();
+    }  
   }
-
+  
+    
   //Draw
   public draw() {
     this.startGame();
-
+    
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
     if (this.scene == "playScene") {
@@ -49,7 +53,11 @@ class Game implements IStartGame {
         sounds.startSceneLoop.loop();
       }
     }
+    if (this.scene == "endScene") {
+      this.endScene.draw();
+    }  }
   }
+
 
   // Starts playScene when space-key is pressed. Also activates the gameMusic.
   public startGame() {
@@ -62,3 +70,4 @@ class Game implements IStartGame {
     }
   }
 }
+
