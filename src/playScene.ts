@@ -47,7 +47,7 @@ class PlayScene {
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
     // TODO - gör om till klocka
-    this.gameTime = 60_000;
+    this.gameTime = 120_000;
     this.gameTimeMin = 0;
     this.gameTimeSec = 0;
 
@@ -124,7 +124,8 @@ class PlayScene {
     this.scoreInterface.draw(
       this.scorePlayer1,
       this.scorePlayer2,
-      this.gameTime
+      this.gameTimeMin,
+      this.gameTimeSec
     );
     this.goal.draw();
     this.playboard.draw();
@@ -155,10 +156,12 @@ class PlayScene {
   private countdownGameTime() {
     this.gameTime -= deltaTime;
 
-    // let totalSeconds = 300;
     this.gameTimeMin = floor(this.gameTime / 60_000);
-    // console.log(this.gameTimeMin);
     this.gameTimeSec = this.gameTime % 60_000;
+
+    if (this.gameTime < 0) {
+      this.gameTime = 60_000;
+    }
   }
 
   /* -----------------------------
