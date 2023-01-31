@@ -78,15 +78,16 @@ class StartScene {
 
     //Player1/blue interaction instruction
     push();
-    text(this.interactionInstructionW, width / 2 - 450, height / 2 + 80);
-    text(this.interactionInstructionASD, width / 2 - 450, height / 2 + 100);
+    text(this.interactionInstructionW, width / 2 - 450, height / 2 + 85);
+    text(this.interactionInstructionASD, width / 2 - 450, height / 2 + 110);
     pop();
 
     //Player2/pink interaction instruction
     push();
     textFont(symbolFont);
-    text(this.interactionInstructionUP_A, width / 2 + 450, height / 2 + 80);
-    text(this.interactionInstructionLDR_A, width / 2 + 450, height / 2 + 100);
+    textSize(18);
+    text(this.interactionInstructionUP_A, width / 2 + 450, height / 2 + 85);
+    text(this.interactionInstructionLDR_A, width / 2 + 450, height / 2 + 110);
     pop();
 
     //Creators
