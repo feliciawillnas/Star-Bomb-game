@@ -46,7 +46,7 @@ class PlayScene {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
-    this.gameTime = 90_000;
+    this.gameTime = 180_000;
     this.gameTimeMin = 0;
     this.gameTimeSec = 0;
 
