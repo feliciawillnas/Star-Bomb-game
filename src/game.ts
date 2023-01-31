@@ -78,7 +78,11 @@ class Game implements IStartGame, IEndGame {
   }
 
   public endGame() {
-    if (game.playScene.gameTime < 0 && this.scene == "playScene") {
+    if (
+      game.playScene.gameTimeMin < 0 &&
+      game.playScene.gameTimeSec < 0 &&
+      this.scene == "playScene"
+    ) {
       this.scene = "endScene";
     }
   }

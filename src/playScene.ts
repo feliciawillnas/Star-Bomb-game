@@ -11,8 +11,8 @@ class PlayScene {
   public playerOne: Player;
   public playerTwo: Player;
 
-  private scorePlayer1: number;
-  private scorePlayer2: number;
+  public scorePlayer1: number;
+  public scorePlayer2: number;
   public gameTime: number;
   public gameTimeMin: number;
   public gameTimeSec: number;

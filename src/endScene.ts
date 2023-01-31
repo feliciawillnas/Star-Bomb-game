@@ -58,13 +58,13 @@ class EndScene {
     // Player 1 score // LÄGG TILL scorePlayer1 & scorePlayer2
     push();
     textSize(40);
-    text("100", width / 2 - 100, height / 2 - 15);
+    text(game.playScene.scorePlayer1, width / 2 - 100, height / 2 - 15);
     pop();
 
     // Player 2 score
     push();
     textSize(40);
-    text("100", width / 2 + 100, height / 2 - 15);
+    text(game.playScene.scorePlayer2, width / 2 + 100, height / 2 - 15);
     pop();
 
     // Drawing all text and images
