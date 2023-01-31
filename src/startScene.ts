@@ -42,8 +42,15 @@ class StartScene {
     push();
     noStroke();
     textSize(10);
-    text("Volume:", 50, 60);
-    text(int(slider.value() * 100) + "%", 105, 60);
+    text("Music:", 45, 20);
+    text(int(slider.value() * 100) + "%", 120, 40);
+    pop();
+
+    push();
+    noStroke();
+    textSize(10);
+    text("Sound effects:", 84, 60);
+    text(int(slider2.value() * 100) + "%", 120, 80);
     pop();
 
     //Text: "Press space to"
