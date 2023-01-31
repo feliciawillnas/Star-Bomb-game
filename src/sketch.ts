@@ -14,7 +14,6 @@ interface Images {
   rocketImgBlue1: p5.Image;
   rocketImgPink2: p5.Image;
   rocketImgBlue2: p5.Image;
-  // neonGreenBomb: p5.Image;
   neonGreenBombBig: p5.Image;
   rocketImgBlue1Big: p5.Image;
   rocketImgPink2Big: p5.Image;
@@ -22,10 +21,13 @@ interface Images {
   rocketImgBlue1gif: p5.Image;
   rocketImgPink1gif: p5.Image;
   redBomb: p5.Image;
-
-  // neonGreenBomb: p5.Image;
   neonGreenBombStor: p5.Image;
   neonGreenBombClear: p5.Image;
+  powerUpIconSlowDown: p5.Image;
+  powerupIconReverseControls: p5.Image;
+  powerUpIconGoalShield: p5.Image;
+  powerUpIconSmallPlayer: p5.Image;
+  powerUpIconBonusPoints: p5.Image;
 }
 
 interface Sounds {
@@ -70,14 +72,18 @@ function preload() {
     rocketImgPink1gif: loadImage("../assets/images/pinkRocket.gif"),
 
     redBomb: loadImage("../assets/images/neonGreenBombRed.png"),
-
-    // neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
     neonGreenBombBig: loadImage("../assets/images/neonGreenBombBig.png"),
     neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),
     neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
     rocketImgBlue1Big: loadImage("../assets/images/blueRocket1big.png"),
     rocketImgPink2Big: loadImage("../assets/images/pinkRocket2big.png"),
     explosion: loadImage("../assets/images/explosion.png"),
+
+    powerUpIconSlowDown: loadImage("../assets/images/slow-down-powerup.png"),
+    powerupIconReverseControls: loadImage("../assets/images/reverse-controls-powerup.png"),
+    powerUpIconGoalShield: loadImage("../assets/images/goal-shield-powerup.png"),
+    powerUpIconSmallPlayer: loadImage("../assets/images/small-player-powerup.png"),
+    powerUpIconBonusPoints: loadImage("../assets/images/bonus-points-powerup.png"),
   };
 
   // FONTS ////////////////////

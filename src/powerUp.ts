@@ -23,23 +23,21 @@ class PowerUp {
     ------------------ */ 
     // Draw
     public draw() {
-        noStroke();
         if (this.type == "slow-down") {
-            fill(255, 0, 0)
+            image(images.powerUpIconSlowDown, this.x, this.y);
         }
         if (this.type == "reverse-controls") {
-            fill(0, 255, 0)
+            image(images.powerupIconReverseControls, this.x, this.y);
         }
         if (this.type == "goal-shield") {
-            fill(0, 0, 255)
+            image(images.powerUpIconGoalShield, this.x, this.y);
         }
         if (this.type == "small-player") {
-            fill(255, 255, 0)
+            image(images.powerUpIconSmallPlayer, this.x, this.y);
         }
         if (this.type == "bonus-points") {
-            fill(0, 255, 255)
+            image(images.powerUpIconBonusPoints, this.x, this.y);
         }
-        ellipse(this.x, this.y, this.diameter)
     }
   
     // Update

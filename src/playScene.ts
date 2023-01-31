@@ -610,7 +610,7 @@ class PlayScene {
 
   // Spawns powerups
   private spawnPowerUps() {
-      const diameter = 24;
+      const diameter = 28;
       const powerUpRadius = diameter / 2;
       const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
       const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
