@@ -34,8 +34,7 @@ class StartScene {
     push();
     textSize(60);
     text(this.gameTitle, width / 2, height / 2 - 140);
-    images.neonGreenBombStor.resize(123, 107);
-    image(images.neonGreenBombStor, width / 2 + 162, height / 2 - 190);
+    image(images.neonGreenBombBig, width / 2 + 163, height / 2 - 190);
     pop();
 
     // Text: "Volume: x%"
@@ -70,31 +69,32 @@ class StartScene {
 
     //Pink rocket img
     push();
-    images.rocketImgPink1.resize(120, 256);
+    images.startScenePinkRocket.resize(120, 256);
     translate(width / 2 + 450, height / 2);
     rotate(-45);
-    image(images.rocketImgPink1, 0, 0);
+    image(images.startScenePinkRocket, 0, 0);
     pop();
 
     //Blue rocket img
     push();
-    images.rocketImgBlue1.resize(120, 256);
+    images.startSceneBlueRocket.resize(120, 256);
     translate(width / 2 - 450, height / 2 + 200);
     rotate(45);
-    image(images.rocketImgBlue1, 0, 0);
+    image(images.startSceneBlueRocket, 0, 0);
     pop();
 
     //Player1/blue interaction instruction
     push();
-    text(this.interactionInstructionW, width / 2 - 450, height / 2 + 80);
-    text(this.interactionInstructionASD, width / 2 - 450, height / 2 + 100);
+    text(this.interactionInstructionW, width / 2 - 450, height / 2 + 85);
+    text(this.interactionInstructionASD, width / 2 - 450, height / 2 + 110);
     pop();
 
     //Player2/pink interaction instruction
     push();
     textFont(symbolFont);
-    text(this.interactionInstructionUP_A, width / 2 + 450, height / 2 + 80);
-    text(this.interactionInstructionLDR_A, width / 2 + 450, height / 2 + 100);
+    textSize(18);
+    text(this.interactionInstructionUP_A, width / 2 + 450, height / 2 + 85);
+    text(this.interactionInstructionLDR_A, width / 2 + 450, height / 2 + 110);
     pop();
 
     //Creators

@@ -21,6 +21,10 @@ interface Images {
   rocketImgBlue1gif: p5.Image;
   rocketImgPink1gif: p5.Image;
   redBomb: p5.Image;
+  startSceneBlueRocket: p5.Image; 
+  startScenePinkRocket: p5.Image;
+
+  // neonGreenBomb: p5.Image;
   neonGreenBombStor: p5.Image;
   neonGreenBombClear: p5.Image;
   powerUpIconSlowDown: p5.Image;
@@ -72,6 +76,12 @@ function preload() {
     rocketImgPink1gif: loadImage("../assets/images/pinkRocket.gif"),
 
     redBomb: loadImage("../assets/images/neonGreenBombRed.png"),
+
+    startSceneBlueRocket: loadImage("../assets/images/startscenerocket.png"),
+    startScenePinkRocket: loadImage("../assets/images/startscenerocketpink.png"),
+
+
+    // neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
     neonGreenBombBig: loadImage("../assets/images/neonGreenBombBig.png"),
     neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),
     neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
