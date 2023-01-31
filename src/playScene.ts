@@ -13,6 +13,9 @@ class PlayScene {
 
   private scorePlayer1: number;
   private scorePlayer2: number;
+  private gameTime: number;
+  public gameTimeMin: number;
+  public gameTimeSec: number;
 
   private offsetTop: number;
   private boardWidth: number;
@@ -20,9 +23,9 @@ class PlayScene {
   private goalW: number;
   private goalH: number;
 
-  private startTime: any;
-  private showGoalTextP1: boolean;
-  private showGoalTextP2: boolean;
+  private startTimeGoalText: any;
+  private showLeftGoalText: boolean;
+  private showRightGoalText: boolean;
 
   /* --------------------
         CONSTRUCTOR
@@ -43,10 +46,13 @@ class PlayScene {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
+    this.gameTime = 12_000;
+    this.gameTimeMin = 0;
+    this.gameTimeSec = 0;
 
-    this.startTime = null;
-    this.showGoalTextP1 = false;
-    this.showGoalTextP2 = false;
+    this.startTimeGoalText = null;
+    this.showLeftGoalText = false;
+    this.showRightGoalText = false;
 
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
 
@@ -105,6 +111,7 @@ class PlayScene {
     for (const bomb of this.bombs) {
       bomb.update();
     }
+    this.countdownGameTime();
     this.checkBombAndPlayerCollision();
     this.checkBorderCollision();
     this.updateBombs(); // spawnBomb, updateBombsTimeToLive, removeDeadBombs
@@ -113,7 +120,12 @@ class PlayScene {
   // Draw
   public draw() {
     this.playboard.draw();
-    this.scoreInterface.draw(this.scorePlayer1, this.scorePlayer2);
+    this.scoreInterface.draw(
+      this.scorePlayer1,
+      this.scorePlayer2,
+      this.gameTimeMin,
+      this.gameTimeSec
+    );
     this.goal.draw();
     this.playboard.draw();
     this.playerOne.draw();
@@ -146,63 +158,80 @@ class PlayScene {
     pop();
   }
 
-  
+  // GAME TIME
+
+  private countdownGameTime() {
+    this.gameTime -= deltaTime;
+
+    this.gameTimeMin = floor(this.gameTime / 60_000);
+    this.gameTimeSec = this.gameTime % 60_000;
+  }
 
   /* -----------------------------
         GOAL-RELATED METHODS
   ----------------------------- */
 
-  // KOLLAR OM EN BOMB HAMNAR I MÅL OCH GER POÄNG.////////////////////////////////////
-  private checkForGoal() {
-    for (let i = 0; i < this.bombs.length; i++) {
-      // Only score if bomb has not exploded
-      if (this.bombs[i].timeToLive > 200) {
-        // Vänster mål
-        if (
-          this.bombs[i].x <=
-            width / 2 - this.boardWidth / 2 + this.bombs[i].diameter / 2 &&
-          this.bombs[i].y <=
-            height / 2 +
-              this.goalH / 2 +
-              this.offsetTop -
-              this.bombs[i].diameter / 4 &&
-          this.bombs[i].y >=
-            height / 2 -
-              this.goalH / 2 +
-              this.offsetTop +
-              this.bombs[i].diameter / 4
-        )  
-        {
-          this.bombs.splice(i, 1);
-          this.scorePlayer2 = this.scorePlayer2 + 10;
-          // Give score to player
-          this.startTime = millis();
-          this.showGoalTextP1 = true;
-        }
+  // If the bomb enters the left goal. Bomb in goal = true, not in goal = false.
+  private inLeftGoal(bomb: Bomb): boolean {
+    if (
+      bomb.x <= width / 2 - this.boardWidth / 2 + bomb.diameter / 2 &&
+      bomb.y <=
+        height / 2 + this.goalH / 2 + this.offsetTop - bomb.diameter / 4 &&
+      bomb.y >= height / 2 - this.goalH / 2 + this.offsetTop + bomb.diameter / 4
+    ) {
+      return true;
+    }
+    return false;
+  }
 
-        // Höger mål
-        if (
-          this.bombs[i].x >=
-            width / 2 + this.boardWidth / 2 - this.bombs[i].diameter / 2 &&
-          this.bombs[i].y <=
-            height / 2 +
-              this.goalH / 2 +
-              this.offsetTop -
-              this.bombs[i].diameter / 4 &&
-          this.bombs[i].y >=
-            height / 2 -
-              this.goalH / 2 +
-              this.offsetTop +
-              this.bombs[i].diameter / 4
-        ) {
-          this.bombs.splice(i, 1);
-          this.scorePlayer1 = this.scorePlayer1 + 10;
-          // Give score to player
-          this.startTime = millis();
-          this.showGoalTextP2 = true;
-        }
+  // If the bomb enters the right goal. Bomb in goal = true, not in goal = false.
+  private inRightGoal(bomb: Bomb): boolean {
+    if (
+      bomb.x >= width / 2 + this.boardWidth / 2 - bomb.diameter / 2 &&
+      bomb.y <=
+        height / 2 + this.goalH / 2 + this.offsetTop - bomb.diameter / 4 &&
+      bomb.y >= height / 2 - this.goalH / 2 + this.offsetTop + bomb.diameter / 4
+    ) {
+      return true;
+    }
+    return false;
+  }
+
+  // Give score to player 1.
+  private player1Score(points: number) {
+    this.scorePlayer1 += points;
+    this.startTimeGoalText = millis();
+    this.showRightGoalText = true;
+  }
+  // Give score to player 2.
+  private player2Score(points: number) {
+    this.scorePlayer2 += points;
+    this.startTimeGoalText = millis();
+    this.showLeftGoalText = true;
+  }
+
+  // Gives points if a goal is scored.
+  private checkForGoal() {
+    let bombs = [];
+    for (let i = 0; i < this.bombs.length; i++) {
+      let bomb = this.bombs[i];
+
+      // Only score if bomb has not exploded
+      if (bomb.timeToLive <= 200) {
+        bombs.push(bomb);
+        continue;
+      }
+      // Add amount of points of scored goal here.
+      if (this.inLeftGoal(bomb)) {
+        this.player2Score(10);
+      } else if (this.inRightGoal(bomb)) {
+        this.player1Score(10);
+      } else {
+        bombs.push(bomb);
       }
     }
+    // Overwrites the old list. We don't want to iterate over the loop when we have updated the list.
+    this.bombs = bombs;
   }
 
   private drawGoal() {
@@ -211,40 +240,40 @@ class PlayScene {
   }
 
   // Draws the text "GOAL!" over the left goal when a bomb crosses its goal line.
-  private drawMadeGoalP1() {
-    if (this.showGoalTextP1) {
+  private drawMadeGoalP2() {
+    if (this.showLeftGoalText) {
       push();
       textAlign(CENTER);
       textSize(25);
       fill(255);
-      if (millis() - this.startTime < 1000) {
+      if (millis() - this.startTimeGoalText < 1000) {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
           height / 2 - this.goalH / 2,
         );
       } else {
-        this.showGoalTextP1 = false;
+        this.showLeftGoalText = false;
       }
       pop();
     }
   }
 
   // Draws the text "GOAL!" over the right goal when a bomb crosses its goal line.
-  private drawMadeGoalP2() {
-    if (this.showGoalTextP2) {
+  private drawMadeGoalP1() {
+    if (this.showRightGoalText) {
       push();
       textAlign(CENTER);
       textSize(25);
       fill(255);
-      if (millis() - this.startTime < 1000) {
+      if (millis() - this.startTimeGoalText < 1000) {
         text(
           "GOAL!",
           width / 2 + this.boardWidth / 2 + this.goalW / 2,
           height / 2 - this.goalH / 2
         );
       } else {
-        this.showGoalTextP2 = false;
+        this.showRightGoalText = false;
       }
       pop();
     }

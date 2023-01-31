@@ -21,22 +21,27 @@ class Player {
   private backwards: number;
 
   //CONSTRUCTOR////////////////////////
-  constructor(player: number, offsetTop: number, boardWidth: number, boardHeight: number) {
+  constructor(
+    player: number,
+    offsetTop: number,
+    boardWidth: number,
+    boardHeight: number
+  ) {
     this.offsetTop = offsetTop;
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
     this.move = 5;
+    this.widthPlayer = 37.5;
+    this.heightPlayer = 60;
+    this.diameter = this.heightPlayer + 15;
 
     // Spelarnas startpositioner flyttas vid in- och utzoomning. Ska det vara så?
     if (player === 1) {
       this.x = width / 2 - this.boardWidth / 2.5;
       this.y = height / 2 + this.offsetTop;
-      this.widthPlayer = 37.5;
-      this.heightPlayer = 60;
-      this.diameter = this.heightPlayer + 15;
       this.angle = 90;
-      this.color = 'blue';
-      this.img = images.rocketImgBlue1;
+      this.color = "blue";
+      this.img = images.rocketImgBlue1gif;
       this.rotateLeft = 65;
       this.rotateRight = 68;
       this.forward = 87;
@@ -44,12 +49,9 @@ class Player {
     } else {
       this.x = width / 2 + this.boardWidth / 2.5;
       this.y = height / 2 + this.offsetTop;
-      this.widthPlayer = 37.5;
-      this.heightPlayer = 60;
-      this.diameter = this.heightPlayer + 15;
       this.angle = -90;
-      this.color = 'purple';
-      this.img = images.rocketImgPink1;
+      this.color = "purple";
+      this.img = images.rocketImgPink1gif;
       this.rotateLeft = 37;
       this.rotateRight = 39;
       this.forward = 38;
@@ -60,8 +62,7 @@ class Player {
 
   //Update
   public update() {
-    this.controlPlayerOne();
-    this.controlPlayerTwo();
+    this.controlPlayers();
     this.keepPlayersInsideScreen();
   }
   //Draw
@@ -80,24 +81,8 @@ class Player {
     image(this.img, 0, 0, this.widthPlayer, this.heightPlayer);
     pop();
   }
-  private controlPlayerOne() {
-    if (keyIsDown(this.rotateLeft)) {
-      this.angle = this.angle - this.move;
-    }
-    if (keyIsDown(this.rotateRight)) {
-      this.angle = this.angle + this.move;
-    }
-    if (keyIsDown(this.forward)) {
-      this.x = this.x + this.move * sin(this.angle);
-      this.y = this.y - this.move * cos(this.angle);
-    }
-    if (keyIsDown(this.backwards)) {
-      this.x = this.x - this.move * sin(this.angle);
-      this.y = this.y + this.move * cos(this.angle);
-    }
-  }
 
-  private controlPlayerTwo() {
+  private controlPlayers() {
     if (keyIsDown(this.rotateLeft)) {
       this.angle = this.angle - this.move;
     }
@@ -125,11 +110,17 @@ class Player {
       this.x = this.x - this.move * 2;
     }
     // can't leave screen on the upper side
-    if (this.y - this.diameter / 2 <= height / 2 - this.boardHeight / 2 + this.offsetTop) {
+    if (
+      this.y - this.diameter / 2 <=
+      height / 2 - this.boardHeight / 2 + this.offsetTop
+    ) {
       this.y = this.y + this.move * 2;
     }
     // can't leave screen on the lower side
-    if (this.y + this.diameter / 2 >= height / 2 + this.boardHeight / 2 + this.offsetTop) {
+    if (
+      this.y + this.diameter / 2 >=
+      height / 2 + this.boardHeight / 2 + this.offsetTop
+    ) {
       this.y = this.y - this.move * 2;
     }
   }
