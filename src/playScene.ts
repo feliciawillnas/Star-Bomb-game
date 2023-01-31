@@ -145,8 +145,16 @@ class PlayScene {
     noStroke();
     fill("white");
     textSize(10);
-    text("Volume:", 50, 60);
-    text(int(slider.value() * 100) + "%", 105, 60);
+    text("Music:", 45, 20);
+    text(int(slider.value() * 100) + "%", 120, 40);
+    pop();
+
+    push();
+    noStroke();
+    fill("white");
+    textSize(10);
+    text("Sound effect:", 80, 60);
+    text(int(slider2.value() * 100) + "%", 120, 80);
     pop();
   }
 
@@ -242,7 +250,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
-          height / 2 - this.goalH / 2
+          height / 2 - this.goalH / 2,
         );
       } else {
         this.showLeftGoalText = false;
