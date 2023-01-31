@@ -46,7 +46,7 @@ class PlayScene {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
-    this.gameTime = 5_000;
+    this.gameTime = 90_000;
     this.gameTimeMin = 0;
     this.gameTimeSec = 0;
 
@@ -224,8 +224,10 @@ class PlayScene {
       // Add amount of points of scored goal here.
       if (this.inLeftGoal(bomb)) {
         this.player2Score(10);
+        // LÄGG TILL LJUD FÖR MÅL
       } else if (this.inRightGoal(bomb)) {
         this.player1Score(10);
+        // LÄGG TILL LJUD FÖR MÅL
       } else {
         bombs.push(bomb);
       }

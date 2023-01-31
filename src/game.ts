@@ -1,8 +1,12 @@
 interface IStartGame {
+  //IGame
   startGame(): void;
 }
+interface IEndGame {
+  endGame(): void;
+}
 
-class Game {
+class Game implements IStartGame, IEndGame {
   //ATTRIBUTE////////////////////////////
   public scene: string;
   public playScene: PlayScene;
@@ -13,8 +17,8 @@ class Game {
   constructor() {
     this.scene = "startScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
-    this.startScene = new StartScene(game);
-    this.endScene = new EndScene(game);
+    this.startScene = new StartScene(this);
+    this.endScene = new EndScene(this);
   }
 
   //METHODS//////////////////////////////
@@ -41,7 +45,6 @@ class Game {
     this.restartGame();
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
-    // BRYT UT TILL EGEN METOD
     if (this.scene == "playScene") {
       this.playScene.draw();
     }
@@ -64,16 +67,17 @@ class Game {
 
   // Starts playScene when space-key is pressed. Also activates the gameMusic.
   public startGame() {
-    if (keyIsDown(32)) {
+    if (this.scene == "startScene" && keyIsDown(32)) {
+      sounds.startSceneLoop.stop();
       this.scene = "playScene";
+
       if (!sounds.gameMusic.isPlaying()) {
         sounds.gameMusic.loop();
       }
-      sounds.startSceneLoop.stop();
     }
   }
 
-  private endGame() {
+  public endGame() {
     if (game.playScene.gameTime < 0 && this.scene == "playScene") {
       this.scene = "endScene";
     }
@@ -90,8 +94,10 @@ class Game {
 
   private restartGame() {
     if (this.scene == "endScene" && keyIsDown(32)) {
-      this.scene = "startScene";
       sounds.endSceneMusic.stop();
+      this.scene = "playScene";
+      sounds.gameMusic.loop();
+      this.playScene = new PlayScene();
     }
   }
 }
