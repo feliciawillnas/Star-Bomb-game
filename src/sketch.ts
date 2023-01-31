@@ -4,6 +4,7 @@ let game: Game;
 let images: Images;
 let sounds: Sounds;
 let slider: any;
+let slider2: any;
 
 interface Images {
   background: p5.Image;
@@ -13,13 +14,16 @@ interface Images {
   rocketImgBlue1: p5.Image;
   rocketImgPink2: p5.Image;
   rocketImgBlue2: p5.Image;
+  // neonGreenBomb: p5.Image;
+  neonGreenBombBig: p5.Image;
+  rocketImgBlue1Big: p5.Image;
+  rocketImgPink2Big: p5.Image;
   explosion: p5.Image;
   rocketImgBlue1gif: p5.Image;
   rocketImgPink1gif: p5.Image;
   redBomb: p5.Image;
   startSceneBlueRocket: p5.Image; 
   startScenePinkRocket: p5.Image;
-  neonGreenBombBig: p5.Image;
 
   // neonGreenBomb: p5.Image;
   neonGreenBombStor: p5.Image;
@@ -32,6 +36,9 @@ interface Sounds {
   startSceneLoop: p5.SoundFile;
   gameMusic: p5.SoundFile;
   endSceneMusic: p5.SoundFile;
+  bombExplosion: p5.SoundFile;
+  goalSound: p5.SoundFile;
+
 }
 
 let gameFont: p5.Font;
@@ -48,6 +55,9 @@ function preload() {
     startSceneLoop: loadSound("../assets/sounds/startscene_loop.mp3"),
     gameMusic: loadSound("../assets/sounds/star_rider.mp3"),
     endSceneMusic: loadSound("../assets/sounds/screenHeroes.mp3"),
+    bombExplosion: loadSound("../assets/sounds/distant-explosion.mp3"),
+    goalSound: loadSound ("../assets/sounds/goal-sound.mp3"),
+
   };
   // IMGAES //////////////////
   images = {
@@ -58,7 +68,6 @@ function preload() {
     rocketImgPink1: loadImage("../assets/images/pinkRocket1.png"),
     rocketImgBlue2: loadImage("../assets/images/blueRocket2.png"),
     rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
-    explosion: loadImage("../assets/images/explosion.png"),
     rocketImgBlue1gif: loadImage("../assets/images/blueRocket.gif"),
     rocketImgPink1gif: loadImage("../assets/images/pinkRocket.gif"),
 
@@ -67,14 +76,18 @@ function preload() {
     startSceneBlueRocket: loadImage("../assets/images/startscenerocket.png"),
     startScenePinkRocket: loadImage("../assets/images/startscenerocketpink.png"),
 
-    neonGreenBombBig: loadImage("../assets/images/neonGreenBombBig.png"),
-
 
     // neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
+    neonGreenBombBig: loadImage("../assets/images/neonGreenBombBig.png"),
     neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),
     neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
+    rocketImgBlue1Big: loadImage("../assets/images/blueRocket1big.png"),
+    rocketImgPink2Big: loadImage("../assets/images/pinkRocket2big.png"),
+    explosion: loadImage("../assets/images/explosion.png"),
   };
+
   // FONTS ////////////////////
+
   gameFont = loadFont("../assets/fonts/PressStart2P-Regular.ttf");
   symbolFont = loadFont("../assets/fonts/symbolerFont.otf");
 }
@@ -86,9 +99,15 @@ function preload() {
  * in the draw function below
  */
 function setup() {
-  slider = createSlider(0, 1, 0.2, 0.01);
-  slider.position(10, 10);
+  // MUSIC TURNED OFF DURING DEVELOPMENT!!!
+  slider = createSlider(0, 1, 0.0, 0.01);
+  slider.position(10, 25);
   slider.style("width", "80px");
+
+    /** Second slider - sound effects **/
+  slider2 = createSlider(0, 1, 0.2, 0.01);
+  slider2.position(10, 65);
+  slider2.style("width", "80px");
 
   createCanvas(windowWidth, windowHeight);
   frameRate(60);
@@ -107,8 +126,12 @@ function setup() {
  * you created in the setup function above
  */
 function draw() {
+  /** First slider - music **/
   sounds.startSceneLoop.setVolume(slider.value());
   sounds.gameMusic.setVolume(slider.value());
+
+  /** Second slider - sound effects **/
+  sounds.bombExplosion.setVolume(slider2.value());
 
   game.update();
   game.draw();
