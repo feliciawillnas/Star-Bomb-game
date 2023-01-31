@@ -13,7 +13,7 @@ class PlayScene {
 
   private scorePlayer1: number;
   private scorePlayer2: number;
-  private gameTime: number;
+  public gameTime: number;
   public gameTimeMin: number;
   public gameTimeSec: number;
 
@@ -250,7 +250,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
-          height / 2 - this.goalH / 2,
+          height / 2 - this.goalH / 2
         );
       } else {
         this.showLeftGoalText = false;

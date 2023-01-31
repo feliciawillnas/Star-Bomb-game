@@ -20,6 +20,8 @@ class Game {
   //METHODS//////////////////////////////
   //Update
   public update() {
+    this.endGame();
+
     if (this.scene == "playScene") {
       this.playScene.update();
     }
@@ -28,14 +30,13 @@ class Game {
     }
     if (this.scene == "endScene") {
       this.endScene.update();
-    }  
+    }
   }
-  
-    
+
   //Draw
   public draw() {
     this.startGame();
-    
+
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
     // BRYT UT TILL EGEN METOD
@@ -59,9 +60,8 @@ class Game {
     }
     if (this.scene == "endScene") {
       this.endScene.draw();
-    }  
+    }
   }
-
 
   // Starts playScene when space-key is pressed. Also activates the gameMusic.
   public startGame() {
@@ -74,10 +74,9 @@ class Game {
     }
   }
 
-  // public endGame() {
-  //   if(gameTime < 0 && this.scene == "playScene") {
-  //     this.scene = "endScene"
-  //   }
-  // }
+  public endGame() {
+    if (game.playScene.gameTime < 0 && this.scene == "playScene") {
+      this.scene = "endScene";
+    }
+  }
 }
-
