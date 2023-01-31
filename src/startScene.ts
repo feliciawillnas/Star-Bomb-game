@@ -38,18 +38,19 @@ class StartScene {
     image(images.neonGreenBombStor, width / 2 + 162, height / 2 - 190);
     pop();
 
-    // Text: "Volume: x%"
+    // Text: "Volume x%"
     push();
     noStroke();
     textSize(10);
-    text("Music:", 45, 20);
+    text("Music", 45, 20);
     text(int(slider.value() * 100) + "%", 120, 40);
     pop();
 
+    // Text: "Sound effects x%"
     push();
     noStroke();
     textSize(10);
-    text("Sound effects:", 84, 60);
+    text("Sound effects", 84, 60);
     text(int(slider2.value() * 100) + "%", 120, 80);
     pop();
 
@@ -99,6 +100,7 @@ class StartScene {
 
     //Creators
     push();
+    textSize(12);
     text("LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS", width / 2, height - 20);
     pop();
     pop();

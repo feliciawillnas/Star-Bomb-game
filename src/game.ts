@@ -20,7 +20,8 @@ class Game {
   //METHODS//////////////////////////////
   //Update
   public update() {
-    this.endGame();
+    this.endSceneMusic();
+    this.startSceneMusic();
 
     if (this.scene == "playScene") {
       this.playScene.update();
@@ -36,7 +37,7 @@ class Game {
   //Draw
   public draw() {
     this.startGame();
-
+    this.endGame();
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
     // BRYT UT TILL EGEN METOD
@@ -45,21 +46,18 @@ class Game {
     }
     if (this.scene == "startScene") {
       this.startScene.draw();
-      this.startSceneMusic();
     }
     if (this.scene == "endScene") {
       this.endScene.draw();
     }
   }
+
   // Loops the music during the start scene of the game.
   private startSceneMusic() {
     if (this.scene == "startScene") {
       if (!sounds.startSceneLoop.isPlaying()) {
         sounds.startSceneLoop.loop();
       }
-    }
-    if (this.scene == "endScene") {
-      this.endScene.draw();
     }
   }
 
@@ -77,6 +75,15 @@ class Game {
   public endGame() {
     if (game.playScene.gameTime < 0 && this.scene == "playScene") {
       this.scene = "endScene";
+    }
+  }
+
+  public endSceneMusic() {
+    if (this.scene == "endScene") {
+      sounds.gameMusic.stop();
+      if (!sounds.endSceneMusic.isPlaying()) {
+        sounds.endSceneMusic.loop();
+      }
     }
   }
 }

@@ -46,7 +46,7 @@ class PlayScene {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
-    this.gameTime = 12_000;
+    this.gameTime = 5_000;
     this.gameTimeMin = 0;
     this.gameTimeSec = 0;
 
@@ -139,13 +139,13 @@ class PlayScene {
     this.drawVolumeSlider();
   }
 
-  // Text: "Volume: x%"
+  // Text: "Volume x%"
   private drawVolumeSlider() {
     push();
     noStroke();
     fill("white");
     textSize(10);
-    text("Music:", 45, 20);
+    text("Music", 45, 20);
     text(int(slider.value() * 100) + "%", 120, 40);
     pop();
 
@@ -153,7 +153,7 @@ class PlayScene {
     noStroke();
     fill("white");
     textSize(10);
-    text("Sound effect:", 80, 60);
+    text("Sound effects", 80, 60);
     text(int(slider2.value() * 100) + "%", 120, 80);
     pop();
   }
