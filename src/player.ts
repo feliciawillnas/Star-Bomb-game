@@ -81,7 +81,14 @@ class Player {
   private drawPlayer() {
     push();
     stroke(this.color);
-    strokeWeight(4);
+
+    // Width of force field is decided whether powerup is activated or not
+    if (this.smallPlayerTime < 0) {
+      strokeWeight(4);;
+    } else {
+      strokeWeight(2);
+    }
+
     noFill();
     circle(this.x, this.y, this.diameter);
     translate(this.x, this.y);
@@ -93,6 +100,7 @@ class Player {
     } else {
       image(this.img, 0, 0, this.widthPlayer/3, this.heightPlayer/3);
     }
+
     pop();
   }
 
