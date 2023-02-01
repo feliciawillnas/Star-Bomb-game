@@ -47,7 +47,7 @@ class EndScene {
 
     // SCORE
     push();
-    textSize(40);
+    textSize(25);
     if (game.playScene.scorePlayer1 > game.playScene.scorePlayer2) {
       text("PLAYER 1 WINS!", width / 2, height / 2 - 100);
     }
@@ -116,9 +116,6 @@ class EndScene {
 
     // Blue rocket img
     push();
-    images.rocketImgBlue1Big;
-    translate(width / 2 - 240, height / 2 - 25);
-    image(images.rocketImgBlue1Big, 0, 0);
     images.startSceneBlueRocket.resize(90, 192);
     translate(width / 2 - 240, height / 2 - 45);
     image(images.startSceneBlueRocket, 0, 0);
