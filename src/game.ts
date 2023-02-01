@@ -19,7 +19,7 @@ class Game implements IStartGame, IEndGame {
         CONSTRUCTOR
   -------------------- */
   constructor() {
-    this.scene = "endScene"; // Activates the first scene of the game.
+    this.scene = "startScene"; // Activates the first scene of the game.
     this.playScene = new PlayScene();
     this.startScene = new StartScene(this);
     this.endScene = new EndScene(this);
