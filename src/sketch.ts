@@ -127,12 +127,12 @@ function preload() {
  * in the draw function below
  */
 function setup() {
-  slider = createSlider(0, 0.5, 0.2, 0.01);
+  slider = createSlider(0, 1, 0.2, 0.01);
   slider.position(10, 25);
   slider.style("width", "80px");
 
   /** Second slider - sound effects **/
-  slider2 = createSlider(0, 0.5, 0.2, 0.01);
+  slider2 = createSlider(0, 1, 0.2, 0.01);
   slider2.position(10, 65);
   slider2.style("width", "80px");
 
@@ -154,14 +154,15 @@ function setup() {
  */
 function draw() {
   /** First slider - music **/
-  sounds.startSceneLoop.setVolume(slider.value());
-  sounds.gameMusic.setVolume(slider.value());
+
+  sounds.startSceneLoop.setVolume(slider.value() / 5);
+  sounds.gameMusic.setVolume(slider.value() / 5);
   sounds.endSceneMusic.setVolume(slider.value());
 
   /** Second slider - sound effects **/
   sounds.bombExplosion.setVolume(slider2.value());
-  sounds.powerUpSound.setVolume(slider2.value());
-  sounds.goalSound.setVolume(slider2.value());
+  sounds.powerUpSound.setVolume(slider2.value() / 2);
+  sounds.goalSound.setVolume(slider2.value() / 6);
 
   game.update();
   game.draw();
