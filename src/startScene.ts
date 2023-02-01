@@ -1,5 +1,8 @@
 class StartScene {
-  //ATTRIBUTE////////////////////////////
+  
+  /* ------------------
+        ATTRIBUTES
+  ------------------ */
   protected gameTitle: string;
   protected interactionInstructionW: string;
   protected interactionInstructionASD: string;
@@ -8,7 +11,9 @@ class StartScene {
   protected creatorNames: string;
   protected game: IStartGame;
 
-  //CONSTRUCTOR////////////////////////
+  /* --------------------
+        CONSTRUCTOR
+  -------------------- */
   constructor(game: IStartGame) {
     this.gameTitle = "STAR  B MB";
 
@@ -20,8 +25,9 @@ class StartScene {
     this.game = game;
   }
 
-  //METHODS//////////////////////////
-
+  /* ------------------
+        METHODS
+  ------------------ */
   public update() {}
 
   public draw() {

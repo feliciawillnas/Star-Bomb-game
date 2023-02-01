@@ -1,4 +1,5 @@
 class PlayScene {
+
   /* ------------------
         ATTRIBUTES
   ------------------ */
@@ -108,9 +109,8 @@ class PlayScene {
   }
 
   /* ---------------------
-        UPDATE & DRAW
+      GENERAL METHODS
   --------------------- */
-
   // Update
   public update() {
     this.playboard.update();
@@ -214,7 +214,6 @@ class PlayScene {
   }
 
   // GAME TIME
-
   private countdownGameTime() {
     this.gameTime -= deltaTime;
 

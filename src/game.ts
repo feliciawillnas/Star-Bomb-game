@@ -7,13 +7,18 @@ interface IEndGame {
 }
 
 class Game implements IStartGame, IEndGame {
-  //ATTRIBUTE////////////////////////////
+
+  /* ------------------
+        ATTRIBUTES
+  ------------------ */
   public scene: string;
   public playScene: PlayScene;
   private startScene: StartScene;
   private endScene: EndScene;
 
-  //CONSTRUCTOR//////////////////////////
+  /* --------------------
+        CONSTRUCTOR
+  -------------------- */
   constructor() {
     this.scene = "playScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
@@ -21,7 +26,9 @@ class Game implements IStartGame, IEndGame {
     this.endScene = new EndScene(this);
   }
 
-  //METHODS//////////////////////////////
+  /* ------------------
+        METHODS
+  ------------------ */
   //Update
   public update() {
     this.startSceneMusic();

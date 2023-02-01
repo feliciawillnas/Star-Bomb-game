@@ -1,5 +1,8 @@
 class Player {
-  //ATTRIBUTE////////////////////////////
+  
+  /* ------------------
+        ATTRIBUTES
+  ------------------ */
   public x: number; //Ändra tillbaka till private När vi testat klart i goal.
   public y: number;
   private widthPlayer: number;
@@ -23,7 +26,9 @@ class Player {
   private forward: number;
   private backwards: number;
 
-  //CONSTRUCTOR////////////////////////
+  /* --------------------
+        CONSTRUCTOR
+  -------------------- */
   constructor(
     player: number,
     offsetTop: number,
@@ -64,8 +69,10 @@ class Player {
       this.backwards = 40;
     }
   }
-  //METHODS//////////////////////////
 
+  /* ------------------
+        METHODS
+  ------------------ */
   //Update
   public update() {
     this.controlPlayers();
