@@ -738,7 +738,7 @@ class PlayScene {
                 this.scorePlayer2 = this.scorePlayer2 + 20;
               }
             }
-  
+            sounds.powerUpSound.play();
             this.powerUps.splice(i, 1);
           }
         }

@@ -42,6 +42,7 @@ interface Sounds {
   endSceneMusic: p5.SoundFile;
   bombExplosion: p5.SoundFile;
   goalSound: p5.SoundFile;
+  powerUpSound: p5.SoundFile;
 }
 
 let gameFont: p5.Font;
@@ -60,6 +61,7 @@ function preload() {
     endSceneMusic: loadSound("../assets/sounds/screenHeroes.mp3"),
     bombExplosion: loadSound("../assets/sounds/distant-explosion.mp3"),
     goalSound: loadSound("../assets/sounds/goal-sound.mp3"),
+    powerUpSound: loadSound("../assets/sounds/powerup-sound.mp3"),
   };
   // IMGAES //////////////////
   images = {
@@ -142,6 +144,7 @@ function draw() {
 
   /** Second slider - sound effects **/
   sounds.bombExplosion.setVolume(slider2.value());
+  sounds.powerUpSound.setVolume(slider2.value());
 
   game.update();
   game.draw();
