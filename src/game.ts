@@ -20,7 +20,7 @@ class Game implements IStartGame, IEndGame {
         CONSTRUCTOR
   -------------------- */
   constructor() {
-    this.scene = "playScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
+    this.scene = "startScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
     this.startScene = new StartScene(this);
     this.endScene = new EndScene(this);
