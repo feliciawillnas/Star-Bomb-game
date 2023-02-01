@@ -5,7 +5,6 @@ let images: Images;
 let sounds: Sounds;
 let slider: any;
 let slider2: any;
-
 interface Images {
   background: p5.Image;
   galaxGoal: p5.Image;
@@ -14,7 +13,6 @@ interface Images {
   rocketImgBlue1: p5.Image;
   rocketImgPink2: p5.Image;
   rocketImgBlue2: p5.Image;
-  // neonGreenBomb: p5.Image;
   neonGreenBombBig: p5.Image;
   rocketImgBlue1Big: p5.Image;
   rocketImgPink2Big: p5.Image;
@@ -24,15 +22,10 @@ interface Images {
   redBomb: p5.Image;
   startSceneBlueRocket: p5.Image; 
   startScenePinkRocket: p5.Image;
-
-  // neonGreenBomb: p5.Image;
   neonGreenBombStor: p5.Image;
   neonGreenBombClear: p5.Image;
 }
-
 interface Sounds {
-  // bang: p5.SoundFile;
-  // pop: p5.SoundFile;
   startSceneLoop: p5.SoundFile;
   gameMusic: p5.SoundFile;
   endSceneMusic: p5.SoundFile;
@@ -57,7 +50,7 @@ function preload() {
     bombExplosion: loadSound("../assets/sounds/distant-explosion.mp3"),
     goalSound: loadSound("../assets/sounds/goal-sound.mp3"),
   };
-  // IMGAES //////////////////
+  // IMAGES //////////////////
   images = {
     background: loadImage("../assets/images/background.jpg"),
     galaxGoal: loadImage("../assets/images/galax.jpg"),
@@ -68,14 +61,9 @@ function preload() {
     rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
     rocketImgBlue1gif: loadImage("../assets/images/blueRocket.gif"),
     rocketImgPink1gif: loadImage("../assets/images/pinkRocket.gif"),
-
     redBomb: loadImage("../assets/images/neonGreenBombRed.png"),
-
     startSceneBlueRocket: loadImage("../assets/images/startscenerocket.png"),
     startScenePinkRocket: loadImage("../assets/images/startscenerocketpink.png"),
-
-
-    // neonGreenBomb: loadImage("../assets/images/neonGreenBomb.png"),
     neonGreenBombBig: loadImage("../assets/images/neonGreenBombBig.png"),
     neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),
     neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
@@ -85,7 +73,6 @@ function preload() {
   };
 
   // FONTS ////////////////////
-
   gameFont = loadFont("../assets/fonts/PressStart2P-Regular.ttf");
   symbolFont = loadFont("../assets/fonts/symbolerFont.otf");
 }
@@ -105,7 +92,6 @@ function setup() {
   /** Second slider - sound effects **/
   slider2 = createSlider(0, 1, 0.2, 0.01);
   slider2.position(10, 65);
-
   slider2.style("width", "80px");
 
   createCanvas(windowWidth, windowHeight);
@@ -132,6 +118,7 @@ function draw() {
 
   /** Second slider - sound effects **/
   sounds.bombExplosion.setVolume(slider2.value());
+  sounds.goalSound.setVolume(slider2.value());
 
   game.update();
   game.draw();
