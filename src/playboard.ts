@@ -9,8 +9,8 @@ class Playboard {
 
   // Extra distance between the top & playground
   public offsetTop: number;
-  // Border lines
 
+  // Border lines
   private neonPink: string;
   private neonBlue: string;
   private neonBlur: number;
@@ -40,9 +40,8 @@ class Playboard {
   }
   //METHODS//////////////////////////
 
-  //Update
   public update() {}
-  //Draw
+
   public draw() {
     this.drawPlayboardImage();
     this.centerLine();
@@ -76,7 +75,7 @@ class Playboard {
     pop();
   }
 
-  // Border Lines for playboard.
+  // Border Lines for playboard
   private borderLines() {
     push();
     strokeWeight(10);
@@ -87,8 +86,8 @@ class Playboard {
     push();
     drawingContext.shadowOffsetY = -this.offsetBlur;
     drawingContext.shadowColor = this.neonBlue;
-    // Top Blue Line
 
+    // Top Blue Line
     line(
       width / 2 - this.width / 2,
       height / 2 - this.height / 2 + this.offsetTop,
@@ -99,6 +98,7 @@ class Playboard {
 
     // Left Blue Line
     push();
+
     // Left blue line blur effect
     drawingContext.shadowOffsetX = -this.offsetBlur;
     drawingContext.shadowColor = this.neonBlue;
@@ -112,6 +112,7 @@ class Playboard {
 
     // Right Blue Line
     push();
+
     // Right blue line blur effect
     drawingContext.shadowOffsetX = this.offsetBlur;
     drawingContext.shadowColor = this.neonBlue;
@@ -128,6 +129,7 @@ class Playboard {
     // Bottom Pink Line Blur Effect
     drawingContext.shadowOffsetY = this.offsetBlur;
     drawingContext.shadowColor = this.neonPink;
+
     // Bottom Pink Line
     line(
       width / 2 + this.width / 2,
@@ -139,6 +141,7 @@ class Playboard {
 
     //Left Pink Line
     push();
+
     // Left Pink Line Blur Effect
     drawingContext.shadowOffsetX = -this.offsetBlur;
     drawingContext.shadowColor = this.neonPink;
@@ -152,6 +155,7 @@ class Playboard {
 
     //Right Pink Line
     push();
+
     // Right Pink Line Blur Effect
     drawingContext.shadowOffsetX = this.offsetBlur;
     drawingContext.shadowColor = this.neonPink;
