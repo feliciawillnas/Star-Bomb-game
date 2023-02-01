@@ -225,7 +225,7 @@ class StartScene {
     push();
     noStroke();
     textSize(10);
-    text("Music", 45, 20);
+    text("Music", 40, 20);
     text(int(slider.value() * 100) + "%", 120, 40);
     pop();
 
@@ -233,7 +233,7 @@ class StartScene {
     push();
     noStroke();
     textSize(10);
-    text("Sound effects", 84, 60);
+    text("Sound effects", 80, 60);
     text(int(slider2.value() * 100) + "%", 120, 80);
     pop();
 

@@ -38,7 +38,4 @@ class PowerUp {
       image(images.powerUpIconBonusPoints, this.x, this.y);
     }
   }
-
-  // Update
-  public update() {}
 }

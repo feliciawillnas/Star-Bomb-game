@@ -43,8 +43,6 @@ class Playboard {
   /* ------------------
         METHODS
   ------------------ */
-  public update() {}
-
   public draw() {
     this.drawPlayboardImage();
     this.centerLine();
