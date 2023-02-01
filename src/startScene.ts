@@ -32,10 +32,6 @@ class StartScene {
         METHODS
   ------------------ */
 
-  //Update
-
-  public update() {}
-
   public draw() {
     this.drawStartScene();
     this.pressI();

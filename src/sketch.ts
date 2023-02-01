@@ -13,10 +13,6 @@ interface Images {
   background: p5.Image;
   galaxGoal: p5.Image;
   playboardBG: p5.Image;
-  rocketImgPink1: p5.Image;
-  rocketImgBlue1: p5.Image;
-  rocketImgPink2: p5.Image;
-  rocketImgBlue2: p5.Image;
   neonGreenBombBig: p5.Image;
   rocketImgBlue1Big: p5.Image;
   rocketImgPink2Big: p5.Image;
@@ -26,7 +22,6 @@ interface Images {
   redBomb: p5.Image;
   startSceneBlueRocket: p5.Image;
   startScenePinkRocket: p5.Image;
-  neonGreenBombStor: p5.Image;
   neonGreenBombClear: p5.Image;
   powerUpIconSlowDown: p5.Image;
   powerupIconReverseControls: p5.Image;
@@ -79,10 +74,6 @@ function preload() {
     galaxGoal: loadImage("../assets/images/galax.jpg"),
     playboardBG: loadImage("../assets/images/playboardBackground.png"),
     // Player
-    rocketImgBlue1: loadImage("../assets/images/blueRocket1.png"),
-    rocketImgPink1: loadImage("../assets/images/pinkRocket1.png"),
-    rocketImgBlue2: loadImage("../assets/images/blueRocket2.png"),
-    rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
     rocketImgBlue1Big: loadImage("../assets/images/blueRocket1big.png"),
     rocketImgPink2Big: loadImage("../assets/images/pinkRocket2big.png"),
     rocketImgBlue1gif: loadImage("../assets/images/blueRocket.gif"),
@@ -94,7 +85,6 @@ function preload() {
     // Bomb
     redBomb: loadImage("../assets/images/neonGreenBombRed.png"),
     neonGreenBombBig: loadImage("../assets/images/neonGreenBombBig.png"),
-    neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),
     neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
     explosion: loadImage("../assets/images/explosion.png"),
     // Powerups
