@@ -13,7 +13,7 @@ class Player {
   public move: number;
   private slowDownTime: number;
   private reverseControlsTime: number;
-  private smallPlayerTime: number;
+  private shrinkPlayerTime: number;
 
   private offsetTop: number;
   private boardWidth: number;
@@ -40,7 +40,7 @@ class Player {
     this.move = 7;
     this.slowDownTime = 0;
     this.reverseControlsTime = 0;
-    this.smallPlayerTime = 0;
+    this.shrinkPlayerTime = 0;
     this.widthPlayer = 37.5;
     this.heightPlayer = 60;
     this.diameter = this.heightPlayer + 15;
@@ -89,7 +89,7 @@ class Player {
     stroke(this.color);
 
     // Width of force field is decided whether powerup is activated or not
-    if (this.smallPlayerTime < 0) {
+    if (this.shrinkPlayerTime < 0) {
       strokeWeight(4);
     } else {
       strokeWeight(2);
@@ -101,7 +101,7 @@ class Player {
     rotate(this.angle);
 
     // Draws image depending on if small player powerup is activated
-    if (this.smallPlayerTime < 0) {
+    if (this.shrinkPlayerTime < 0) {
       image(this.img, 0, 0, this.widthPlayer, this.heightPlayer);
     } else {
       image(this.img, 0, 0, this.widthPlayer / 3, this.heightPlayer / 3);
@@ -209,10 +209,10 @@ class Player {
     }
 
     // Makes player small while powerup is activated
-    this.smallPlayerTime -= deltaTime;
-    if (this.smallPlayerTime > 0 && this.diameter! >= 35) {
+    this.shrinkPlayerTime -= deltaTime;
+    if (this.shrinkPlayerTime > 0 && this.diameter! >= 35) {
       this.diameter -= 10;
-    } else if (this.smallPlayerTime <= 0 && this.diameter! <= 75) {
+    } else if (this.shrinkPlayerTime <= 0 && this.diameter! <= 75) {
       this.diameter += 10;
     }
   }
@@ -222,8 +222,8 @@ class Player {
     this.slowDownTime = 5_000;
   }
 
-  public makePlayerSmall() {
-    this.smallPlayerTime = 10_000;
+  public shrinkPlayer() {
+    this.shrinkPlayerTime = 10_000;
   }
 
   public activateReverseControls() {

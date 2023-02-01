@@ -1,5 +1,4 @@
 class Playboard {
-
   /* ------------------
         ATTRIBUTES
   ------------------ */
@@ -7,7 +6,6 @@ class Playboard {
   public width: number;
   public height: number;
 
-  private goalW: number;
   private goalH: number;
 
   // Extra distance between the top & playground
@@ -26,7 +24,6 @@ class Playboard {
     offsetTop: number,
     width: number,
     height: number,
-    goalW: number,
     goalH: number,
     neonPink: string,
     neonBlue: string,
@@ -40,10 +37,9 @@ class Playboard {
     this.neonBlue = neonBlue;
     this.neonBlur = neonBlur;
     this.offsetBlur = offsetBlur;
-    this.goalW = goalW;
     this.goalH = goalH;
   }
-  
+
   /* ------------------
         METHODS
   ------------------ */

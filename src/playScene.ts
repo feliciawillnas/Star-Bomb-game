@@ -75,7 +75,6 @@ class PlayScene {
       this.offsetTop,
       this.boardWidth,
       this.boardHeight,
-      this.goalW,
       this.goalH,
       neonPink,
       neonBlue,
@@ -464,8 +463,8 @@ class PlayScene {
           let ay = (targetY - otherBombs.y) * spring;
           bomb.vx -= ax;
           bomb.vy -= ay;
-          otherBombs.vx += ax;
-          otherBombs.vy += ay;
+          otherBombs.vx += ax / 8;
+          otherBombs.vy += ay / 8;
         }
       }
 
@@ -484,8 +483,8 @@ class PlayScene {
           let targetY = bomb.y + sin(angle) * minDist;
           let ax = (targetX - player.x) * spring;
           let ay = (targetY - player.y) * spring;
-          bomb.vx -= ax;
-          bomb.vy -= ay;
+          bomb.vx -= ax / 8;
+          bomb.vy -= ay / 8;
         }
       }
       // SPELARE KOLLIDERAR MED SPELARE
@@ -542,7 +541,7 @@ class PlayScene {
         if (bomb.vx >= 0 && bomb.vx <= 1) {
           bomb.vx = -1;
         } else if (bomb.vx > 1) {
-          bomb.vx = -2;
+          bomb.vx = -1;
         }
       }
 
@@ -561,7 +560,7 @@ class PlayScene {
         if (bomb.vx < 0 && bomb.vx >= -1) {
           bomb.vx = 1;
         } else if (bomb.vx < -1) {
-          bomb.vx = 2;
+          bomb.vx = 1;
         }
       }
 
@@ -638,7 +637,7 @@ class PlayScene {
       "reverse-controls",
       "goal-shield",
       "slow-down",
-      "small-player",
+      "shrink-player",
       "bonus-points",
     ];
     this.spawnTimeoutPowerUp -= deltaTime;
@@ -732,12 +731,12 @@ class PlayScene {
                 this.rightGoalShieldTime = 6_000;
               }
             }
-            // Small player powerup – yellow color
-            if (this.powerUps[i].type == "small-player") {
+            // Shrink player powerup – yellow color
+            if (this.powerUps[i].type == "shrink-player") {
               if (p == 0) {
-                players[1].makePlayerSmall();
+                players[1].shrinkPlayer();
               } else {
-                players[0].makePlayerSmall();
+                players[0].shrinkPlayer();
               }
             }
             // Bonus powerup – cyan color

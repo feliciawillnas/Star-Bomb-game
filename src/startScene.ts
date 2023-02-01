@@ -95,14 +95,14 @@ class StartScene {
       text("Power Ups", width / 2 - 240, height / 2 - 40);
       pop();
 
-      // Goal Protection - Text
+      // Goal Shield - Text
       push();
       strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(10);
       image(images.powerUpIconGoalShield, width / 2 - 245, height / 2 - 5);
-      text("- Goal Protection", width / 2 - 220, height / 2);
+      text("- Goal Shield", width / 2 - 220, height / 2);
       pop();
 
       // Bonus Points - Text
@@ -121,7 +121,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerUpIconSmallPlayer, width / 2 - 245, height / 2 + 75);
+      image(images.powerUpIconShrinkPlayer, width / 2 - 245, height / 2 + 75);
       text("- Shrink Opponent", width / 2 - 220, height / 2 + 80);
       pop();
 

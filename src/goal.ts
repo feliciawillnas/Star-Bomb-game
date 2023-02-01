@@ -1,5 +1,4 @@
 class Goal {
-
   /* ------------------
         ATTRIBUTES
   ------------------ */
@@ -27,7 +26,7 @@ class Goal {
     neonPink: string,
     neonBlue: string,
     neonBlur: number,
-    offsetBlur: number,
+    offsetBlur: number
   ) {
     this.offsetTop = offsetTop;
     this.boardWidth = boardWidth;
@@ -45,11 +44,9 @@ class Goal {
         METHODS
   ------------------ */
   //Update
-  public update() {
-    
-  }
+  public update() {}
   //Draw
-  
+
   public draw() {
     this.goals();
     this.leftGoalLines();
@@ -73,9 +70,8 @@ class Goal {
   //     pop();
   //   }
 
-    
   //   // Text som skriver "GOAL!!!"
-    
+
   // }
 
   private goals() {
@@ -91,7 +87,7 @@ class Goal {
   }
 
   private leftGoalLines() {
-    push()
+    push();
     stroke(this.neonPink);
     strokeWeight(10);
 
@@ -141,7 +137,7 @@ class Goal {
     push();
     stroke(this.neonBlue);
     strokeWeight(10);
-    
+
     // Top line
     push();
     drawingContext.shadowOffsetY = -this.offsetBlur;

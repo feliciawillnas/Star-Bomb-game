@@ -24,14 +24,14 @@ interface Images {
   rocketImgBlue1gif: p5.Image;
   rocketImgPink1gif: p5.Image;
   redBomb: p5.Image;
-  startSceneBlueRocket: p5.Image; 
+  startSceneBlueRocket: p5.Image;
   startScenePinkRocket: p5.Image;
   neonGreenBombStor: p5.Image;
   neonGreenBombClear: p5.Image;
   powerUpIconSlowDown: p5.Image;
   powerupIconReverseControls: p5.Image;
   powerUpIconGoalShield: p5.Image;
-  powerUpIconSmallPlayer: p5.Image;
+  powerUpIconShrinkPlayer: p5.Image;
   powerUpIconBonusPoints: p5.Image;
 }
 
@@ -56,7 +56,6 @@ let symbolFont: p5.Font;
  */
 
 function preload() {
-  
   /* -------------
        SOUNDS
   ------------- */
@@ -89,7 +88,9 @@ function preload() {
     rocketImgBlue1gif: loadImage("../assets/images/blueRocket.gif"),
     rocketImgPink1gif: loadImage("../assets/images/pinkRocket.gif"),
     startSceneBlueRocket: loadImage("../assets/images/startscenerocket.png"),
-    startScenePinkRocket: loadImage("../assets/images/startscenerocketpink.png"),
+    startScenePinkRocket: loadImage(
+      "../assets/images/startscenerocketpink.png"
+    ),
     // Bomb
     redBomb: loadImage("../assets/images/neonGreenBombRed.png"),
     neonGreenBombBig: loadImage("../assets/images/neonGreenBombBig.png"),
@@ -98,10 +99,18 @@ function preload() {
     explosion: loadImage("../assets/images/explosion.png"),
     // Powerups
     powerUpIconSlowDown: loadImage("../assets/images/slow-down-powerup.png"),
-    powerupIconReverseControls: loadImage("../assets/images/reverse-controls-powerup.png"),
-    powerUpIconGoalShield: loadImage("../assets/images/goal-shield-powerup.png"),
-    powerUpIconSmallPlayer: loadImage("../assets/images/small-player-powerup.png"),
-    powerUpIconBonusPoints: loadImage("../assets/images/bonus-points-powerup.png"),
+    powerupIconReverseControls: loadImage(
+      "../assets/images/reverse-controls-powerup.png"
+    ),
+    powerUpIconGoalShield: loadImage(
+      "../assets/images/goal-shield-powerup.png"
+    ),
+    powerUpIconShrinkPlayer: loadImage(
+      "../assets/images/small-player-powerup.png"
+    ),
+    powerUpIconBonusPoints: loadImage(
+      "../assets/images/bonus-points-powerup.png"
+    ),
   };
 
   /* --------------
@@ -123,7 +132,7 @@ function setup() {
   slider.position(10, 25);
   slider.style("width", "80px");
 
-    /** Second slider - sound effects **/
+  /** Second slider - sound effects **/
   slider2 = createSlider(0, 1, 0.0, 0.01);
   slider2.position(10, 65);
   slider2.style("width", "80px");

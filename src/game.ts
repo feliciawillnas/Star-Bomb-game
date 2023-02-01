@@ -7,7 +7,6 @@ interface IEndGame {
 }
 
 class Game implements IStartGame, IEndGame {
-
   /* ------------------
         ATTRIBUTES
   ------------------ */
