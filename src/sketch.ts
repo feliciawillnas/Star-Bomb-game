@@ -78,10 +78,8 @@ function preload() {
     rocketImgPink2Big: loadImage("../assets/images/pinkRocket2big.png"),
     rocketImgBlue1gif: loadImage("../assets/images/blueRocket.gif"),
     rocketImgPink1gif: loadImage("../assets/images/pinkRocket.gif"),
-    startSceneBlueRocket: loadImage("../assets/images/startscenerocket.png"),
-    startScenePinkRocket: loadImage(
-      "../assets/images/startscenerocketpink.png"
-    ),
+    startSceneBlueRocket: loadImage("../assets/images/startSceneRocketBlue.png"),
+    startScenePinkRocket: loadImage("../assets/images/startSceneRocketPink.png"),
     // Bomb
     redBomb: loadImage("../assets/images/neonGreenBombRed.png"),
     neonGreenBombBig: loadImage("../assets/images/neonGreenBombBig.png"),

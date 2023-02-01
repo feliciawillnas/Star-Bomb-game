@@ -250,7 +250,6 @@ class StartScene {
 
     //Pink rocket img
     push();
-    images.startScenePinkRocket.resize(120, 256);
     translate(width / 2 + 450, height / 2);
     rotate(-45);
     image(images.startScenePinkRocket, 0, 0);
@@ -258,7 +257,6 @@ class StartScene {
 
     //Blue rocket img
     push();
-    images.startSceneBlueRocket.resize(120, 256);
     translate(width / 2 - 450, height / 2 + 200);
     rotate(45);
     image(images.startSceneBlueRocket, 0, 0);

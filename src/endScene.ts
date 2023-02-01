@@ -109,9 +109,9 @@ class EndScene {
 
     // Pink rocket img
     push();
-    images.rocketImgPink2Big;
-    translate(width / 2 + 240, height / 2 - 25);
-    image(images.rocketImgPink2Big, 0, 0);
+    images.startScenePinkRocket.resize(90, 192);
+    translate(width / 2 + 240, height / 2 - 45);
+    image(images.startScenePinkRocket, 0, 0);
     pop();
 
     // Blue rocket img
@@ -119,6 +119,9 @@ class EndScene {
     images.rocketImgBlue1Big;
     translate(width / 2 - 240, height / 2 - 25);
     image(images.rocketImgBlue1Big, 0, 0);
+    images.startSceneBlueRocket.resize(90, 192);
+    translate(width / 2 - 240, height / 2 - 45);
+    image(images.startSceneBlueRocket, 0, 0);
     pop();
 
     // Creators
