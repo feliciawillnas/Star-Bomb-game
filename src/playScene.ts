@@ -228,22 +228,20 @@ class PlayScene {
       // Add amount of points of scored goal here.
       if (this.inLeftGoal(bomb)) {
         this.player2Score(10);
-        // LÄGG TILL LJUD FÖR MÅL
 
+        // LÄGG TILL LJUD FÖR MÅL
         if (!this.isGoal) {
-          sounds.goalSound.play()
-          this.isGoal = true;
+          sounds.goalSound.play();
         }
 
-        
       } else if (this.inRightGoal(bomb)) {
         this.player1Score(10);
+
         // LÄGG TILL LJUD FÖR MÅL
         if (!this.isGoal) {
-          sounds.goalSound.play()
-          this.isGoal = true;
+          sounds.goalSound.play();
         }
-        
+
       } else {
         bombs.push(bomb);
       }
