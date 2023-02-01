@@ -1,5 +1,4 @@
 class StartScene {
-
   /* ------------------
         ATTRIBUTES
   ------------------ */
@@ -27,12 +26,12 @@ class StartScene {
 
     this.infoText =
       "Move the bombs by hitting them with your spaceship's\n force field. You will get 3 points when a bomb \nexplodes on your opponent's half of the court and \n10 points if you manage to get a bomb in your \nopponent's galaxy goal.The player that manages to \ncollect the most points in 3 minutes wins the game!";
-    }
+  }
 
   /* ------------------
         METHODS
   ------------------ */
-  
+
   //Update
 
   public update() {}
@@ -41,7 +40,7 @@ class StartScene {
     this.drawStartScene();
     this.pressI();
   }
-  
+
   private pressI() {
     push();
     push();
@@ -49,37 +48,36 @@ class StartScene {
     fill("white");
     stroke("black");
     strokeWeight(10);
-    text('Press "i" for information', width / 2, height / 2 + 120);
+    text('Hold "i" for information', width / 2, height / 2 + 120);
     pop();
-    
+
     this.informationBox();
-    
+
     pop();
   }
 
-
-  private informationBox(){
-    if (keyIsDown(73)){
+  private informationBox() {
+    if (keyIsDown(73)) {
       // Box
       push();
-      stroke("black")
-      strokeWeight(10)
-      fill("#31204A")
-      rect(width / 2, height / 2, 600, 500 )
+      stroke("black");
+      strokeWeight(10);
+      fill("#31204A");
+      rect(width / 2, height / 2, 600, 500);
       pop();
-      
+
       // Game Description - Topic
       push();
-      strokeWeight(4)
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(20);
-      text("GAME DESCRIPTION", width / 2, height / 2 - 200)
+      text("GAME DESCRIPTION", width / 2, height / 2 - 200);
       pop();
 
       //Game Description - Text
       push();
-      strokeWeight(4)
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(10);
@@ -87,77 +85,80 @@ class StartScene {
       text(this.infoText, width / 2, height / 2 - 170);
       pop();
 
-      textAlign(LEFT)
+      textAlign(LEFT);
       // Power Ups - Topic
-       push();
-      strokeWeight(4)
+      push();
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(20);
       text("Power Ups", width / 2 - 240, height / 2 - 40);
       pop();
-      
+
       // Goal Protection - Text
       push();
-      strokeWeight(4)
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerUpIconGoalShield, width / 2 - 245, height/ 2 - 5)
+      image(images.powerUpIconGoalShield, width / 2 - 245, height / 2 - 5);
       text("- Goal Protection", width / 2 - 220, height / 2);
       pop();
-      
+
       // Reversed Controls - Text
       push();
-      strokeWeight(4)
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerupIconReverseControls, width / 2 - 245, height/ 2 + 35)
+      image(
+        images.powerupIconReverseControls,
+        width / 2 - 245,
+        height / 2 + 35
+      );
       text("- Reversed Controls", width / 2 - 220, height / 2 + 40);
       pop();
-      
+
       // Extra Points - Text
       push();
-      strokeWeight(4)
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerUpIconBonusPoints, width / 2 - 245, height/ 2 + 75)
+      image(images.powerUpIconBonusPoints, width / 2 - 245, height / 2 + 75);
       text("- Extra Points", width / 2 - 220, height / 2 + 80);
       pop();
-      
+
       // Shrink Opponent - Text
       push();
-      strokeWeight(4)
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerUpIconSmallPlayer, width / 2 - 245, height/ 2 + 115)
+      image(images.powerUpIconSmallPlayer, width / 2 - 245, height / 2 + 115);
       text("- Shrink Opponent", width / 2 - 220, height / 2 + 120);
       pop();
-      
+
       // Slow Down Opponent - Text
       push();
-      strokeWeight(4)
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerUpIconSlowDown, width / 2 - 245, height/ 2 + 155)
+      image(images.powerUpIconSlowDown, width / 2 - 245, height / 2 + 155);
       text("- Slow Down Opponent", width / 2 - 220, height / 2 + 160);
       pop();
 
       // Middle Line
-      push()
-      stroke("white")
-      strokeWeight(5)
-      line(width/2, height/2 - 40, width/2, height/2 + 200)
-      pop()
+      push();
+      stroke("white");
+      strokeWeight(5);
+      line(width / 2, height / 2 - 40, width / 2, height / 2 + 200);
+      pop();
 
-      
       // Controls - Topic
       push();
-      strokeWeight(4)
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(20);
@@ -165,45 +166,44 @@ class StartScene {
       pop();
 
       // Player 1 - Text
-      push()
-      strokeWeight(4)
+      push();
+      strokeWeight(4);
       stroke("black");
       fill("#69B7C2");
       textSize(10);
-      text("PLAYER 1", width/2 + 30, height/2 + 40)
-      pop()
+      text("PLAYER 1", width / 2 + 30, height / 2 + 40);
+      pop();
 
       // Player 1 Controls - Text
-      push()
-      strokeWeight(4)
+      push();
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(10);
-      text(this.interactionInstructionW, width/2 + 200, height/2 + 30)
-      text(this.interactionInstructionASD, width/2 + 180, height/2 + 50)
-      pop()
-      
+      text(this.interactionInstructionW, width / 2 + 200, height / 2 + 30);
+      text(this.interactionInstructionASD, width / 2 + 180, height / 2 + 50);
+      pop();
+
       // Player 2 - Text
-      push()
-      strokeWeight(4)
+      push();
+      strokeWeight(4);
       stroke("black");
       fill("#F98CF3");
       textSize(10);
-      text("PLAYER 2", width/2 + 30, height/2 + 120)
-      pop()
+      text("PLAYER 2", width / 2 + 30, height / 2 + 120);
+      pop();
 
       // Player 2 Controls - Text
-      push()
-      strokeWeight(4)
+      push();
+      strokeWeight(4);
       stroke("black");
       fill("white");
       textSize(14);
       textFont(symbolFont);
-      text(this.interactionInstructionUP_A, width/2 + 203, height/2 + 110)
-      text(this.interactionInstructionLDR_A, width/2 + 180, height/2 + 130)
-      pop()
-      
-    } 
+      text(this.interactionInstructionUP_A, width / 2 + 203, height / 2 + 110);
+      text(this.interactionInstructionLDR_A, width / 2 + 180, height / 2 + 130);
+      pop();
+    }
   }
 
   private drawStartScene() {
@@ -212,7 +212,7 @@ class StartScene {
     fill("white");
     stroke("black");
     strokeWeight(10);
-    
+
     // Text: GameTitle
     push();
     textSize(60);

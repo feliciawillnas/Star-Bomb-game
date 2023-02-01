@@ -1,5 +1,4 @@
 class Player {
-  
   /* ------------------
         ATTRIBUTES
   ------------------ */
@@ -38,7 +37,7 @@ class Player {
     this.offsetTop = offsetTop;
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
-    this.move = 20;
+    this.move = 7;
     this.slowDownTime = 0;
     this.reverseControlsTime = 0;
     this.smallPlayerTime = 0;
@@ -91,7 +90,7 @@ class Player {
 
     // Width of force field is decided whether powerup is activated or not
     if (this.smallPlayerTime < 0) {
-      strokeWeight(4);;
+      strokeWeight(4);
     } else {
       strokeWeight(2);
     }
@@ -105,7 +104,7 @@ class Player {
     if (this.smallPlayerTime < 0) {
       image(this.img, 0, 0, this.widthPlayer, this.heightPlayer);
     } else {
-      image(this.img, 0, 0, this.widthPlayer/3, this.heightPlayer/3);
+      image(this.img, 0, 0, this.widthPlayer / 3, this.heightPlayer / 3);
     }
 
     pop();
@@ -114,35 +113,35 @@ class Player {
   private drawPowerupEffect() {
     // Draw reverse control effect on player while powerup is activated
     if (this.reverseControlsTime > 0 && this.slowDownTime <= 0) {
-      push()
+      push();
       strokeWeight(2);
-       fill(0, 255, 0)
-       ellipse(this.x+20, this.y-20, 10);
-      pop()
+      fill(0, 255, 0);
+      ellipse(this.x + 20, this.y - 20, 10);
+      pop();
     }
 
     // Draw slow down effect on player while powerup is activated
     if (this.slowDownTime > 0 && this.reverseControlsTime <= 0) {
-      push()
+      push();
       strokeWeight(2);
-       fill(255, 0, 0);
-       ellipse(this.x+20, this.y-20, 10);
-      pop()
+      fill(255, 0, 0);
+      ellipse(this.x + 20, this.y - 20, 10);
+      pop();
     }
 
     // Draw both reverse control and slowdown effect on player while both are active
     if (this.slowDownTime > 0 && this.reverseControlsTime > 0) {
-      push()
+      push();
       strokeWeight(1);
-        fill(0, 255, 0)
-        arc(this.x+20, this.y-20, 10, 10, 180, 360);
-      pop()
+      fill(0, 255, 0);
+      arc(this.x + 20, this.y - 20, 10, 10, 180, 360);
+      pop();
 
-      push()
-        strokeWeight(1);
-        fill(255, 0, 0)
-        arc(this.x+20, this.y-20, 10, 10, 360, 180);
-      pop()
+      push();
+      strokeWeight(1);
+      fill(255, 0, 0);
+      arc(this.x + 20, this.y - 20, 10, 10, 360, 180);
+      pop();
     }
   }
 
@@ -193,48 +192,48 @@ class Player {
     // Slows down player while powerup is activated
     this.slowDownTime -= deltaTime;
     if (this.slowDownTime <= 0) {
-        this.move = 10;
+      this.move = 7;
     }
 
     // Reverse controls for player while powerup is activated
     this.reverseControlsTime -= deltaTime;
     if (this.reverseControlsTime <= 0) {
-        if (this.color === "blue") {
-            this.rotateLeft = 65;
-            this.rotateRight = 68;
-        }
-        if (this.color === "purple") {
-            this.rotateLeft = 37;
-            this.rotateRight = 39;
-        }
+      if (this.color === "blue") {
+        this.rotateLeft = 65;
+        this.rotateRight = 68;
+      }
+      if (this.color === "purple") {
+        this.rotateLeft = 37;
+        this.rotateRight = 39;
+      }
     }
 
     // Makes player small while powerup is activated
     this.smallPlayerTime -= deltaTime;
-    if (this.smallPlayerTime > 0 && this.diameter !>= 35) {
-        this.diameter -= 10;
-    } else if (this.smallPlayerTime <= 0 && this.diameter !<= 75) {
-        this.diameter += 10;
+    if (this.smallPlayerTime > 0 && this.diameter! >= 35) {
+      this.diameter -= 10;
+    } else if (this.smallPlayerTime <= 0 && this.diameter! <= 75) {
+      this.diameter += 10;
     }
   }
 
   public slowDownPlayer() {
-    this.move = 4;
+    this.move = 3;
     this.slowDownTime = 5000;
   }
-  
+
   public makePlayerSmall() {
     this.smallPlayerTime = 10000;
   }
-  
+
   public activateReverseControls() {
-      if (this.color === "blue") {
-          this.rotateLeft = 68;
-          this.rotateRight = 65;
-      } else if (this.color === "purple") {
-          this.rotateLeft = 39;
-          this.rotateRight = 37;
-      }
-          this.reverseControlsTime = 5000;
+    if (this.color === "blue") {
+      this.rotateLeft = 68;
+      this.rotateRight = 65;
+    } else if (this.color === "purple") {
+      this.rotateLeft = 39;
+      this.rotateRight = 37;
+    }
+    this.reverseControlsTime = 5000;
   }
 }
