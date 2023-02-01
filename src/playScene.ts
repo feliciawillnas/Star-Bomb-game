@@ -701,9 +701,9 @@ class PlayScene {
             // Goal shield powerup – blue color
             if (this.powerUps[i].type == "goal-shield") {
               if (p == 0) {
-                this.leftGoalShieldTime = 10000;
+                this.leftGoalShieldTime = 6000;
               } else {
-                this.rightGoalShieldTime = 10000;
+                this.rightGoalShieldTime = 6000;
               }
             }
             // Small player powerup – yellow color

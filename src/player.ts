@@ -160,25 +160,25 @@ class Player {
     // can't leave screen on the left side
     // May need to change diameter to diameter to make it work with bombs.
     if (this.x - this.diameter / 2 <= width / 2 - this.boardWidth / 2) {
-      this.x = this.x + this.move * 2;
+      this.x = this.x + this.move;
     }
     // can't leave screen on the right side
     if (this.x + this.diameter / 2 >= width / 2 + this.boardWidth / 2) {
-      this.x = this.x - this.move * 2;
+      this.x = this.x - this.move;
     }
     // can't leave screen on the upper side
     if (
       this.y - this.diameter / 2 <=
       height / 2 - this.boardHeight / 2 + this.offsetTop
     ) {
-      this.y = this.y + this.move * 2;
+      this.y = this.y + this.move;
     }
     // can't leave screen on the lower side
     if (
       this.y + this.diameter / 2 >=
       height / 2 + this.boardHeight / 2 + this.offsetTop
     ) {
-      this.y = this.y - this.move * 2;
+      this.y = this.y - this.move;
     }
   }
 
