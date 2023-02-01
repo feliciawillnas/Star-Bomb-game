@@ -36,12 +36,6 @@ class Game implements IStartGame, IEndGame {
     if (this.scene == "playScene") {
       this.playScene.update();
     }
-    if (this.scene == "startScene") {
-      this.startScene.update();
-    }
-    if (this.scene == "endScene") {
-      this.endScene.update();
-    }
   }
 
   //Draw

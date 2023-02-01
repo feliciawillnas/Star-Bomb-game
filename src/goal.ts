@@ -43,8 +43,6 @@ class Goal {
   /* ------------------
         METHODS
   ------------------ */
-  //Update
-  public update() {}
   //Draw
 
   public draw() {

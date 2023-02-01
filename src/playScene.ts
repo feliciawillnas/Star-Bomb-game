@@ -65,7 +65,7 @@ class PlayScene {
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
 
     this.spawnTimeout = 0;
-    this.spawnTimeoutPowerUp = 5000;
+    this.spawnTimeoutPowerUp = 5_000;
     this.rightGoalShieldTime = 10;
     this.leftGoalShieldTime = 10;
     this.bombs = [];
@@ -111,16 +111,8 @@ class PlayScene {
   --------------------- */
   // Update
   public update() {
-    this.playboard.update();
-    this.scoreInterface.update();
-    this.goal.update();
-    this.playboard.update();
     this.playerOne.update();
     this.playerTwo.update();
-
-    for (const powerUp of this.powerUps) {
-      powerUp.update();
-    }
 
     for (const bomb of this.bombs) {
       bomb.update();

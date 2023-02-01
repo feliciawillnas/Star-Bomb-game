@@ -18,7 +18,6 @@ class EndScene {
   /* ------------------
         METHODS
   ------------------ */
-  public update() {}
 
   public draw() {
     // Text: "Volume x%"
