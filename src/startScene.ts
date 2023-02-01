@@ -1,5 +1,8 @@
 class StartScene {
-  //ATTRIBUTE////////////////////////////
+
+  /* ------------------
+        ATTRIBUTES
+  ------------------ */
   private gameTitle: string;
   private interactionInstructionW: string;
   private interactionInstructionASD: string;
@@ -9,7 +12,9 @@ class StartScene {
   protected game: IStartGame;
   private infoText: string;
 
-  //CONSTRUCTOR////////////////////////
+  /* --------------------
+        CONSTRUCTOR
+  -------------------- */
   constructor(game: IStartGame) {
     this.gameTitle = "STAR  B MB";
 
@@ -23,8 +28,11 @@ class StartScene {
     this.infoText =
       "Move the bombs by hitting them with your spaceship's\n force field. You will get 3 points when a bomb \nexplodes on your opponent's half of the court and \n10 points if you manage to get a bomb in your \nopponent's galaxy goal.The player that manages to \ncollect the most points in 3 minutes wins the game!";
     }
-    //METHODS//////////////////////////
-    
+
+  /* ------------------
+        METHODS
+  ------------------ */
+  
   //Update
 
   public update() {}
@@ -95,7 +103,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.neonGreenBombClear, width / 2 - 260, height/ 2)
+      image(images.powerUpIconGoalShield, width / 2 - 245, height/ 2 - 5)
       text("- Goal Protection", width / 2 - 220, height / 2);
       pop();
       
@@ -105,7 +113,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.neonGreenBombClear, width / 2 - 260, height/ 2 + 40)
+      image(images.powerupIconReverseControls, width / 2 - 245, height/ 2 + 35)
       text("- Reversed Controls", width / 2 - 220, height / 2 + 40);
       pop();
       
@@ -115,7 +123,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.neonGreenBombClear, width / 2 - 260, height/ 2 + 80)
+      image(images.powerUpIconBonusPoints, width / 2 - 245, height/ 2 + 75)
       text("- Extra Points", width / 2 - 220, height / 2 + 80);
       pop();
       
@@ -125,7 +133,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.neonGreenBombClear, width / 2 - 260, height/ 2 + 120)
+      image(images.powerUpIconSmallPlayer, width / 2 - 245, height/ 2 + 115)
       text("- Shrink Opponent", width / 2 - 220, height / 2 + 120);
       pop();
       
@@ -135,7 +143,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.neonGreenBombClear, width / 2 - 260, height/ 2 + 160)
+      image(images.powerUpIconSlowDown, width / 2 - 245, height/ 2 + 155)
       text("- Slow Down Opponent", width / 2 - 220, height / 2 + 160);
       pop();
 

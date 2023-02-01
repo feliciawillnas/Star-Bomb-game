@@ -1,5 +1,8 @@
 class Playboard {
-  //ATTRIBUTE////////////////////////////
+
+  /* ------------------
+        ATTRIBUTES
+  ------------------ */
   // Playground width & height
   public width: number;
   public height: number;
@@ -16,7 +19,9 @@ class Playboard {
   private neonBlur: number;
   private offsetBlur: number;
 
-  //CONSTRUCTOR////////////////////////
+  /* --------------------
+        CONSTRUCTOR
+  -------------------- */
   constructor(
     offsetTop: number,
     width: number,
@@ -38,8 +43,10 @@ class Playboard {
     this.goalW = goalW;
     this.goalH = goalH;
   }
-  //METHODS//////////////////////////
-
+  
+  /* ------------------
+        METHODS
+  ------------------ */
   public update() {}
 
   public draw() {

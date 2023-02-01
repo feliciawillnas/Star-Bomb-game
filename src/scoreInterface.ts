@@ -1,15 +1,22 @@
 class ScoreInterface {
-  //ATTRIBUTE////////////////////////////
+  
+  /* ------------------
+        ATTRIBUTES
+  ------------------ */
   private boardWidth: number;
   private boardHeight: number;
 
-  //CONSTRUCTOR////////////////////////
+  /* --------------------
+        CONSTRUCTOR
+  -------------------- */
   constructor(boardWidth: number, boardHeight: number) {
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
   }
-  //METHODS//////////////////////////
 
+  /* ------------------
+        METHODS
+  ------------------ */
   //Update
   public update() {}
   //Draw

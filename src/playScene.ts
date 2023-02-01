@@ -1,4 +1,5 @@
 class PlayScene {
+
   /* ------------------
         ATTRIBUTES
   ------------------ */
@@ -6,7 +7,9 @@ class PlayScene {
   public scoreInterface: ScoreInterface;
   public playboard: Playboard;
   private bombs: Bomb[];
+  private powerUps: PowerUp[];
   private spawnTimeout: number;
+  private spawnTimeoutPowerUp: number;
 
   public playerOne: Player;
   public playerTwo: Player;
@@ -22,6 +25,8 @@ class PlayScene {
   private boardHeight: number;
   private goalW: number;
   private goalH: number;
+  private rightGoalShieldTime: number
+  private leftGoalShieldTime: number
 
   private startTimeGoalText: any;
   private showLeftGoalText: boolean;
@@ -48,7 +53,7 @@ class PlayScene {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
-    this.gameTime = 180_000;
+    this.gameTime = 180_999;
     this.gameTimeMin = 0;
     this.gameTimeSec = 0;
 
@@ -61,7 +66,11 @@ class PlayScene {
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
 
     this.spawnTimeout = 0;
+    this.spawnTimeoutPowerUp = 5000;
+    this.rightGoalShieldTime = 10;
+    this.leftGoalShieldTime = 10;
     this.bombs = [];
+    this.powerUps = [];
 
     this.playboard = new Playboard(
       this.offsetTop,
@@ -100,9 +109,8 @@ class PlayScene {
   }
 
   /* ---------------------
-        UPDATE & DRAW
+      GENERAL METHODS
   --------------------- */
-
   // Update
   public update() {
     this.playboard.update();
@@ -112,13 +120,18 @@ class PlayScene {
     this.playerOne.update();
     this.playerTwo.update();
 
+    for (const powerUp of this.powerUps) {
+      powerUp.update();
+    }
+
     for (const bomb of this.bombs) {
       bomb.update();
     }
+
+    this.checkCollisions();
     this.countdownGameTime();
-    this.checkBombAndPlayerCollision();
-    this.checkBorderCollision();
     this.updateBombs(); // spawnBomb, updateBombsTimeToLive, removeDeadBombs
+    this.spawnPowerUps()
   }
 
   // Draw
@@ -135,15 +148,53 @@ class PlayScene {
     this.playerOne.draw();
     this.playerTwo.draw();
 
+    for (const powerUp of this.powerUps) {
+      powerUp.draw();
+    }
+
     for (const bomb of this.bombs) {
       bomb.draw();
     }
-    this.checkForGoal();
+
+    if (this.rightGoalShieldTime > 0) {
+      push();
+      stroke(255);
+      strokeWeight(10);
+      line(
+        width / 2 + this.boardWidth / 2,
+        height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop+10,
+        width / 2 + this.boardWidth / 2,
+        height / 2 + this.goalH / 2 + this.offsetTop - 10
+      );
+      pop();
+    }
+    
+    if (this.leftGoalShieldTime > 0) {
+      push();
+      stroke(255);
+      strokeWeight(10);
+      line(
+        width / 2 - this.boardWidth / 2,
+        height / 2 - this.boardHeight / 2 + this.goalH - this.offsetTop+10,
+        width / 2 - this.boardWidth / 2,
+        height / 2 + this.goalH / 2 + this.offsetTop - 10
+      );
+      pop();
+    }
+
     this.drawGoal();
     this.drawVolumeSlider();
   }
 
-  // Text: "Volume x%"
+  // A collection of collision checking methods
+  private checkCollisions() {
+    this.checkBombAndPlayerCollision();
+    this.checkBorderCollision();
+    this.checkPowerUpCollision();
+    this.checkForGoal();
+  }
+
+  // Text: "Volume: x%"
   private drawVolumeSlider() {
     push();
     noStroke();
@@ -163,7 +214,6 @@ class PlayScene {
   }
 
   // GAME TIME
-
   private countdownGameTime() {
     this.gameTime -= deltaTime;
 
@@ -178,10 +228,7 @@ class PlayScene {
   // If the bomb enters the left goal. Bomb in goal = true, not in goal = false.
   private inLeftGoal(bomb: Bomb): boolean {
     if (
-      bomb.x <= width / 2 - this.boardWidth / 2 + bomb.diameter / 2 &&
-      bomb.y <=
-        height / 2 + this.goalH / 2 + this.offsetTop - bomb.diameter / 4 &&
-      bomb.y >= height / 2 - this.goalH / 2 + this.offsetTop + bomb.diameter / 4
+      bomb.x <= width / 2 - this.boardWidth / 2
     ) {
       return true;
     }
@@ -191,10 +238,7 @@ class PlayScene {
   // If the bomb enters the right goal. Bomb in goal = true, not in goal = false.
   private inRightGoal(bomb: Bomb): boolean {
     if (
-      bomb.x >= width / 2 + this.boardWidth / 2 - bomb.diameter / 2 &&
-      bomb.y <=
-        height / 2 + this.goalH / 2 + this.offsetTop - bomb.diameter / 4 &&
-      bomb.y >= height / 2 - this.goalH / 2 + this.offsetTop + bomb.diameter / 4
+      bomb.x >= width / 2 + this.boardWidth / 2
     ) {
       return true;
     }
@@ -409,6 +453,7 @@ class PlayScene {
     const players = [this.playerOne, this.playerTwo];
 
     for (const bomb of allBombs) {
+
       //BOMBER KOLLIDERAR MED BOMBER
       for (const otherBombs of allBombs) {
         if (bomb === otherBombs) continue;
@@ -431,6 +476,7 @@ class PlayScene {
           otherBombs.vy += ay;
         }
       }
+
       // SPELARE KOLLIDERAR MED BOMBER
       for (const player of players) {
         let spring = 0.35;
@@ -483,46 +529,60 @@ class PlayScene {
     const playboardTopBorder = height / 2 - this.playboard.height / 2 + 40;
     const playboardBottomBorder = height / 2 + this.playboard.height / 2 + 40;
     const allBombs = [...this.bombs];
-
+    this.rightGoalShieldTime -= deltaTime;
+    this.leftGoalShieldTime -= deltaTime;
+    
     for (const bomb of allBombs) {
+      
       const bombRadius = bomb.diameter / 2;
-
+    
       // Checks collision with right border
       // The if conditionals decides the bombs speed (vx) after collision
-      if (bomb.x > playboardRightBorder - bombRadius) {
-        if (bomb.vx > 0 && bomb.vx < 1) {
+      if (
+        (this.rightGoalShieldTime <= 0 && bomb.x > playboardRightBorder - bombRadius &&
+        bomb.y < playboardTopBorder + 140 + bomb.diameter / 4)
+        ||
+        (this.rightGoalShieldTime <= 0 && bomb.x > playboardRightBorder - bombRadius &&
+        bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)
+        ||
+        (this.rightGoalShieldTime > 0 && bomb.x > playboardRightBorder - bombRadius)
+      ) {
+      
+        if (bomb.vx >= 0 && bomb.vx <= 1) {
           bomb.vx = -1;
-        } else if (bomb.vx > 1 && bomb.vx <= 2) {
+        } else if (bomb.vx > 1) {
           bomb.vx = -2;
-        } else if (bomb.vx > 2 && bomb.vx <= 3) {
-          bomb.vx = -3;
-        } else if (bomb.vx > 3 && bomb.vx <= 4) {
-          bomb.vx = -4;
-        } else if (bomb.vx > 4) {
-          bomb.vx = -5;
         }
       }
 
       // Checks collision with left border
       // The if conditionals decides the bombs speed (vx) after collision
-      if (bomb.x < playboardLeftBorder + bombRadius) {
-        if (bomb.vx < 0 && bomb.vx > -1) {
-          bomb.vx = 1;
-        } else if (bomb.vx < -1 && bomb.vx >= -2) {
-          bomb.vx = 2;
-        } else if (bomb.vx < -2 && bomb.vx >= -3) {
-          bomb.vx = 3;
-        } else if (bomb.vx < -3 && bomb.vx >= -4) {
-          bomb.vx = 4;
-        } else if (bomb.vx < -4) {
-          bomb.vx = 5;
-        }
+      if (
+        (this.leftGoalShieldTime <= 0 && bomb.x < playboardLeftBorder + bombRadius &&
+        bomb.y< playboardTopBorder + 140 + bomb.diameter / 4) 
+        ||
+        (this.leftGoalShieldTime <= 0 && bomb.x < playboardLeftBorder + bombRadius &&
+        bomb.y > playboardBottomBorder - 140 - bomb.diameter / 4)
+        ||
+        (this.leftGoalShieldTime > 0 && bomb.x < playboardLeftBorder + bombRadius)
+      ) {
+          if (bomb.vx < 0 && bomb.vx >= -1) {
+            bomb.vx = 1;
+          } else if (bomb.vx < -1) {
+            bomb.vx = 2;
+          }
       }
-
-      // Checks collision with top border
+    
+      // Checks collision with top border within play area and inside goals
       // The if conditionals decides the bombs speed (vy) after collision
-      if (bomb.y < playboardTopBorder + bombRadius) {
-        if (bomb.vy < 0 && bomb.vy > -1) {
+      if (
+        (bomb.y < playboardTopBorder + bombRadius)
+        ||
+        (bomb.x > playboardRightBorder - bombRadius && bomb.y < playboardTopBorder + 140 + bombRadius)
+        || 
+        (bomb.x < playboardLeftBorder + bombRadius && bomb.y < playboardTopBorder + 140 + bombRadius)
+      ) {
+        if (bomb.vy <= 0 && bomb.vy >= -1) {
           bomb.vy = 1;
         } else if (bomb.vy < -1 && bomb.vy >= -2) {
           bomb.vy = 2;
@@ -534,11 +594,17 @@ class PlayScene {
           bomb.vy = 5;
         }
       }
-
-      // Checks collision with bottom border
+    
+      // Checks collision with bottom border within play areea and inside goals
       // The if conditionals decides the bombs speed (vy) after collision
-      if (bomb.y > playboardBottomBorder - bombRadius) {
-        if (bomb.vy > 0 && bomb.vy < 1) {
+      if (
+        (bomb.y > playboardBottomBorder - bombRadius) 
+        || 
+        (bomb.x > playboardRightBorder - bombRadius && bomb.y > playboardBottomBorder - 140 - bombRadius)
+        || 
+        (bomb.x < playboardLeftBorder + bombRadius && bomb.y > playboardBottomBorder - 140 - bombRadius)
+      ) {
+        if (bomb.vy > 0 && bomb.vy <= 1) {
           bomb.vy = -1;
         } else if (bomb.vy > 1 && bomb.vy <= 2) {
           bomb.vy = -2;
@@ -548,6 +614,132 @@ class PlayScene {
           bomb.vy = -4;
         } else if (bomb.vy > 4) {
           bomb.vy = -5;
+        }
+      }
+    }
+  }
+
+  /* -----------------------------
+        POWERUP-RELATED METHODS
+  ----------------------------- */ 
+
+  // Spawns powerups
+  private spawnPowerUps() {
+      const diameter = 28;
+      const powerUpRadius = diameter / 2;
+      const playAreaLeftBorder = (width / 2 - this.playboard.width / 2)
+      const playAreaRightBorder = (width / 2 + this.playboard.width / 2)
+      const playAreaTopBorder = (height / 2 - this.playboard.height / 2 + this.playboard.offsetTop)
+      const playAreaBottomBorder = (height / 2 + this.playboard.height / 2 + this.playboard.offsetTop)
+      const playAreaX1 = playAreaLeftBorder + powerUpRadius + 400;
+      const playAreaX2 = playAreaRightBorder - powerUpRadius - 400;
+      const playAreaY1 = playAreaTopBorder + powerUpRadius + 50;
+      const playAreaY2 = playAreaBottomBorder - powerUpRadius - 50;
+      let x = random(playAreaX1, playAreaX2);
+      let y = random(playAreaY1, playAreaY2)
+      const players = [this.playerOne, this.playerTwo];
+      let unavailableSpacesX = []
+      let unavailableSpacesY = []
+      let allTypesOfPowerUps = ["reverse-controls", "goal-shield", "slow-down", "small-player", "bonus-points"]
+      this.spawnTimeoutPowerUp -= deltaTime;
+        
+      if (this.spawnTimeoutPowerUp < 0) {
+  
+          // Kontrollerar om spelare existerar på x-axeln
+          for (const player of players) {
+              if (x > (player.x - player.diameter / 2 - powerUpRadius - 50) &&
+                  x < (player.x + player.diameter / 2 + powerUpRadius + 50)) {
+                  unavailableSpacesX.push(player.x);
+              }
+          }
+  
+          // Kontrollerar om spelare existerar på y-axeln
+          for (const player of players) {
+              if (y > (player.y - player.diameter / 2 - powerUpRadius - 50) &&
+                  y < (player.y + player.diameter / 2 + powerUpRadius + 50)) {
+                  unavailableSpacesY.push(player.y);
+              }
+          }
+  
+          // Kontrollerar om powerup existerar på x-axeln
+          for (const powerUp of this.powerUps) {
+            if (x > (powerUp.x - powerUp.diameter - 5) && x < (powerUp.x + powerUp.diameter + 5)) {
+                unavailableSpacesX.push(powerUp.x);
+            }
+          }
+
+          // Kontrollerar om powerup existerar på y-axeln
+          for (const powerUp of this.powerUps) {
+              if (y > (powerUp.y - powerUp.diameter - 5) && y < (powerUp.y + powerUp.diameter + 5)) {
+                  unavailableSpacesY.push(powerUp.y);
+              }
+          }
+
+          // Lägger till powerup på spelplan om randomvärdet inte kolliderar med existerande powerups
+          // eller spelare på x- eller y-axeln
+          if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
+              this.powerUps.push(new PowerUp(diameter, x, y, random(allTypesOfPowerUps)));
+              this.spawnTimeoutPowerUp = random(7_000, 20_000);
+          }
+      }
+  }
+
+  // Checks collision between powerups and players and applies powerups
+  private checkPowerUpCollision() {
+    const players = [this.playerOne, this.playerTwo];
+
+    for (let i = 0; i < this.powerUps.length; i++) {
+      for (let p = 0; p < players.length; p++) {
+        if (this.powerUps[i] !== undefined) {
+          let dx = players[p].x - this.powerUps[i].x;
+          let dy = players[p].y - this.powerUps[i].y;
+          let distance = sqrt(dx * dx + dy * dy);
+          let minDist = players[p].diameter / 2 + this.powerUps[i].diameter / 2;
+  
+          if (distance < minDist) {
+            // Slow down powerup – red color
+            if (this.powerUps[i].type == "slow-down") {
+                if (p == 0) {
+                  players[1].slowDownPlayer();
+                } else {
+                  players[0].slowDownPlayer();
+                }
+            }
+            // Reverse control powerup – green color
+            if (this.powerUps[i].type == "reverse-controls") {
+              if (p == 0) {
+                players[1].activateReverseControls();
+              } else {
+                players[0].activateReverseControls();
+              }
+            }
+            // Goal shield powerup – blue color
+            if (this.powerUps[i].type == "goal-shield") {
+              if (p == 0) {
+                this.leftGoalShieldTime = 6000;
+              } else {
+                this.rightGoalShieldTime = 6000;
+              }
+            }
+            // Small player powerup – yellow color
+            if (this.powerUps[i].type == "small-player") {
+              if (p == 0) {
+                players[1].makePlayerSmall();
+              } else {
+                players[0].makePlayerSmall();
+              }
+            }
+            // Bonus powerup – cyan color
+            if (this.powerUps[i].type == "bonus-points") {
+              if (p == 0) {
+                this.scorePlayer1 = this.scorePlayer1 + 20;
+              } else {
+                this.scorePlayer2 = this.scorePlayer2 + 20;
+              }
+            }
+            sounds.powerUpSound.play();
+            this.powerUps.splice(i, 1);
+          }
         }
       }
     }

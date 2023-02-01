@@ -1,5 +1,8 @@
 class Goal {
-  //ATTRIBUTE////////////////////////////
+
+  /* ------------------
+        ATTRIBUTES
+  ------------------ */
   // Goal width & height
   private goalW: number;
   private goalH: number;
@@ -12,7 +15,9 @@ class Goal {
   private neonBlur: number;
   private offsetBlur: number;
 
-  //CONSTRUCTOR////////////////////////
+  /* --------------------
+        CONSTRUCTOR
+  -------------------- */
   constructor(
     offsetTop: number,
     boardWidth: number,
@@ -35,8 +40,10 @@ class Goal {
     this.neonBlur = neonBlur;
     this.offsetBlur = offsetBlur;
   }
-  //METHODS//////////////////////////
 
+  /* ------------------
+        METHODS
+  ------------------ */
   //Update
   public update() {
     
