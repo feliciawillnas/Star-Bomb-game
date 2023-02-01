@@ -16,20 +16,21 @@ class StartScene {
     this.interactionInstructionASD = "A S D";
     this.interactionInstructionUP_A = "\uf106";
     this.interactionInstructionLDR_A = "\uf104   \uf107   \uf105";
-    this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS";
+    this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA & LUCAS";
     this.game = game;
   }
+
   //METHODS//////////////////////////
 
-  //Update
   public update() {}
-  //Draw
+
   public draw() {
     // Drawing all text and images.
     push();
     fill("white");
     stroke("black");
     strokeWeight(10);
+    
     // Text: GameTitle
     push();
     textSize(60);
@@ -101,7 +102,7 @@ class StartScene {
     //Creators
     push();
     textSize(12);
-    text("LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS", width / 2, height - 20);
+    text(this.creatorNames, width / 2, height - 20);
     pop();
     pop();
   }
