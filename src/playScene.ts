@@ -27,6 +27,8 @@ class PlayScene {
   private showLeftGoalText: boolean;
   private showRightGoalText: boolean;
 
+  private isGoal: boolean;
+
   /* --------------------
         CONSTRUCTOR
   -------------------- */
@@ -53,6 +55,8 @@ class PlayScene {
     this.startTimeGoalText = null;
     this.showLeftGoalText = false;
     this.showRightGoalText = false;
+
+    this.isGoal = false;
 
     this.scoreInterface = new ScoreInterface(this.boardWidth, this.boardHeight);
 
@@ -225,9 +229,21 @@ class PlayScene {
       if (this.inLeftGoal(bomb)) {
         this.player2Score(10);
         // LÄGG TILL LJUD FÖR MÅL
+
+        if (!this.isGoal) {
+          sounds.goalSound.play()
+          this.isGoal = true;
+        }
+
+        
       } else if (this.inRightGoal(bomb)) {
         this.player1Score(10);
         // LÄGG TILL LJUD FÖR MÅL
+        if (!this.isGoal) {
+          sounds.goalSound.play()
+          this.isGoal = true;
+        }
+        
       } else {
         bombs.push(bomb);
       }
