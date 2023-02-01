@@ -49,7 +49,15 @@ class EndScene {
     // SCORE
     push();
     textSize(40);
-    text("SCORE", width / 2, height / 2 - 100);
+    if (game.playScene.scorePlayer1 > game.playScene.scorePlayer2) {
+      text("PLAYER 1 WINS!", width / 2, height / 2 - 100);
+    }
+    if (game.playScene.scorePlayer1 < game.playScene.scorePlayer2) {
+      text("PLAYER 2 WINS!", width / 2, height / 2 - 100);
+    }
+    if (game.playScene.scorePlayer1 == game.playScene.scorePlayer2) {
+      text("IT'S A DRAW!", width / 2, height / 2 - 100);
+    }
     strokeWeight(7);
     pop();
 
@@ -103,14 +111,14 @@ class EndScene {
     // Pink rocket img
     push();
     images.rocketImgPink2Big;
-    translate(width / 2 + 240, height / 2 - 35);
+    translate(width / 2 + 240, height / 2 - 25);
     image(images.rocketImgPink2Big, 0, 0);
     pop();
 
     // Blue rocket img
     push();
     images.rocketImgBlue1Big;
-    translate(width / 2 - 240, height / 2 - 35);
+    translate(width / 2 - 240, height / 2 - 25);
     image(images.rocketImgBlue1Big, 0, 0);
     pop();
 
