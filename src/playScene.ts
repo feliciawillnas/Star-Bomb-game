@@ -483,8 +483,8 @@ class PlayScene {
           let targetY = bomb.y + sin(angle) * minDist;
           let ax = (targetX - player.x) * spring;
           let ay = (targetY - player.y) * spring;
-          bomb.vx -= ax / 8;
-          bomb.vy -= ay / 8;
+          bomb.vx -= ax;
+          bomb.vy -= ay;
         }
       }
       // SPELARE KOLLIDERAR MED SPELARE

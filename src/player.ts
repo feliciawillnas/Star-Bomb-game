@@ -2,7 +2,7 @@ class Player {
   /* ------------------
         ATTRIBUTES
   ------------------ */
-  public x: number; //Ändra tillbaka till private När vi testat klart i goal.
+  public x: number;
   public y: number;
   private widthPlayer: number;
   private heightPlayer: number;
@@ -45,7 +45,6 @@ class Player {
     this.heightPlayer = 60;
     this.diameter = this.heightPlayer + 15;
 
-    // Spelarnas startpositioner flyttas vid in- och utzoomning. Ska det vara så?
     if (player === 1) {
       this.x = width / 2 - this.boardWidth / 2.5;
       this.y = height / 2 + this.offsetTop;
