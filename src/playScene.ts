@@ -11,9 +11,9 @@ class PlayScene {
   public playerOne: Player;
   public playerTwo: Player;
 
-  private scorePlayer1: number;
-  private scorePlayer2: number;
-  private gameTime: number;
+  public scorePlayer1: number;
+  public scorePlayer2: number;
+  public gameTime: number;
   public gameTimeMin: number;
   public gameTimeSec: number;
 
@@ -46,7 +46,7 @@ class PlayScene {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
-    this.gameTime = 12_000;
+    this.gameTime = 180_000;
     this.gameTimeMin = 0;
     this.gameTimeSec = 0;
 
@@ -139,13 +139,13 @@ class PlayScene {
     this.drawVolumeSlider();
   }
 
-  // Text: "Volume: x%"
+  // Text: "Volume x%"
   private drawVolumeSlider() {
     push();
     noStroke();
     fill("white");
     textSize(10);
-    text("Music:", 45, 20);
+    text("Music", 45, 20);
     text(int(slider.value() * 100) + "%", 120, 40);
     pop();
 
@@ -153,7 +153,7 @@ class PlayScene {
     noStroke();
     fill("white");
     textSize(10);
-    text("Sound effect:", 80, 60);
+    text("Sound effects", 80, 60);
     text(int(slider2.value() * 100) + "%", 120, 80);
     pop();
   }
@@ -224,8 +224,10 @@ class PlayScene {
       // Add amount of points of scored goal here.
       if (this.inLeftGoal(bomb)) {
         this.player2Score(10);
+        // LÄGG TILL LJUD FÖR MÅL
       } else if (this.inRightGoal(bomb)) {
         this.player1Score(10);
+        // LÄGG TILL LJUD FÖR MÅL
       } else {
         bombs.push(bomb);
       }
@@ -250,7 +252,7 @@ class PlayScene {
         text(
           "GOAL!",
           width / 2 - this.boardWidth / 2 - this.goalW / 2,
-          height / 2 - this.goalH / 2,
+          height / 2 - this.goalH / 2
         );
       } else {
         this.showLeftGoalText = false;

@@ -1,8 +1,12 @@
 interface IStartGame {
+  //IGame
   startGame(): void;
 }
+interface IEndGame {
+  endGame(): void;
+}
 
-class Game {
+class Game implements IStartGame, IEndGame {
   //ATTRIBUTE////////////////////////////
   public scene: string;
   public playScene: PlayScene;
@@ -13,13 +17,16 @@ class Game {
   constructor() {
     this.scene = "startScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
     this.playScene = new PlayScene();
-    this.startScene = new StartScene(game);
-    this.endScene = new EndScene(game);
+    this.startScene = new StartScene(this);
+    this.endScene = new EndScene(this);
   }
 
   //METHODS//////////////////////////////
   //Update
   public update() {
+    this.startSceneMusic();
+    this.endSceneMusic();
+
     if (this.scene == "playScene") {
       this.playScene.update();
     }
@@ -28,28 +35,27 @@ class Game {
     }
     if (this.scene == "endScene") {
       this.endScene.update();
-    }  
+    }
   }
-  
-    
+
   //Draw
   public draw() {
     this.startGame();
-    
+    this.endGame();
+    this.restartGame();
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
-    // BRYT UT TILL EGEN METOD
     if (this.scene == "playScene") {
       this.playScene.draw();
     }
     if (this.scene == "startScene") {
       this.startScene.draw();
-      this.startSceneMusic();
     }
     if (this.scene == "endScene") {
       this.endScene.draw();
     }
   }
+
   // Loops the music during the start scene of the game.
   private startSceneMusic() {
     if (this.scene == "startScene") {
@@ -57,27 +63,45 @@ class Game {
         sounds.startSceneLoop.loop();
       }
     }
-    if (this.scene == "endScene") {
-      this.endScene.draw();
-    }  
   }
-
 
   // Starts playScene when space-key is pressed. Also activates the gameMusic.
   public startGame() {
-    if (keyIsDown(32)) {
+    if (this.scene == "startScene" && keyIsDown(32)) {
+      sounds.startSceneLoop.stop();
       this.scene = "playScene";
+
       if (!sounds.gameMusic.isPlaying()) {
         sounds.gameMusic.loop();
       }
-      sounds.startSceneLoop.stop();
     }
   }
 
-  // public endGame() {
-  //   if(gameTime < 0 && this.scene == "playScene") {
-  //     this.scene = "endScene"
-  //   }
-  // }
-}
+  public endGame() {
+    if (
+      game.playScene.gameTimeMin < 0 &&
+      game.playScene.gameTimeSec < 0 &&
+      this.scene == "playScene"
+    ) {
+      this.scene = "endScene";
+    }
+  }
 
+  private endSceneMusic() {
+    if (this.scene == "endScene") {
+      sounds.gameMusic.stop();
+      if (!sounds.endSceneMusic.isPlaying()) {
+        sounds.endSceneMusic.loop();
+      }
+    }
+  }
+
+  private restartGame() {
+    if (this.scene == "endScene" && keyIsDown(32)) {
+      sounds.endSceneMusic.stop();
+      this.scene = "playScene";
+      sounds.gameMusic.loop();
+      this.playScene = new PlayScene();
+    }
+  }
+}
