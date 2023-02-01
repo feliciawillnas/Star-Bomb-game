@@ -42,7 +42,6 @@ interface Sounds {
   endSceneMusic: p5.SoundFile;
   bombExplosion: p5.SoundFile;
   goalSound: p5.SoundFile;
-
 }
 
 let gameFont: p5.Font;
@@ -60,8 +59,7 @@ function preload() {
     gameMusic: loadSound("../assets/sounds/star_rider.mp3"),
     endSceneMusic: loadSound("../assets/sounds/screenHeroes.mp3"),
     bombExplosion: loadSound("../assets/sounds/distant-explosion.mp3"),
-    goalSound: loadSound ("../assets/sounds/goal-sound.mp3"),
-
+    goalSound: loadSound("../assets/sounds/goal-sound.mp3"),
   };
   // IMGAES //////////////////
   images = {
@@ -117,6 +115,7 @@ function setup() {
     /** Second slider - sound effects **/
   slider2 = createSlider(0, 1, 0.0, 0.01);
   slider2.position(10, 65);
+
   slider2.style("width", "80px");
 
   createCanvas(windowWidth, windowHeight);
@@ -139,6 +138,7 @@ function draw() {
   /** First slider - music **/
   sounds.startSceneLoop.setVolume(slider.value());
   sounds.gameMusic.setVolume(slider.value());
+  sounds.endSceneMusic.setVolume(slider.value());
 
   /** Second slider - sound effects **/
   sounds.bombExplosion.setVolume(slider2.value());
