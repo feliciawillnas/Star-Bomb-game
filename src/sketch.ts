@@ -127,12 +127,12 @@ function preload() {
  * in the draw function below
  */
 function setup() {
-  slider = createSlider(0, 1, 0.2, 0.01);
+  slider = createSlider(0, 1, 0.5, 0.01);
   slider.position(10, 25);
   slider.style("width", "80px");
 
   /** Second slider - sound effects **/
-  slider2 = createSlider(0, 1, 0.2, 0.01);
+  slider2 = createSlider(0, 1, 0.5, 0.01);
   slider2.position(10, 65);
   slider2.style("width", "80px");
 

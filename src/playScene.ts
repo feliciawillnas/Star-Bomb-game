@@ -198,7 +198,7 @@ class PlayScene {
     noStroke();
     fill("white");
     textSize(10);
-    text("Music", 45, 20);
+    text("Music", 40, 20);
     text(int(slider.value() * 100) + "%", 120, 40);
     pop();
 
