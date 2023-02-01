@@ -8,7 +8,7 @@ class EndScene {
   //CONSTRUCTOR////////////////////////
   constructor(game: Game) {
     this.gameTitle = "STAR  B MB";
-    this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS";
+    this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA & LUCAS";
     this.game = game;
   }
 

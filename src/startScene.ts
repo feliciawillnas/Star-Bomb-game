@@ -17,16 +17,18 @@ class StartScene {
     this.interactionInstructionASD = "A S D";
     this.interactionInstructionUP_A = "\uf106";
     this.interactionInstructionLDR_A = "\uf104   \uf107   \uf105";
-    this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA, LUCAS";
+    this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA & LUCAS";
     this.game = game;
+
     this.infoText =
       "Move the bombs by hitting them with your spaceship's\n force field. You will get 3 points when a bomb \nexplodes on your opponent's half of the court and \n10 points if you manage to get a bomb in your \nopponent's galaxy goal.The player that manages to \ncollect the most points in 3 minutes wins the game!";
     }
     //METHODS//////////////////////////
     
   //Update
+
   public update() {}
-  //Draw
+
   public draw() {
     this.drawStartScene();
     this.pressI();
@@ -202,6 +204,7 @@ class StartScene {
     fill("white");
     stroke("black");
     strokeWeight(10);
+    
     // Text: GameTitle
     push();
     textSize(60);
