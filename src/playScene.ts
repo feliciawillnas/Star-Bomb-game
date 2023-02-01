@@ -229,7 +229,7 @@ class PlayScene {
       if (this.inLeftGoal(bomb)) {
         this.player2Score(10);
 
-        // LÄGG TILL LJUD FÖR MÅL
+        // Goal sound plays
         if (!this.isGoal) {
           sounds.goalSound.play();
         }
@@ -237,7 +237,7 @@ class PlayScene {
       } else if (this.inRightGoal(bomb)) {
         this.player1Score(10);
 
-        // LÄGG TILL LJUD FÖR MÅL
+        // Goal sound plays
         if (!this.isGoal) {
           sounds.goalSound.play();
         }
