@@ -142,7 +142,7 @@ class Playboard {
     );
     pop();
 
-    //Left Pink Line
+    // Left Pink Line
     push();
 
     // Left Pink Line Blur Effect
@@ -156,7 +156,7 @@ class Playboard {
     );
     pop();
 
-    //Right Pink Line
+    // Right Pink Line
     push();
 
     // Right Pink Line Blur Effect

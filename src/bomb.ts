@@ -7,7 +7,7 @@ class Bomb {
   public vx: number;
   public vy: number;
   public diameter: number;
-  public timeToLive: number; // The bombs lifetime
+  public timeToLive: number; // The bombs lifetime.
   private isExploding: boolean;
 
   /* --------------------

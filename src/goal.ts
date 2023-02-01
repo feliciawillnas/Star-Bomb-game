@@ -51,28 +51,7 @@ class Goal {
     this.goals();
     this.leftGoalLines();
     this.rightGoalLines();
-    // this.checkForGoal();
   }
-
-  // private checkForGoal(){
-  //   // Spelare skapar ett nummer när den entrar mål.
-  //   // Vänster mål
-  //   if(game.playScene.playerOne.x <= width/2 - this.boardWidth/2 && game.playScene.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && game.playScene.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop) {
-  //     this.scorePlayer1 = this.scorePlayer1 + 10
-  //     circle(width/2, height/2, 200)
-  //   }
-  //   // Höger mål
-  //   if (game.playScene.playerOne.x >= width/2 + this.boardWidth/2 && game.playScene.playerOne.y <= height/2 + this.goalH/2 + this.offsetTop && game.playScene.playerOne.y >= height/2 - this.goalH/2 + this.offsetTop){
-  //     push();
-  //     fill('green')
-  //     this.scorePlayer2 = this.scorePlayer2 + 10
-  //     circle(width/2, height/2, 200)
-  //     pop();
-  //   }
-
-  //   // Text som skriver "GOAL!!!"
-
-  // }
 
   private goals() {
     // Goal left

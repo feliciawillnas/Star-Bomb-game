@@ -268,20 +268,6 @@ class StartScene {
     image(images.startSceneBlueRocket, 0, 0);
     pop();
 
-    // //Player1/blue interaction instruction
-    // push();
-    // text(this.interactionInstructionW, width / 2 - 450, height / 2 + 85);
-    // text(this.interactionInstructionASD, width / 2 - 450, height / 2 + 110);
-    // pop();
-
-    // //Player2/pink interaction instruction
-    // push();
-    // textFont(symbolFont);
-    // textSize(18);
-    // text(this.interactionInstructionUP_A, width / 2 + 450, height / 2 + 85);
-    // text(this.interactionInstructionLDR_A, width / 2 + 450, height / 2 + 110);
-    // pop();
-
     //Creators
     push();
     textSize(12);

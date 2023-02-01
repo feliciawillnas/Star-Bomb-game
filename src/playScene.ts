@@ -365,7 +365,7 @@ class PlayScene {
     let timeToLive = random(6_000, 20_000);
 
     if (this.spawnTimeout < 0) {
-      // Kontrollerar om spelare existerar på x-axeln
+      // Checks if player is present on the x-axis.
       for (const player of players) {
         if (
           x > player.x - player.diameter / 2 - bombRadius - 50 &&
@@ -375,7 +375,7 @@ class PlayScene {
         }
       }
 
-      // Kontrollerar om spelare existerar på y-axeln
+      // Checks if player is present on the y-axis.
       for (const player of players) {
         if (
           y > player.y - player.diameter / 2 - bombRadius - 50 &&
@@ -385,22 +385,22 @@ class PlayScene {
         }
       }
 
-      // Kontrollerar om bomb existerar på x-axeln
+      // Checks if bomb is present on the x-axis.
       for (const bomb of this.bombs) {
         if (x > bomb.x - bomb.diameter - 5 && x < bomb.x + bomb.diameter + 5) {
           unavailableSpacesX.push(bomb.x);
         }
       }
 
-      // Kontrollerar om bomb existerar på y-axeln
+      // Checks if bomb is present on the y-axis.
       for (const bomb of this.bombs) {
         if (y > bomb.y - bomb.diameter - 5 && y < bomb.y + bomb.diameter + 5) {
           unavailableSpacesY.push(bomb.y);
         }
       }
 
-      // Lägger till bomb på spelplan om randomvärdet inte kolliderar med existerande bomber
-      // eller spelare på x- eller y-axeln
+      // Adds a bomb to the playfield if the random value is not colliding with existing
+      // bombs or players on the x- or y-axis.
       if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
         this.bombs.push(new Bomb(diameter, x, y, timeToLive));
         this.spawnTimeout = 1_500;
@@ -445,7 +445,7 @@ class PlayScene {
     const players = [this.playerOne, this.playerTwo];
 
     for (const bomb of allBombs) {
-      //BOMBER KOLLIDERAR MED BOMBER
+      // BOMB COLLIDES WITH BOMB
       for (const otherBombs of allBombs) {
         if (bomb === otherBombs) continue;
         let spring = 0.15;
@@ -468,7 +468,7 @@ class PlayScene {
         }
       }
 
-      // SPELARE KOLLIDERAR MED BOMBER
+      // PLAYER COLLIDES WITH BOMB
       for (const player of players) {
         let spring = 0.35;
 
@@ -487,7 +487,7 @@ class PlayScene {
           bomb.vy -= ay;
         }
       }
-      // SPELARE KOLLIDERAR MED SPELARE
+      // PLAYER COLLIDES WITH PLAYER
       for (const player of players) {
         for (const otherPlayer of players) {
           if (player === otherPlayer) continue;
@@ -643,7 +643,7 @@ class PlayScene {
     this.spawnTimeoutPowerUp -= deltaTime;
 
     if (this.spawnTimeoutPowerUp < 0) {
-      // Kontrollerar om spelare existerar på x-axeln
+      // Checks if player is present on the x-axis.
       for (const player of players) {
         if (
           x > player.x - player.diameter / 2 - powerUpRadius - 50 &&
@@ -653,7 +653,7 @@ class PlayScene {
         }
       }
 
-      // Kontrollerar om spelare existerar på y-axeln
+      // Checks if player is present on the y-axis.
       for (const player of players) {
         if (
           y > player.y - player.diameter / 2 - powerUpRadius - 50 &&
@@ -663,7 +663,7 @@ class PlayScene {
         }
       }
 
-      // Kontrollerar om powerup existerar på x-axeln
+      // Check if powerup is present on the x-axis.
       for (const powerUp of this.powerUps) {
         if (
           x > powerUp.x - powerUp.diameter - 5 &&
@@ -673,7 +673,7 @@ class PlayScene {
         }
       }
 
-      // Kontrollerar om powerup existerar på y-axeln
+      // Check if powerup is present on the y-axis.
       for (const powerUp of this.powerUps) {
         if (
           y > powerUp.y - powerUp.diameter - 5 &&
@@ -683,8 +683,8 @@ class PlayScene {
         }
       }
 
-      // Lägger till powerup på spelplan om randomvärdet inte kolliderar med existerande powerups
-      // eller spelare på x- eller y-axeln
+      // Adds powerup to the playfield if the random value does not collide with the present powerups
+      // or players on the x- or y-axis.
       if (unavailableSpacesX.length === 0 || unavailableSpacesY.length === 0) {
         this.powerUps.push(
           new PowerUp(diameter, x, y, random(allTypesOfPowerUps))

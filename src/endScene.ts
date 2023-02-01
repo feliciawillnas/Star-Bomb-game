@@ -5,7 +5,6 @@ class EndScene {
   protected gameTitle: string;
   protected creatorNames: string;
   protected game: Game;
-  // constructor(game: IStartGame) { /kommenterat ut, ha kvar?
 
   /* --------------------
         CONSTRUCTOR
@@ -61,7 +60,7 @@ class EndScene {
     strokeWeight(7);
     pop();
 
-    // Player 1 score // LÄGG TILL scorePlayer1 & scorePlayer2
+    // Player 1 score
     push();
     textSize(40);
     text(game.playScene.scorePlayer1, width / 2 - 100, height / 2 - 15);
@@ -86,7 +85,7 @@ class EndScene {
     image(images.neonGreenBombBig, width / 2 + 163, height / 2 - 245);
     pop();
 
-    //  "Press space to"
+    // "Press space to"
     push();
     textSize(15);
     text("PRESS SPACE TO ", width / 2, height / 2 + 170);

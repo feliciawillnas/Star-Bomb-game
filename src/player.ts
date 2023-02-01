@@ -162,7 +162,7 @@ class Player {
   }
 
   private keepPlayersInsideScreen() {
-    // can't leave screen on the left side
+    // Can't leave screen on the left side
     // May need to change diameter to diameter to make it work with bombs.
     if (this.x - this.diameter / 2 <= width / 2 - this.boardWidth / 2) {
       this.x = this.x + this.move;
