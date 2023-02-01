@@ -132,6 +132,8 @@ function draw() {
 
   /** Second slider - sound effects **/
   sounds.bombExplosion.setVolume(slider2.value());
+  sounds.goalSound.setVolume(slider2.value());
+
 
   game.update();
   game.draw();
