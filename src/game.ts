@@ -7,7 +7,6 @@ interface IEndGame {
 }
 
 class Game implements IStartGame, IEndGame {
-
   /* ------------------
         ATTRIBUTES
   ------------------ */
@@ -20,7 +19,7 @@ class Game implements IStartGame, IEndGame {
         CONSTRUCTOR
   -------------------- */
   constructor() {
-    this.scene = "startScene"; //Ändra denna för att till startscene när vi är klara. "startScene"
+    this.scene = "startScene"; // Activates the first scene of the game.
     this.playScene = new PlayScene();
     this.startScene = new StartScene(this);
     this.endScene = new EndScene(this);
@@ -36,12 +35,6 @@ class Game implements IStartGame, IEndGame {
 
     if (this.scene == "playScene") {
       this.playScene.update();
-    }
-    if (this.scene == "startScene") {
-      this.startScene.update();
-    }
-    if (this.scene == "endScene") {
-      this.endScene.update();
     }
   }
 

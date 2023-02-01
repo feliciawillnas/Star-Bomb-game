@@ -13,10 +13,6 @@ interface Images {
   background: p5.Image;
   galaxGoal: p5.Image;
   playboardBG: p5.Image;
-  rocketImgPink1: p5.Image;
-  rocketImgBlue1: p5.Image;
-  rocketImgPink2: p5.Image;
-  rocketImgBlue2: p5.Image;
   neonGreenBombBig: p5.Image;
   rocketImgBlue1Big: p5.Image;
   rocketImgPink2Big: p5.Image;
@@ -24,14 +20,13 @@ interface Images {
   rocketImgBlue1gif: p5.Image;
   rocketImgPink1gif: p5.Image;
   redBomb: p5.Image;
-  startSceneBlueRocket: p5.Image; 
+  startSceneBlueRocket: p5.Image;
   startScenePinkRocket: p5.Image;
-  neonGreenBombStor: p5.Image;
   neonGreenBombClear: p5.Image;
   powerUpIconSlowDown: p5.Image;
   powerupIconReverseControls: p5.Image;
   powerUpIconGoalShield: p5.Image;
-  powerUpIconSmallPlayer: p5.Image;
+  powerUpIconShrinkPlayer: p5.Image;
   powerUpIconBonusPoints: p5.Image;
 }
 
@@ -56,7 +51,6 @@ let symbolFont: p5.Font;
  */
 
 function preload() {
-  
   /* -------------
        SOUNDS
   ------------- */
@@ -80,10 +74,6 @@ function preload() {
     galaxGoal: loadImage("../assets/images/galax.jpg"),
     playboardBG: loadImage("../assets/images/playboardBackground.png"),
     // Player
-    rocketImgBlue1: loadImage("../assets/images/blueRocket1.png"),
-    rocketImgPink1: loadImage("../assets/images/pinkRocket1.png"),
-    rocketImgBlue2: loadImage("../assets/images/blueRocket2.png"),
-    rocketImgPink2: loadImage("../assets/images/pinkRocket2.png"),
     rocketImgBlue1Big: loadImage("../assets/images/blueRocket1big.png"),
     rocketImgPink2Big: loadImage("../assets/images/pinkRocket2big.png"),
     rocketImgBlue1gif: loadImage("../assets/images/blueRocket.gif"),
@@ -93,15 +83,22 @@ function preload() {
     // Bomb
     redBomb: loadImage("../assets/images/neonGreenBombRed.png"),
     neonGreenBombBig: loadImage("../assets/images/neonGreenBombBig.png"),
-    neonGreenBombStor: loadImage("../assets/images/neonGreenBombClear.png"),
     neonGreenBombClear: loadImage("../assets/images/neonGreenBombClear.png"),
     explosion: loadImage("../assets/images/explosion.png"),
     // Powerups
     powerUpIconSlowDown: loadImage("../assets/images/slow-down-powerup.png"),
-    powerupIconReverseControls: loadImage("../assets/images/reverse-controls-powerup.png"),
-    powerUpIconGoalShield: loadImage("../assets/images/goal-shield-powerup.png"),
-    powerUpIconSmallPlayer: loadImage("../assets/images/small-player-powerup.png"),
-    powerUpIconBonusPoints: loadImage("../assets/images/bonus-points-powerup.png"),
+    powerupIconReverseControls: loadImage(
+      "../assets/images/reverse-controls-powerup.png"
+    ),
+    powerUpIconGoalShield: loadImage(
+      "../assets/images/goal-shield-powerup.png"
+    ),
+    powerUpIconShrinkPlayer: loadImage(
+      "../assets/images/small-player-powerup.png"
+    ),
+    powerUpIconBonusPoints: loadImage(
+      "../assets/images/bonus-points-powerup.png"
+    ),
   };
 
   /* --------------
@@ -118,13 +115,12 @@ function preload() {
  * in the draw function below
  */
 function setup() {
-  // MUSIC TURNED OFF DURING DEVELOPMENT!!!
-  slider = createSlider(0, 1, 0.0, 0.01);
+  slider = createSlider(0, 1, 0.5, 0.01);
   slider.position(10, 25);
   slider.style("width", "80px");
 
-    /** Second slider - sound effects **/
-  slider2 = createSlider(0, 1, 0.0, 0.01);
+  /** Second slider - sound effects **/
+  slider2 = createSlider(0, 1, 0.5, 0.01);
   slider2.position(10, 65);
   slider2.style("width", "80px");
 
@@ -146,14 +142,15 @@ function setup() {
  */
 function draw() {
   /** First slider - music **/
-  sounds.startSceneLoop.setVolume(slider.value());
-  sounds.gameMusic.setVolume(slider.value());
+
+  sounds.startSceneLoop.setVolume(slider.value() / 5);
+  sounds.gameMusic.setVolume(slider.value() / 5);
   sounds.endSceneMusic.setVolume(slider.value());
 
   /** Second slider - sound effects **/
   sounds.bombExplosion.setVolume(slider2.value());
-  sounds.powerUpSound.setVolume(slider2.value());
-  sounds.goalSound.setVolume(slider2.value());
+  sounds.powerUpSound.setVolume(slider2.value() / 2);
+  sounds.goalSound.setVolume(slider2.value() / 6);
 
   game.update();
   game.draw();

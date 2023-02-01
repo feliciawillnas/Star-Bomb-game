@@ -5,7 +5,6 @@ class EndScene {
   protected gameTitle: string;
   protected creatorNames: string;
   protected game: Game;
-  // constructor(game: IStartGame) { /kommenterat ut, ha kvar?
 
   /* --------------------
         CONSTRUCTOR
@@ -19,7 +18,6 @@ class EndScene {
   /* ------------------
         METHODS
   ------------------ */
-  public update() {}
 
   public draw() {
     // Text: "Volume x%"
@@ -50,7 +48,15 @@ class EndScene {
     // SCORE
     push();
     textSize(40);
-    text("SCORE", width / 2, height / 2 - 100);
+    if (game.playScene.scorePlayer1 > game.playScene.scorePlayer2) {
+      text("PLAYER 1 WINS!", width / 2, height / 2 - 100);
+    }
+    if (game.playScene.scorePlayer1 < game.playScene.scorePlayer2) {
+      text("PLAYER 2 WINS!", width / 2, height / 2 - 100);
+    }
+    if (game.playScene.scorePlayer1 == game.playScene.scorePlayer2) {
+      text("IT'S A DRAW!", width / 2, height / 2 - 100);
+    }
     strokeWeight(7);
     pop();
 
@@ -61,7 +67,7 @@ class EndScene {
     strokeWeight(7);
     pop();
 
-    // Player 1 score // LÄGG TILL scorePlayer1 & scorePlayer2
+    // Player 1 score
     push();
     textSize(40);
     text(game.playScene.scorePlayer1, width / 2 - 100, height / 2 - 15);
@@ -86,7 +92,7 @@ class EndScene {
     image(images.neonGreenBombBig, width / 2 + 163, height / 2 - 245);
     pop();
 
-    //  "Press space to"
+    // "Press space to"
     push();
     textSize(15);
     text("PRESS SPACE TO ", width / 2, height / 2 + 170);
@@ -110,6 +116,9 @@ class EndScene {
 
     // Blue rocket img
     push();
+    images.rocketImgBlue1Big;
+    translate(width / 2 - 240, height / 2 - 25);
+    image(images.rocketImgBlue1Big, 0, 0);
     images.startSceneBlueRocket.resize(90, 192);
     translate(width / 2 - 240, height / 2 - 45);
     image(images.startSceneBlueRocket, 0, 0);

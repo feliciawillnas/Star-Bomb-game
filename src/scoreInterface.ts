@@ -1,5 +1,4 @@
 class ScoreInterface {
-  
   /* ------------------
         ATTRIBUTES
   ------------------ */
@@ -17,8 +16,6 @@ class ScoreInterface {
   /* ------------------
         METHODS
   ------------------ */
-  //Update
-  public update() {}
   //Draw
   public draw(
     scorePlayer1: number,

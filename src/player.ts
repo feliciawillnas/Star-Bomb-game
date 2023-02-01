@@ -1,9 +1,8 @@
 class Player {
-  
   /* ------------------
         ATTRIBUTES
   ------------------ */
-  public x: number; //Ändra tillbaka till private När vi testat klart i goal.
+  public x: number;
   public y: number;
   private widthPlayer: number;
   private heightPlayer: number;
@@ -14,7 +13,7 @@ class Player {
   public move: number;
   private slowDownTime: number;
   private reverseControlsTime: number;
-  private smallPlayerTime: number;
+  private shrinkPlayerTime: number;
 
   private offsetTop: number;
   private boardWidth: number;
@@ -38,15 +37,14 @@ class Player {
     this.offsetTop = offsetTop;
     this.boardWidth = boardWidth;
     this.boardHeight = boardHeight;
-    this.move = 20;
+    this.move = 7;
     this.slowDownTime = 0;
     this.reverseControlsTime = 0;
-    this.smallPlayerTime = 0;
+    this.shrinkPlayerTime = 0;
     this.widthPlayer = 37.5;
     this.heightPlayer = 60;
     this.diameter = this.heightPlayer + 15;
 
-    // Spelarnas startpositioner flyttas vid in- och utzoomning. Ska det vara så?
     if (player === 1) {
       this.x = width / 2 - this.boardWidth / 2.5;
       this.y = height / 2 + this.offsetTop;
@@ -90,8 +88,8 @@ class Player {
     stroke(this.color);
 
     // Width of force field is decided whether powerup is activated or not
-    if (this.smallPlayerTime < 0) {
-      strokeWeight(4);;
+    if (this.shrinkPlayerTime < 0) {
+      strokeWeight(4);
     } else {
       strokeWeight(2);
     }
@@ -102,10 +100,10 @@ class Player {
     rotate(this.angle);
 
     // Draws image depending on if small player powerup is activated
-    if (this.smallPlayerTime < 0) {
+    if (this.shrinkPlayerTime < 0) {
       image(this.img, 0, 0, this.widthPlayer, this.heightPlayer);
     } else {
-      image(this.img, 0, 0, this.widthPlayer/3, this.heightPlayer/3);
+      image(this.img, 0, 0, this.widthPlayer / 3, this.heightPlayer / 3);
     }
 
     pop();
@@ -114,35 +112,35 @@ class Player {
   private drawPowerupEffect() {
     // Draw reverse control effect on player while powerup is activated
     if (this.reverseControlsTime > 0 && this.slowDownTime <= 0) {
-      push()
+      push();
       strokeWeight(2);
-       fill(0, 255, 0)
-       ellipse(this.x+20, this.y-20, 10);
-      pop()
+      fill(0, 255, 0);
+      ellipse(this.x + 20, this.y - 20, 10);
+      pop();
     }
 
     // Draw slow down effect on player while powerup is activated
     if (this.slowDownTime > 0 && this.reverseControlsTime <= 0) {
-      push()
+      push();
       strokeWeight(2);
-       fill(255, 0, 0);
-       ellipse(this.x+20, this.y-20, 10);
-      pop()
+      fill(255, 0, 0);
+      ellipse(this.x + 20, this.y - 20, 10);
+      pop();
     }
 
     // Draw both reverse control and slowdown effect on player while both are active
     if (this.slowDownTime > 0 && this.reverseControlsTime > 0) {
-      push()
+      push();
       strokeWeight(1);
-        fill(0, 255, 0)
-        arc(this.x+20, this.y-20, 10, 10, 180, 360);
-      pop()
+      fill(0, 255, 0);
+      arc(this.x + 20, this.y - 20, 10, 10, 180, 360);
+      pop();
 
-      push()
-        strokeWeight(1);
-        fill(255, 0, 0)
-        arc(this.x+20, this.y-20, 10, 10, 360, 180);
-      pop()
+      push();
+      strokeWeight(1);
+      fill(255, 0, 0);
+      arc(this.x + 20, this.y - 20, 10, 10, 360, 180);
+      pop();
     }
   }
 
@@ -164,7 +162,7 @@ class Player {
   }
 
   private keepPlayersInsideScreen() {
-    // can't leave screen on the left side
+    // Can't leave screen on the left side
     // May need to change diameter to diameter to make it work with bombs.
     if (this.x - this.diameter / 2 <= width / 2 - this.boardWidth / 2) {
       this.x = this.x + this.move;
@@ -193,48 +191,48 @@ class Player {
     // Slows down player while powerup is activated
     this.slowDownTime -= deltaTime;
     if (this.slowDownTime <= 0) {
-        this.move = 10;
+      this.move = 7;
     }
 
     // Reverse controls for player while powerup is activated
     this.reverseControlsTime -= deltaTime;
     if (this.reverseControlsTime <= 0) {
-        if (this.color === "blue") {
-            this.rotateLeft = 65;
-            this.rotateRight = 68;
-        }
-        if (this.color === "purple") {
-            this.rotateLeft = 37;
-            this.rotateRight = 39;
-        }
+      if (this.color === "blue") {
+        this.rotateLeft = 65;
+        this.rotateRight = 68;
+      }
+      if (this.color === "purple") {
+        this.rotateLeft = 37;
+        this.rotateRight = 39;
+      }
     }
 
     // Makes player small while powerup is activated
-    this.smallPlayerTime -= deltaTime;
-    if (this.smallPlayerTime > 0 && this.diameter !>= 35) {
-        this.diameter -= 10;
-    } else if (this.smallPlayerTime <= 0 && this.diameter !<= 75) {
-        this.diameter += 10;
+    this.shrinkPlayerTime -= deltaTime;
+    if (this.shrinkPlayerTime > 0 && this.diameter! >= 35) {
+      this.diameter -= 10;
+    } else if (this.shrinkPlayerTime <= 0 && this.diameter! <= 75) {
+      this.diameter += 10;
     }
   }
 
   public slowDownPlayer() {
-    this.move = 4;
-    this.slowDownTime = 5000;
+    this.move = 3;
+    this.slowDownTime = 5_000;
   }
-  
-  public makePlayerSmall() {
-    this.smallPlayerTime = 10000;
+
+  public shrinkPlayer() {
+    this.shrinkPlayerTime = 10_000;
   }
-  
+
   public activateReverseControls() {
-      if (this.color === "blue") {
-          this.rotateLeft = 68;
-          this.rotateRight = 65;
-      } else if (this.color === "purple") {
-          this.rotateLeft = 39;
-          this.rotateRight = 37;
-      }
-          this.reverseControlsTime = 5000;
+    if (this.color === "blue") {
+      this.rotateLeft = 68;
+      this.rotateRight = 65;
+    } else if (this.color === "purple") {
+      this.rotateLeft = 39;
+      this.rotateRight = 37;
+    }
+    this.reverseControlsTime = 5_000;
   }
 }
