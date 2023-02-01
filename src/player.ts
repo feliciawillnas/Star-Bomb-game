@@ -219,11 +219,11 @@ class Player {
 
   public slowDownPlayer() {
     this.move = 3;
-    this.slowDownTime = 5000;
+    this.slowDownTime = 5_000;
   }
 
   public makePlayerSmall() {
-    this.smallPlayerTime = 10000;
+    this.smallPlayerTime = 10_000;
   }
 
   public activateReverseControls() {
@@ -234,6 +234,6 @@ class Player {
       this.rotateLeft = 39;
       this.rotateRight = 37;
     }
-    this.reverseControlsTime = 5000;
+    this.reverseControlsTime = 5_000;
   }
 }
