@@ -103,7 +103,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerUpIconGoalShield, width / 2 - 260, height/ 2 - 5)
+      image(images.powerUpIconGoalShield, width / 2 - 245, height/ 2 - 5)
       text("- Goal Protection", width / 2 - 220, height / 2);
       pop();
       
@@ -113,7 +113,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerupIconReverseControls, width / 2 - 260, height/ 2 + 35)
+      image(images.powerupIconReverseControls, width / 2 - 245, height/ 2 + 35)
       text("- Reversed Controls", width / 2 - 220, height / 2 + 40);
       pop();
       
@@ -123,7 +123,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerUpIconBonusPoints, width / 2 - 260, height/ 2 + 75)
+      image(images.powerUpIconBonusPoints, width / 2 - 245, height/ 2 + 75)
       text("- Extra Points", width / 2 - 220, height / 2 + 80);
       pop();
       
@@ -133,7 +133,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerUpIconSmallPlayer, width / 2 - 260, height/ 2 + 115)
+      image(images.powerUpIconSmallPlayer, width / 2 - 245, height/ 2 + 115)
       text("- Shrink Opponent", width / 2 - 220, height / 2 + 120);
       pop();
       
@@ -143,7 +143,7 @@ class StartScene {
       stroke("black");
       fill("white");
       textSize(10);
-      image(images.powerUpIconSlowDown, width / 2 - 260, height/ 2 + 155)
+      image(images.powerUpIconSlowDown, width / 2 - 245, height/ 2 + 155)
       text("- Slow Down Opponent", width / 2 - 220, height / 2 + 160);
       pop();
 
