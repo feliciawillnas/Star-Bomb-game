@@ -8,13 +8,12 @@ class StartScene {
   private interactionInstructionUP_A: string;
   private interactionInstructionLDR_A: string;
   private creatorNames: string;
-  protected game: IStartGame;
   private infoText: string;
 
   /* --------------------
         CONSTRUCTOR
   -------------------- */
-  constructor(game: IStartGame) {
+  constructor() {
     this.gameTitle = "STAR  B MB";
 
     this.interactionInstructionW = "W";
@@ -22,7 +21,6 @@ class StartScene {
     this.interactionInstructionUP_A = "\uf106";
     this.interactionInstructionLDR_A = "\uf104   \uf107   \uf105";
     this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA & LUCAS";
-    this.game = game;
 
     this.infoText =
       "Move the bombs by hitting them with your spaceship's\n force field. You will get 3 points when a bomb \nexplodes on your opponent's half of the court and \n10 points if you manage to get a bomb in your \nopponent's galaxy goal.The player that manages to \ncollect the most points in 3 minutes wins the game!";

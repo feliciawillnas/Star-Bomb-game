@@ -1,4 +1,8 @@
-class PlayScene {
+interface IPlaySceneScore {
+  getPlayer1Score(): number;
+  getPlayer2Score(): number;
+}
+class PlayScene implements IPlaySceneScore {
   /* ------------------
         ATTRIBUTES
   ------------------ */
@@ -13,8 +17,8 @@ class PlayScene {
   public playerOne: Player;
   public playerTwo: Player;
 
-  public scorePlayer1: number;
-  public scorePlayer2: number;
+  private scorePlayer1: number;
+  private scorePlayer2: number;
   public gameTime: number;
   public gameTimeMin: number;
   public gameTimeSec: number;
@@ -176,6 +180,15 @@ class PlayScene {
     this.drawVolumeSlider();
   }
 
+  // Sends score to endScene.
+  public getPlayer1Score(): number {
+    return this.scorePlayer1;
+  }
+
+  // Sends score to endScene.
+  public getPlayer2Score(): number {
+    return this.scorePlayer2;
+  }
   // A collection of collision checking methods
   private checkCollisions() {
     this.checkBombAndPlayerCollision();
