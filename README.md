@@ -1,9 +1,9 @@
 # Slutprojektet
 
-Välkommen till den förinställda kodbasen för slutprojektet.
-Se filen [Sketch](./src/sketch.ts) och [Game](./src/game.ts) filerna för hur ni bör börja skriva er kod!
+Detta är ett skolprojekt som är utfört av Linus, Simon, Marcus, Jenny, Felicia och Lucas, FED22G - Medieinstitutet Göteborg.
 
-Kom ihåg att använda git!
+Det här är vårt slutprojekt i JavaScript - Grundkurs.
+Uppgiften gick ut på att skapa ett spel från grunden med allt vi har lärt oss under kursens gång med ett extra fokus på OOP, TypeScript och P5-biblioteket.
 
 ## Dokument & Artifakter
 
@@ -34,9 +34,5 @@ För att starta debuggern tycker du på `F5` eller via play-knappen i "ActionBar
 Versionen av p5.js är 1.5.0 medan senaste version av p5 typerna endast är uppdaterad till 1.4.3. Detta skulle kunna orsaka problem och det kan vara så att ni hittar något i p5's dokumention som inte finns tillgängligt i detta projektet - dock osannolikt.
 
 Typings för de globala variablerna relaterat till p5.sound fungerar tyvärr inte - exempel finns för hur ni kan kringå detta. Se [loadSound funktionen](global.d.ts) för hur det kan göras.
-
-## TODO
-
-Lägg till ytterliggare information som är specifikt för ert projekt!
 
 **LYCKA TILL!**

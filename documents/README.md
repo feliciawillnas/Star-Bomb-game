@@ -6,7 +6,6 @@ Eftersom det är vanligt att vi arbetar med dokument online så kan det vara anv
 
 ## Dokument:
 
-* [Spelbeskrivning](https://www.google.se)
-* [Klassdiagram](https://www.google.se)
-* [etc...](https://www.google.se)
-
+- [Spelbeskrivning](https://docs.google.com/document/d/1Wml4WTKc2bAyR_SDgbUKQ1SjfSMM0ReKhVCXydo4hcs/edit?usp=share_link)
+- [Klassdiagram](https://drive.google.com/file/d/1YUVJ1qAU2RcccoD-OxaBW-3ciVdJmuhc/view?usp=share_link)
+- [etc...](https://www.google.se)
