@@ -1,12 +1,4 @@
-interface IStartGame {
-  //IGame
-  startGame(): void;
-}
-interface IEndGame {
-  endGame(): void;
-}
-
-class Game implements IStartGame, IEndGame {
+class Game {
   /* ------------------
         ATTRIBUTES
   ------------------ */
@@ -21,8 +13,8 @@ class Game implements IStartGame, IEndGame {
   constructor() {
     this.scene = "startScene"; // Activates the first scene of the game.
     this.playScene = new PlayScene();
-    this.startScene = new StartScene(this);
-    this.endScene = new EndScene(this);
+    this.startScene = new StartScene();
+    this.endScene = new EndScene(this.playScene);
   }
 
   /* ------------------
@@ -33,6 +25,10 @@ class Game implements IStartGame, IEndGame {
     this.startSceneMusic();
     this.endSceneMusic();
 
+    this.startGame();
+    this.endGame();
+    this.restartGame();
+
     if (this.scene == "playScene") {
       this.playScene.update();
     }
@@ -40,9 +36,6 @@ class Game implements IStartGame, IEndGame {
 
   //Draw
   public draw() {
-    this.startGame();
-    this.endGame();
-    this.restartGame();
     image(images.background, width / 2, height / 2, windowWidth, windowHeight);
 
     if (this.scene == "playScene") {
@@ -79,8 +72,8 @@ class Game implements IStartGame, IEndGame {
 
   public endGame() {
     if (
-      game.playScene.gameTimeMin < 0 &&
-      game.playScene.gameTimeSec < 0 &&
+      this.playScene.gameTimeMin < 0 &&
+      this.playScene.gameTimeSec < 0 &&
       this.scene == "playScene"
     ) {
       this.scene = "endScene";

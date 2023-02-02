@@ -4,15 +4,15 @@ class EndScene {
   ------------------ */
   protected gameTitle: string;
   protected creatorNames: string;
-  protected game: Game;
+  protected playScene: IPlaySceneScore;
 
   /* --------------------
         CONSTRUCTOR
   -------------------- */
-  constructor(game: Game) {
+  constructor(playScene: IPlaySceneScore) {
     this.gameTitle = "STAR  B MB";
     this.creatorNames = "LINUS, SIMON, MARCUS, JENNY, FELICIA & LUCAS";
-    this.game = game;
+    this.playScene = playScene;
   }
 
   /* ------------------
@@ -48,13 +48,13 @@ class EndScene {
     // SCORE
     push();
     textSize(25);
-    if (game.playScene.scorePlayer1 > game.playScene.scorePlayer2) {
+    if (this.playScene.getPlayer1Score() > this.playScene.getPlayer2Score()) {
       text("PLAYER 1 WINS!", width / 2, height / 2 - 100);
     }
-    if (game.playScene.scorePlayer1 < game.playScene.scorePlayer2) {
+    if (this.playScene.getPlayer1Score() < this.playScene.getPlayer2Score()) {
       text("PLAYER 2 WINS!", width / 2, height / 2 - 100);
     }
-    if (game.playScene.scorePlayer1 == game.playScene.scorePlayer2) {
+    if (this.playScene.getPlayer1Score() == this.playScene.getPlayer2Score()) {
       text("IT'S A DRAW!", width / 2, height / 2 - 100);
     }
     strokeWeight(7);
@@ -70,13 +70,13 @@ class EndScene {
     // Player 1 score
     push();
     textSize(40);
-    text(game.playScene.scorePlayer1, width / 2 - 100, height / 2 - 15);
+    text(this.playScene.getPlayer1Score(), width / 2 - 100, height / 2 - 15);
     pop();
 
     // Player 2 score
     push();
     textSize(40);
-    text(game.playScene.scorePlayer2, width / 2 + 100, height / 2 - 15);
+    text(this.playScene.getPlayer2Score(), width / 2 + 100, height / 2 - 15);
     pop();
 
     // Drawing all text and images
