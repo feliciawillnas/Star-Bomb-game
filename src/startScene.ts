@@ -212,7 +212,7 @@ class StartScene {
     push();
     textSize(60);
     text(this.gameTitle, width / 2, height / 2 - 160);
-    image(images.neonGreenBombBig, width / 2 + 163, height / 2 - 210);
+    image(images.neonGreenBombBig, width / 2 + 163, height / 2 - 205);
     pop();
 
     // Text: "Volume x%"
