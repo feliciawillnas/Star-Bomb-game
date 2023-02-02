@@ -560,9 +560,9 @@ class PlayScene {
       // The if conditionals decides the bombs speed (vy) after collision
       if (
         bomb.y < playboardTopBorder + bombRadius ||
-        (bomb.x > playboardRightBorder - bombRadius &&
+        (bomb.x > playboardRightBorder - bombRadius+5 &&
           bomb.y < playboardTopBorder + 140 + bombRadius) ||
-        (bomb.x < playboardLeftBorder + bombRadius &&
+        (bomb.x < playboardLeftBorder + bombRadius-5 &&
           bomb.y < playboardTopBorder + 140 + bombRadius)
       ) {
         if (bomb.vy <= 0 && bomb.vy >= -1) {
@@ -578,13 +578,13 @@ class PlayScene {
         }
       }
 
-      // Checks collision with bottom border within play areea and inside goals
+      // Checks collision with bottom border within play area and inside goals
       // The if conditionals decides the bombs speed (vy) after collision
       if (
         bomb.y > playboardBottomBorder - bombRadius ||
-        (bomb.x > playboardRightBorder - bombRadius &&
+        (bomb.x > playboardRightBorder - bombRadius+5 &&
           bomb.y > playboardBottomBorder - 140 - bombRadius) ||
-        (bomb.x < playboardLeftBorder + bombRadius &&
+        (bomb.x < playboardLeftBorder + bombRadius-5 &&
           bomb.y > playboardBottomBorder - 140 - bombRadius)
       ) {
         if (bomb.vy > 0 && bomb.vy <= 1) {

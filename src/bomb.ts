@@ -9,6 +9,7 @@ class Bomb {
   public diameter: number;
   public timeToLive: number; // The bombs lifetime.
   private isExploding: boolean;
+  private deaccelerateBomb: number = 500;
 
   /* --------------------
         CONSTRUCTOR
@@ -127,7 +128,13 @@ class Bomb {
 
   // Moves bomb
   private moveBomb() {
+    this.deaccelerateBomb -= deltaTime;
     this.x += this.vx;
     this.y += this.vy;
+    if (this.deaccelerateBomb <= 0) {
+      this.vx = this.vx / 1.2
+      this.vy = this.vy / 1.2
+      this.deaccelerateBomb = 500;
+    }
   }
 }
