@@ -7,7 +7,7 @@ Uppgiften gick ut på att skapa ett spel från grunden med allt vi har lärt oss
 
 ### Länk till spel:
 
-[Star Bomb](https://docs.google.com/document/d/1Wml4WTKc2bAyR_SDgbUKQ1SjfSMM0ReKhVCXydo4hcs/edit?usp=share_link)
+[Star Bomb](https://star-bomb.netlify.app/)
 
 ## Dokument & Artifakter
 
