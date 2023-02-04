@@ -77,6 +77,7 @@ class Game {
       this.scene == "playScene"
     ) {
       this.scene = "endScene";
+      this.endScene = new EndScene(this.playScene);
     }
   }
 

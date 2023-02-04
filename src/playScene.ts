@@ -56,7 +56,7 @@ class PlayScene implements IPlaySceneScore {
 
     this.scorePlayer1 = 0;
     this.scorePlayer2 = 0;
-    this.gameTime = 180_999;
+    this.gameTime = 10_999;
     this.gameTimeMin = 0;
     this.gameTimeSec = 0;
 
